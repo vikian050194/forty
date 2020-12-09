@@ -2,11 +2,33 @@
 
 from utils import *
 
-# send_message('timelord', 'I hope that it\'s a message - not a title')
+data = get_settings()
 
-settings = get_settings()
+state = Settings(data)
 
-print(settings)
-print(settings['hours'])
-print(settings['minutes'])
-print(settings['seconds'])
+print(state)
+print(state.hours)
+print(state.minutes)
+print(state.seconds)
+
+state.hours = 0
+state.minutes = 0
+state.seconds = 3
+
+def tick():
+    state.seconds = state.seconds - 1
+    if state.seconds == -1:
+        state.seconds = 59
+        state.minutes = state.minutes - 1
+    
+    if state.minutes == -1:
+        state.minutes = 59
+        state.hours = state.hours - 1
+
+    if state.hours == -1:
+        send_message('timelord', 'time is up')
+
+    print(state)
+
+
+rt = RepeatedTimer(1, tick)
