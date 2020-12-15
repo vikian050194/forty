@@ -1,46 +1,55 @@
 #!/usr/bin/env python3
 
+from operator import add, sub
 from utils import *
 
-data = get_settings()
-
-state = Settings(data)
+state = load_state()
 
 print(state)
-print(state.hours)
-print(state.minutes)
-print(state.seconds)
 
-state.hours = 0
-state.minutes = 0
-state.seconds = 3
+key = None
+stop_the_world = None
+restart = lambda: call_repeatedly(1, tick, state)
+stop_the_world = restart()
 
-def tick():
-    state.seconds = state.seconds - 1
-    if state.seconds == -1:
-        state.seconds = 59
-        state.minutes = state.minutes - 1
+while key != 'q':
+    key = input()
     
-    if state.minutes == -1:
-        state.minutes = 59
-        state.hours = state.hours - 1
+    if key == 'q':
+        stop_the_world()
+        save_state(state)
+        continue
 
-    if state.hours == -1:
-        send_message('timelord', 'time is up')
+    if key == 'p':
+        print('pause')
+        stop_the_world()
+        save_state(state)
+        continue
+    
+    if key == 'c':
+        print('continue')
+        stop_the_world = restart()
+        continue
+    
+    op_key = key[:1]
 
-    print(state)
+    if op_key in ['+', '-']:
+        op = add if op_key == '+' else sub
+        data = key[1:].split(':')
+        delta_h = 0
+        delta_m = 0
+        delta_s = 0
 
-
-# rt = RepeatedTimer(1, tick)
-
-from time import sleep
-
-def hello(name):
-    print(f'Hello {name}!')
-
-print('starting...')
-rt = RepeatedTimer(1, hello, 'World') # it auto-starts, no need of rt.start()
-try:
-    sleep(5) # your long-running job goes here...
-finally:
-    rt.stop() # better in a try/finally block to make sure the program ends!
+        if len(data) > 0 and len(data[0]):
+            delta_h = int(data[0])
+        if len(data) > 1 and len(data[1]):
+            delta_m = int(data[1])
+        if len(data) > 2 and len(data[2]):
+            delta_s = int(data[2])
+        
+        state.hours = op(state.hours, delta_h)
+        state.minutes = op(state.minutes, delta_m)
+        state.seconds = op(state.seconds, delta_s)
+        save_state(state)
+        print(state)
+        continue

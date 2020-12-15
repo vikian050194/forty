@@ -2,22 +2,32 @@ import json
 import subprocess
 
 
-filename = "settings.json"
+filename = "state.json"
 
 
-class Settings():
+class State():
     def __init__(self, data):
         self.hours = data['hours']
         self.minutes = data['minutes']
         self.seconds = data['seconds']
 
     def __str__(self):
-        return f'{self.hours}:{self.minutes}:{self.seconds}'
+        return f'{self.hours:02d}:{self.minutes:02d}:{self.seconds:02d}'
 
 
-def get_settings():
-    fp = open(filename, "r")
-    return json.load(fp)
+def load_state():
+    with open(filename, "r") as fr:
+        return State(json.load(fr))
+
+
+def save_state(state):
+    data = dict(
+        hours=state.hours,
+        minutes=state.minutes,
+        seconds=state.seconds
+    )
+    with open(filename, "w") as fw:
+        json.dump(data, fw)
 
 
 def send_message(title, message):
@@ -25,31 +35,28 @@ def send_message(title, message):
     return
 
 
-from threading import Timer
+from threading import Event, Thread
+
+def call_repeatedly(interval, func, *args):
+    stopped = Event()
+    def loop():
+        while not stopped.wait(interval):
+            func(*args)
+    Thread(target=loop).start()    
+    return stopped.set
 
 
-class RepeatedTimer():
-    def __init__(self, interval, function, *args, **kwargs):
-        self._timer     = None
-        self.interval   = interval
-        self.function   = function
-        self.args       = args
-        self.kwargs     = kwargs
-        self.is_running = False
-        self.start()
+def tick(state):
+    state.seconds = state.seconds - 1
+    if state.seconds == -1:
+        state.seconds = 59
+        state.minutes = state.minutes - 1
+    
+    if state.minutes == -1:
+        state.minutes = 59
+        state.hours = state.hours - 1
 
-    def _run(self):
-        self.is_running = False
-        self.start()
-        self.function(*self.args, **self.kwargs)
+    if state.hours == -1:
+        send_message('timelord', 'time is up')
 
-    def start(self):
-        if not self.is_running:
-            self._timer = Timer(self.interval, self._run)
-            self._timer.daemon = False
-            self._timer.start()
-            self.is_running = True
-
-    def stop(self):
-        self._timer.cancel()
-        self.is_running = False
+    print(state)
