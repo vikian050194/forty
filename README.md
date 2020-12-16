@@ -11,6 +11,8 @@ However it has a lot of useful features.
 
 Timelord can help you and remind to take a break, track working time and more.
 
+Versions log is [here](TODO.md).
+
 [status-url]: https://github.com/vikian050194/timelord/pulse
 [status-badge]: https://img.shields.io/github/last-commit/vikian050194/timelord.svg
 
