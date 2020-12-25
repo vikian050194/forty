@@ -13,6 +13,14 @@ Timelord can help you and remind to take a break, track working time and more.
 
 Versions log is [here](TODO.md).
 
+## Tests
+
+Tests use just `unittest` module
+
+```
+python3 -m unittest discover -s tests/ -p "test_*.py"
+```
+
 [status-url]: https://github.com/vikian050194/timelord/pulse
 [status-badge]: https://img.shields.io/github/last-commit/vikian050194/timelord.svg
 

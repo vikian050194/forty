@@ -1,0 +1,16 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run all unit tests",
+            "type": "shell",
+            "group": "test",
+            "command": "python3 -m unittest discover -s tests/ -p \"test_*.py\"",
+            "presentation": {
+                "reveal": "silent",
+                "panel": "dedicated",
+                "clear": false
+            }
+        }
+    ]
+}

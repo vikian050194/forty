@@ -8,6 +8,11 @@
 - [x] Save state on exit, on pause, on change
 
 ## v0.2
+- [ ] Make it work not like "active" REPL (in other words remove loop), it's would be better to act like `curl`, `rm` or something else
+- Store last checkpoint time
+
+## v0.3
+- [ ] "Normalize" time after changing
 - [ ] Initial state is stored in `init.json`
 - [ ] Configuration is stored in `config.json`
 - [ ] Print time in a short format if configured
@@ -16,7 +21,7 @@
 - [ ] Iteration duration (interval) is configurable
 - [ ] Save state in the end of each interval
 
-## v0.3
+## v0.4
 - [ ] Print today's passed time
 - [ ] Print today's remained time
 - [ ] Work time per day is configurable
