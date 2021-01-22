@@ -1,27 +1,21 @@
 # TODO
 
-## v0.1
+## Business
 
-- [x] Read state from file on init
-- [x] Pause and continue counting on command
-- [x] Change state by adding or subtracting some value in minutes on command
-- [x] Save state on exit, on pause, on change
+- [ ] Get "help"
+- [ ] Set up count of days, time per day on initialization
+- [ ] Add mark "day is started"
+- [ ] Add mark "day is ended"
+- [ ] Add mark "pause is started"
+- [ ] Add mark "pause is ended"
+- [ ] Add hh:mm to current value
+- [ ] Subtract hh:mm from current value
+- [ ] Get today's passed time
+- [ ] Get today's remained time
+- [ ] Get total passed time
+- [ ] Get total remained time
+- [ ] Read initial configuration from file 
 
-## v0.2
-- [ ] Make it work not like "active" REPL (in other words remove loop), it's would be better to act like `curl`, `rm` or something else
-- Store last checkpoint time
+## Tech
 
-## v0.3
-- [ ] "Normalize" time after changing
-- [ ] Initial state is stored in `init.json`
-- [ ] Configuration is stored in `config.json`
-- [ ] Print time in a short format if configured
-- [ ] Print time one time per **n** iterations
-- [ ] **n** is configurable
-- [ ] Iteration duration (interval) is configurable
-- [ ] Save state in the end of each interval
-
-## v0.4
-- [ ] Print today's passed time
-- [ ] Print today's remained time
-- [ ] Work time per day is configurable
+- [ ] ???
