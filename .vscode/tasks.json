@@ -7,7 +7,7 @@
             "group": "test",
             "command": "python3 -m unittest discover -s tests/ -p \"test_*.py\"",
             "presentation": {
-                "reveal": "silent",
+                "reveal": "always",
                 "panel": "dedicated",
                 "clear": false
             }

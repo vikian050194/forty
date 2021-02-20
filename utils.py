@@ -1,10 +1,17 @@
 import json
 import subprocess
 
-from time import localtime
+from datetime import datetime
 
 
 filename = "state.json"
+
+
+# datetime.fromisoformat('2011-11-04T00:05:23')
+# datetime.now().isoformat(sep='T', timespec='seconds')
+# t1 = datetime.fromisoformat('2011-11-04T00:05:23')
+# t2 = datetime.fromisoformat('2011-11-04T00:06:23')
+# dt = t2 - t1
 
 
 class Time():
@@ -18,9 +25,31 @@ class Time():
         return f'{self.hours:02d}:{self.minutes:02d}:{self.seconds:02d}'
 
 
-def load_state():
+class Action():
+    def __init__(self, type, timestamp = datetime.now().isoformat(sep='T', timespec='seconds'), value = None):
+        self.type = type
+        self.value = value
+        self.timestamp = timestamp
+
+    def __str__(self):
+        return f'{self.hours:02d}:{self.minutes:02d}:{self.seconds:02d}'
+
+
+def make_action(data):
+    type = data.get("type")
+    value = data.get("value")
+    timestamp = datetime.fromisoformat(data.get("timestamp"))
+    return Action(type, value, timestamp)
+
+
+class State():
+    def __init__(self, value=None):
+        self.value = value
+
+
+def load_actions():
     with open(filename, "r") as fr:
-        return State(json.load(fr))
+        return list(map(make_action, json.load(fr).get("actions")))
 
 
 def save_state(state):
@@ -36,3 +65,5 @@ def save_state(state):
 def send_message(title, message):
     subprocess.Popen(['notify-send', title, message])
     return
+
+    

@@ -11,7 +11,7 @@ However it has a lot of useful features.
 
 **Fourty** can help you and remind to take a break, track working time and more.
 
-Versions log/todo list is [here](TODO.md).
+Versions history and todo list is [here](TODO.md).
 
 ## Tests
 

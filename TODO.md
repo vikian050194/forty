@@ -2,13 +2,14 @@
 
 ## v0.1.0
 - [ ] Get "help"
-- [ ] Set up initial value
+- [ ] Initialize
 - [ ] Add mark "day is started"
 - [ ] Add mark "day is ended"
 - [ ] Get total passed time
 - [ ] Get total remained time
 
 ## v0.2.0
+- [ ] Set up initial value
 - [ ] Add mark "pause is started"
 - [ ] Add mark "pause is ended"
 
