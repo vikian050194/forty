@@ -5,12 +5,24 @@
             "label": "Run all unit tests",
             "type": "shell",
             "group": "test",
-            "command": "python3 -m unittest discover -s tests/ -p \"test_*.py\"",
+            "command": "python3 -m unittest discover -t=\"${workspaceFolder}\" -s=tests/ -p=\"test_*.py\"",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": false
+            }
+        },
+        {
+            "label": "Run all unit tests verbose",
+            "type": "shell",
+            "group": "test",
+            "command": "python3 -m unittest discover -t=\"${workspaceFolder}\" s=tests/ -p=\"test_*.py\" -v",
             "presentation": {
                 "reveal": "always",
                 "panel": "dedicated",
                 "clear": false
             }
         }
+
     ]
 }

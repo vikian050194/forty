@@ -13,13 +13,13 @@ class TestTime(unittest.TestCase):
         self.assertEqual(t.seconds, 56)
 
     def test_correct_value_with_leading_zero(self):
-        value = "01:02:00"
+        value = "01:02:03"
 
         t = Time(value)
 
         self.assertEqual(t.hours, 1)
         self.assertEqual(t.minutes, 2)
-        self.assertEqual(t.seconds, 0)
+        self.assertEqual(t.seconds, 3)
 
     def test_incorrect_value_without_seconds(self):
         value = "01:02:"
@@ -50,3 +50,19 @@ class TestTime(unittest.TestCase):
 
         with self.assertRaises(ValueError):
             t = Time(value)
+
+    def test_to_seconds(self):
+        value = "01:02:03"
+
+        t = Time(value)
+
+        self.assertEqual(t.to_seconds(), 3723)
+
+    def test_from_seconds(self):
+        value = 3723
+
+        t = Time.from_seconds(value)
+
+        self.assertEqual(t.hours, 1)
+        self.assertEqual(t.minutes, 2)
+        self.assertEqual(t.seconds, 3)

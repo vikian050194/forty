@@ -1,4 +1,6 @@
-from utils import State
+from datetime import datetime
+
+from utils import State, Action, Actions, Time
 
 class RemainedTimeState(State):
     def __init__(self, value=None, is_started=False, start_timestamp=None):
@@ -7,22 +9,28 @@ class RemainedTimeState(State):
         self.start_timestamp = start_timestamp
 
 
-def on_init(state, action):
+def on_init(state: RemainedTimeState, action: Action):
     return RemainedTimeState(action.value)
 
 
-def on_start(state, action):
-    return RemainedTimeState()
+def on_start(state: RemainedTimeState, action: Action):
+    return RemainedTimeState(state.value, True, action.timestamp)
 
 
-def on_stop(state, action):
-    return RemainedTimeState()
+def on_stop(state: RemainedTimeState, action: Action):
+    t1 = datetime.fromisoformat(state.start_timestamp)
+    t2 = datetime.fromisoformat(action.timestamp)
+    dt = t2 - t1
+    dts = dt.seconds
+    old_value = Time(state.value).to_seconds()
+    new_value = str(Time.from_seconds(old_value-dts))
+    return RemainedTimeState(new_value)
 
 
 handlers = {
-    "init": on_init,
-    "start": on_start,
-    "stop": on_stop
+    Actions.INIT: on_init,
+    Actions.START: on_start,
+    Actions.STOP: on_stop
 }
 
 

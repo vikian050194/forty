@@ -1,10 +1,18 @@
 import json
 import subprocess
+import enum
 
 from datetime import datetime
 
 
 filename = "state.json"
+
+
+@enum.unique
+class Actions(str, enum.Enum):
+    INIT = "init"
+    START = "start"
+    STOP = "stop"
 
 
 # datetime.fromisoformat('2011-11-04T00:05:23')
@@ -24,6 +32,14 @@ class Time():
     def __str__(self):
         return f'{self.hours:02d}:{self.minutes:02d}:{self.seconds:02d}'
 
+    def from_seconds(value: int):
+        h = int(value/3600)
+        m = int((value/60)%60)
+        s = int(value%60)
+        return Time(f'{h}:{m}:{s}')
+
+    def to_seconds(self):
+        return self.hours*3600 + self.minutes*60 + self.seconds
 
 class Action():
     def __init__(self, type, timestamp = datetime.now().isoformat(sep='T', timespec='seconds'), value = None):
@@ -40,6 +56,13 @@ def make_action(data):
     value = data.get("value")
     timestamp = datetime.fromisoformat(data.get("timestamp"))
     return Action(type, value, timestamp)
+
+
+def actions_applicator(reducer, actions):
+    state = None
+    for action in actions:
+        state = reducer(state, action)
+    return state
 
 
 class State():
