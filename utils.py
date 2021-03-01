@@ -22,6 +22,14 @@ class Actions(str, enum.Enum):
 # dt = t2 - t1
 
 
+def to_iso(value: datetime):
+    return value.isoformat(sep='T', timespec='seconds')
+
+
+def from_iso(value: str):
+    return datetime.fromisoformat(value)
+
+
 class Time():
     def __init__(self, value):
         [h, m, s] = value.split(':')
@@ -42,20 +50,24 @@ class Time():
         return self.hours*3600 + self.minutes*60 + self.seconds
 
 class Action():
-    def __init__(self, type, timestamp = datetime.now().isoformat(sep='T', timespec='seconds'), value = None):
+    def __init__(self, type: Actions, timestamp: datetime = datetime.now(), value: str = None):
         self.type = type
         self.value = value
         self.timestamp = timestamp
 
-    def __str__(self):
-        return f'{self.hours:02d}:{self.minutes:02d}:{self.seconds:02d}'
+    def to_dict(self):
+        return dict(
+            type=self.type,
+            timestamp=self.timestamp.isoformat(sep='T', timespec='seconds'),
+            value=self.value
+        )
 
 
 def make_action(data):
     type = data.get("type")
     value = data.get("value")
     timestamp = datetime.fromisoformat(data.get("timestamp"))
-    return Action(type, value, timestamp)
+    return Action(type, timestamp, value)
 
 
 def actions_applicator(reducer, actions):
@@ -75,12 +87,9 @@ def load_actions():
         return list(map(make_action, json.load(fr).get("actions")))
 
 
-def save_state(state):
-    data = dict(
-        hours=state.hours,
-        minutes=state.minutes,
-        seconds=state.seconds
-    )
+def save_actions(actions):
+    actions_dict = list(map(lambda item: item.to_dict(), actions))
+    data = dict(actions=actions_dict)
     with open(filename, "w") as fw:
         json.dump(data, fw)
 

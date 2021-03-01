@@ -4,6 +4,10 @@ from sys import argv
 from datetime import datetime
 
 from utils import *
+from reducers.get_remained_time import get_remained_time
+
+
+remained = lambda actions: actions_applicator(get_remained_time, actions)
 
 
 def main(args):
@@ -19,7 +23,28 @@ def main(args):
         print('-f, --finish\tappend "finish" action')
         return
 
+    actions = load_actions()
+
+    if arg in ['-i', '--init']:
+        new_action = Action(Actions.INIT, value="40:00:00")
+        save_actions([new_action])
+
+    if arg in ['-s', '--start']:
+        new_action = Action(Actions.START)
+        actions.append(new_action)
+        save_actions(actions)
+
+    if arg in ['-f', '--finish']:
+        new_action = Action(Actions.STOP)
+        actions.append(new_action)
+        save_actions(actions)
+
+    if arg in ['-r', '--remained']:
+        if actions[-1].type != Actions.STOP: 
+            actions.append(Action(Actions.STOP))
+        final_state = remained(actions)
+        print(final_state.value)
+
 
 if __name__ == "__main__":
-    # main(argv[1:])
-    load_actions()
+    main(argv[1:])

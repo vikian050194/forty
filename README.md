@@ -18,7 +18,7 @@ Versions history and todo list is [here](TODO.md).
 Tests use just `unittest` module
 
 ```
-python3 -m unittest discover -s tests/ -p "test_*.py"
+python3 -m unittest discover -t=. -s=tests/ -p=test_*.py
 ```
 
 [status-url]: https://github.com/vikian050194/fourty/pulse

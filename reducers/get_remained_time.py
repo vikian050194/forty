@@ -18,9 +18,7 @@ def on_start(state: RemainedTimeState, action: Action):
 
 
 def on_stop(state: RemainedTimeState, action: Action):
-    t1 = datetime.fromisoformat(state.start_timestamp)
-    t2 = datetime.fromisoformat(action.timestamp)
-    dt = t2 - t1
+    dt = action.timestamp - state.start_timestamp
     dts = dt.seconds
     old_value = Time(state.value).to_seconds()
     new_value = str(Time.from_seconds(old_value-dts))
