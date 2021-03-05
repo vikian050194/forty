@@ -5,15 +5,25 @@ import enum
 from datetime import datetime
 
 
-filename = "state.json"
+file_config = "config.json"
+file_actions = "actions.json"
 
 
 @enum.unique
 class Actions(str, enum.Enum):
-    INIT = "init"
     START = "start"
-    STOP = "stop"
+    FINISH = "finish"
+    PAUSE = "pause"
+    RESUME = "resume"
+    SKIP = "skip"
 
+
+@enum.unique
+class Commands(Actions, enum.Enum):
+    STATUS = "status"
+    RESET = "reset"
+    BREAK = "break"
+    CONFIG = "config"
 
 # datetime.fromisoformat('2011-11-04T00:05:23')
 # datetime.now().isoformat(sep='T', timespec='seconds')
@@ -83,19 +93,16 @@ class State():
 
 
 def load_actions():
-    with open(filename, "r") as fr:
-        return list(map(make_action, json.load(fr).get("actions")))
+    with open(file_actions, "r") as fr:
+        return list(map(make_action, json.load(fr)))
 
 
 def save_actions(actions):
-    actions_dict = list(map(lambda item: item.to_dict(), actions))
-    data = dict(actions=actions_dict)
-    with open(filename, "w") as fw:
+    data = list(map(lambda item: item.to_dict(), actions))
+    with open(file_actions, "w") as fw:
         json.dump(data, fw)
 
 
 def send_message(title, message):
     subprocess.Popen(['notify-send', title, message])
     return
-
-    

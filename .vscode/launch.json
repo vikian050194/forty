@@ -15,14 +15,16 @@
             "type": "python",
             "request": "launch",
             "program": "${file}",
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
         },
         {
             "name": "Python: Run App",
             "type": "python",
             "request": "launch",
             "program": "app.py",
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "args": [
+            ]
         }
     ]
 }

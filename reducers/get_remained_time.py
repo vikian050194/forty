@@ -1,6 +1,6 @@
 from datetime import datetime
+from utils import State, Action, Actions, Time, actions_applicator
 
-from utils import State, Action, Actions, Time
 
 class RemainedTimeState(State):
     def __init__(self, value=None, is_started=False, start_timestamp=None):
@@ -9,15 +9,11 @@ class RemainedTimeState(State):
         self.start_timestamp = start_timestamp
 
 
-def on_init(state: RemainedTimeState, action: Action):
-    return RemainedTimeState(action.value)
-
-
 def on_start(state: RemainedTimeState, action: Action):
     return RemainedTimeState(state.value, True, action.timestamp)
 
 
-def on_stop(state: RemainedTimeState, action: Action):
+def on_finish(state: RemainedTimeState, action: Action):
     dt = action.timestamp - state.start_timestamp
     dts = dt.seconds
     old_value = Time(state.value).to_seconds()
@@ -26,13 +22,12 @@ def on_stop(state: RemainedTimeState, action: Action):
 
 
 handlers = {
-    Actions.INIT: on_init,
     Actions.START: on_start,
-    Actions.STOP: on_stop
+    Actions.FINISH: on_finish
 }
 
 
-def get_remained_time(state, action):
+def get_remained_time_reducer(state, action):
     if state is None:
         state = RemainedTimeState()
 
@@ -40,6 +35,9 @@ def get_remained_time(state, action):
         return handlers[action.type](state, action)
     else:
         return state
+
+
+get_remained_time = lambda actions: actions_applicator(get_remained_time_reducer, actions)
 
 
 __all__ = ["get_remained_time"]

@@ -2,48 +2,73 @@
 
 from sys import argv
 from datetime import datetime
+from typing import List
 
 from utils import *
-from reducers.get_remained_time import get_remained_time
+from reducers.get_current_status import get_current_status
 
 
-remained = lambda actions: actions_applicator(get_remained_time, actions)
+def on_help(value):
+    print('fourty', 'v0.0.0')
+    print('help\tget help')
+    print('reset\treset actions')
+    # print('config\tget or set configuration parameters')
+    print('status\tget current status')
+    # print('get\tget specific value')
+    print('start\tstart work')
+    print('finish\tfinish work')
+    # print('pause\tstart pause')
+    # print('resume\tfinish pause')
+    # print('break\tstart pause and automatically finish it')
 
 
-def main(args):
-    if len(args) == 0:
-        args = ['-h']
+def on_reset(value):
+    save_actions([])
 
-    [arg] = args
-    if arg in ['-h', '--help']:
-        print('fourty', 'v0.0.0')
-        print('-h, --help\tget full available info')
-        print('-i, --init\tinitialization')
-        print('-s, --start\tappend "start" action')
-        print('-f, --finish\tappend "finish" action')
-        return
 
+def on_status(value):
     actions = load_actions()
+    state = get_current_status(actions)
+    print(state.value)
 
-    if arg in ['-i', '--init']:
-        new_action = Action(Actions.INIT, value="40:00:00")
-        save_actions([new_action])
 
-    if arg in ['-s', '--start']:
-        new_action = Action(Actions.START)
-        actions.append(new_action)
-        save_actions(actions)
+def on_start(value):
+    actions = load_actions()
+    new_action = Action(Actions.START)
+    actions.append(new_action)
+    save_actions(actions)
 
-    if arg in ['-f', '--finish']:
-        new_action = Action(Actions.STOP)
-        actions.append(new_action)
-        save_actions(actions)
 
-    if arg in ['-r', '--remained']:
-        if actions[-1].type != Actions.STOP: 
-            actions.append(Action(Actions.STOP))
-        final_state = remained(actions)
-        print(final_state.value)
+def on_finish(value):
+    actions = load_actions()
+    new_action = Action(Actions.FINISH)
+    actions.append(new_action)
+    save_actions(actions)
+
+
+handlers = {
+    "help": on_help,
+    Commands.RESET: on_reset,
+    Commands.STATUS: on_status,
+    Commands.START: on_start,
+    Commands.FINISH: on_finish
+}
+
+
+def main(args: List[str]):
+    command = "help"
+    value = None
+
+    if len(args) == 1:
+        command = args[0]
+
+    if len(args) == 2:
+        value = args[1]
+
+    if command in handlers:
+        return handlers[command](value)
+    else:
+        handlers["help"](value)
 
 
 if __name__ == "__main__":
