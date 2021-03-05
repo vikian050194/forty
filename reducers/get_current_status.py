@@ -1,5 +1,5 @@
 from datetime import datetime
-from utils import State, Action, Actions, Time, actions_applicator
+from utils import State, Action, Actions, Time, actions_reducer
 
 
 def on_foo(state: State, action: Action):
@@ -24,7 +24,7 @@ def get_current_status_reducer(state, action):
         return state
 
 
-get_current_status = lambda actions: actions_applicator(get_current_status_reducer, actions)
+get_current_status = lambda actions: actions_reducer(get_current_status_reducer, actions)
 
 
 __all__ = ["get_current_status"]

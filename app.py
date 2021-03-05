@@ -6,6 +6,7 @@ from typing import List
 
 from utils import *
 from reducers.get_current_status import get_current_status
+from reducers.get_remained_time import get_remained_time
 
 
 def on_help(value):
@@ -14,7 +15,7 @@ def on_help(value):
     print('reset\treset actions')
     # print('config\tget or set configuration parameters')
     print('status\tget current status')
-    # print('get\tget specific value')
+    print('get\tget specific value')
     print('start\tstart work')
     print('finish\tfinish work')
     # print('pause\tstart pause')
@@ -46,12 +47,21 @@ def on_finish(value):
     save_actions(actions)
 
 
+def on_get(value):
+    config = load_config()
+    actions = load_actions()
+    state = get_remained_time(actions, config)
+    value = Time.from_seconds(state.value)
+    print(value)
+
+
 handlers = {
     "help": on_help,
     Commands.RESET: on_reset,
     Commands.STATUS: on_status,
     Commands.START: on_start,
-    Commands.FINISH: on_finish
+    Commands.FINISH: on_finish,
+    Commands.GET: on_get
 }
 
 

@@ -1,5 +1,5 @@
 from datetime import datetime
-from utils import State, Action, Actions, Time, actions_applicator
+from utils import State, Action, Actions, Time, actions_reducer, load_config
 
 
 class RemainedTimeState(State):
@@ -16,8 +16,8 @@ def on_start(state: RemainedTimeState, action: Action):
 def on_finish(state: RemainedTimeState, action: Action):
     dt = action.timestamp - state.start_timestamp
     dts = dt.seconds
-    old_value = Time(state.value).to_seconds()
-    new_value = str(Time.from_seconds(old_value-dts))
+    old_value = state.value
+    new_value = old_value-dts
     return RemainedTimeState(new_value)
 
 
@@ -29,7 +29,7 @@ handlers = {
 
 def get_remained_time_reducer(state, action):
     if state is None:
-        state = RemainedTimeState()
+        state = initial_state
 
     if action.type in handlers:
         return handlers[action.type](state, action)
@@ -37,7 +37,9 @@ def get_remained_time_reducer(state, action):
         return state
 
 
-get_remained_time = lambda actions: actions_applicator(get_remained_time_reducer, actions)
+def get_remained_time(actions, config):
+    initial_state = RemainedTimeState(config.total * config.day * 3600)
+    return actions_reducer(get_remained_time_reducer, actions, initial_state)
 
 
 __all__ = ["get_remained_time"]

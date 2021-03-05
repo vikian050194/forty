@@ -15,3 +15,5 @@
 - break
 - reset
 - skip
+- plus
+- minus

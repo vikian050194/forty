@@ -9,12 +9,38 @@ file_config = "config.json"
 file_actions = "actions.json"
 
 
+class Config():
+    def __init__(self, total: int, day: int):
+        self.total = total
+        self.day = day
+
+    def to_dict(self):
+        return {
+            "total": self.total,
+            "day": self.day
+        }
+
+
+def load_config() -> Config:
+    with open(file_config, "r") as fr:
+        values = json.load(fr)
+        return Config(values["total"], values["day"])
+
+
+def save_config(config: Config):
+    with open(file_config, "w") as fw:
+        json.dump(config.to_dict(), fw)
+
+
+
 @enum.unique
 class Actions(str, enum.Enum):
     START = "start"
     FINISH = "finish"
     PAUSE = "pause"
     RESUME = "resume"
+    PLUS = "plus"
+    MINUS = "minus"
     SKIP = "skip"
 
 
@@ -24,6 +50,7 @@ class Commands(Actions, enum.Enum):
     RESET = "reset"
     BREAK = "break"
     CONFIG = "config"
+    GET = "get"
 
 # datetime.fromisoformat('2011-11-04T00:05:23')
 # datetime.now().isoformat(sep='T', timespec='seconds')
@@ -80,8 +107,8 @@ def make_action(data):
     return Action(type, timestamp, value)
 
 
-def actions_applicator(reducer, actions):
-    state = None
+def actions_reducer(reducer, actions, initial_state = None):
+    state = initial_state
     for action in actions:
         state = reducer(state, action)
     return state
