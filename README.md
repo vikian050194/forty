@@ -1,28 +1,24 @@
-# fourty
+# forty
 
 [![MIT license][license-badge]][license-url]
 [![Maintenance status][status-badge]][status-url]
 
-Small and useful tool.
+**forty** can help you track working time, take a break and more.
 
-In fact it's just a timer that work in terminal.
-
-However it has a lot of useful features.
-
-**Fourty** can help you and remind to take a break, track working time and more.
+Required Python version is 3.8 or higher.
 
 Versions history and todo list is [here](TODO.md).
 
 ## Tests
 
-Tests use just `unittest` module
+Module for testing is `unittest`
 
 ```
 python3 -m unittest discover -t=. -s=tests/ -p=test_*.py
 ```
 
-[status-url]: https://github.com/vikian050194/fourty/pulse
-[status-badge]: https://img.shields.io/github/last-commit/vikian050194/fourty.svg
+[status-url]: https://github.com/vikian050194/forty/pulse
+[status-badge]: https://img.shields.io/github/last-commit/vikian050194/forty.svg
 
-[license-url]: https://github.com/vikian050194/fourty/blob/master/LICENSE
-[license-badge]: https://img.shields.io/github/license/vikian050194/fourty.svg
+[license-url]: https://github.com/vikian050194/forty/blob/master/LICENSE
+[license-badge]: https://img.shields.io/github/license/vikian050194/forty.svg

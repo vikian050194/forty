@@ -10,7 +10,7 @@ from reducers.get_remained_time import get_remained_time
 
 
 def on_help(value):
-    print('fourty', 'v0.0.0')
+    print('forty', 'v0.0.0')
     print('help\tget help')
     print('reset\treset actions')
     # print('config\tget or set configuration parameters')
