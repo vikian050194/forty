@@ -7,7 +7,7 @@
 
 Required Python version is 3.8 or higher.
 
-Versions history and todo list is [here](TODO.md).
+To-do list is [here](TODO.md).
 
 ## Tests
 
