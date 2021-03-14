@@ -2,7 +2,7 @@ import json
 import subprocess
 import enum
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 file_config = "config.json"
@@ -39,18 +39,21 @@ class Actions(str, enum.Enum):
     FINISH = "finish"
     PAUSE = "pause"
     RESUME = "resume"
-    PLUS = "plus"
-    MINUS = "minus"
-    SKIP = "skip"
 
 
 @enum.unique
-class Commands(Actions, enum.Enum):
+class Commands(str, enum.Enum):
+    HELP = "help"
     STATUS = "status"
+    LOG = "log"
     RESET = "reset"
+    PLUS = "plus"
+    MINUS = "minus"
     BREAK = "break"
     CONFIG = "config"
     GET = "get"
+    UNDO = "undo"
+    REDO = "redo"
 
 # datetime.fromisoformat('2011-11-04T00:05:23')
 # datetime.now().isoformat(sep='T', timespec='seconds')
@@ -85,6 +88,9 @@ class Time():
 
     def to_seconds(self):
         return self.hours*3600 + self.minutes*60 + self.seconds
+
+    def to_timedelta(self):
+        return timedelta(hours=self.hours, minutes=self.minutes, seconds=self.seconds)
 
 class Action():
     def __init__(self, type: Actions, timestamp: datetime = datetime.now(), value: str = None):

@@ -6,8 +6,8 @@
 - [x] **finish**
 - [ ] **pause**
 - [ ] **resume**
-- [ ] **plus**
-- [ ] **minus**
+- [x] **plus**
+- [x] **minus**
 
 ## Commands
 
