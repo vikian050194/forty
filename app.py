@@ -43,6 +43,8 @@ def on_status(value):
 
 def on_start(value):
     actions = load_actions()
+    if actions[-1].type == Actions.START:
+        return
     new_action = Action(Actions.START)
     actions.append(new_action)
     save_actions(actions)
@@ -50,6 +52,8 @@ def on_start(value):
 
 def on_finish(value):
     actions = load_actions()
+    if actions[-1].type == Actions.FINISH:
+        return
     new_action = Action(Actions.FINISH)
     actions.append(new_action)
     save_actions(actions)
@@ -79,6 +83,7 @@ def on_get(value):
     state = get_remained_time(actions, config)
     value = Time.from_seconds(state.value)
     print(value)
+    send_message("forty", str(value))
 
 
 handlers = {

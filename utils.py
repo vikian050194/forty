@@ -4,9 +4,9 @@ import enum
 
 from datetime import datetime, timedelta
 
-
-file_config = "config.json"
-file_actions = "actions.json"
+dir = "/home/kirill/git/forty/"
+file_config = dir + "config.json"
+file_actions = dir + "actions.json"
 
 
 class Config():
@@ -136,6 +136,20 @@ def save_actions(actions):
         json.dump(data, fw)
 
 
-def send_message(title, message):
-    subprocess.Popen(['notify-send', title, message])
-    return
+@enum.unique
+class UrgencyLevel(str, enum.Enum):
+    LOW = "low"
+    NORMAL = "normal"
+    CRITICAL = "critical"
+
+
+def send_message(title, body, expire_time: int = 10):
+    urgency: UrgencyLevel = UrgencyLevel.NORMAL
+    icon = dir + "icon48.png"
+    arguments = ['notify-send', title, body]
+    arguments.append(f"--expire-time={expire_time * 1000}")
+    arguments.append(f"--urgency={urgency}")
+    arguments.append(f"--icon={icon}")
+    arguments.append("--hint=int:transient:1")
+    # arguments.append("--app-name=forty")
+    subprocess.Popen(arguments)
