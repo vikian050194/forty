@@ -1,7 +1,8 @@
 import unittest
 
-from utils import Action, Actions, from_iso
-from reducers.get_current_status import get_current_status as call
+from forty.common import from_iso
+from forty.actions import Action, Actions
+from forty.reducers import get_current_status as call
 
 
 class TestTime(unittest.TestCase):

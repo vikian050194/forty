@@ -1,5 +1,7 @@
 from datetime import datetime
-from utils import State, Action, Actions, Time, actions_reducer
+
+from forty.common import Time, State, actions_reducer
+from forty.actions import Action, Actions
 
 
 def on_foo(state: State, action: Action):

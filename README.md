@@ -3,11 +3,12 @@
 [![MIT license][license-badge]][license-url]
 [![Maintenance status][status-badge]][status-url]
 
-**forty** can help you track working time, take a break and more.
+**forty** can help you track working time, take a break and more
 
-Required Python version is 3.8 or higher.
+Required Python version is 3.8 or higher
+Tested on Ubuntu 20.04
 
-To-do list is [here](TODO.md).
+To-do list is [here](TODO.md)
 
 ## Tests
 

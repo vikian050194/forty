@@ -1,7 +1,9 @@
 import unittest
 
-from utils import Action, Actions, from_iso, Config
-from reducers.get_remained_time import get_remained_time as call
+from forty.actions import Action, Actions
+from forty.common import from_iso
+from forty.data import Config
+from forty.reducers import get_remained_time as call
 
 
 test_config = Config(1, 1)

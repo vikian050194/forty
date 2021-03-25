@@ -1,5 +1,8 @@
 from datetime import datetime
-from utils import State, Action, Actions, Time, actions_reducer, load_config
+
+from forty.common import State, actions_reducer
+from forty.actions import Action, Actions
+from forty.data import load_config
 
 
 class RemainedTimeState(State):

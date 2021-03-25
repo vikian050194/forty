@@ -1,6 +1,6 @@
 import unittest
 
-from utils import Time
+from forty.common import Time
 
 class TestTime(unittest.TestCase):
     def test_correct_value(self):

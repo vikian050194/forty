@@ -5,7 +5,10 @@
             "label": "Run all unit tests",
             "type": "shell",
             "group": "test",
-            "command": "python3 -m unittest discover -t=\"${workspaceFolder}\" -s=tests/ -p=\"test_*.py\"",
+            "command": "python3 -m unittest discover -t=${workspaceFolder} -s=tests -p=test_*.py",
+            "options": {
+                "cwd": "forty"
+            },
             "presentation": {
                 "reveal": "always",
                 "panel": "dedicated",
@@ -16,13 +19,15 @@
             "label": "Run all unit tests verbose",
             "type": "shell",
             "group": "test",
-            "command": "python3 -m unittest discover -t=\"${workspaceFolder}\" s=tests/ -p=\"test_*.py\" -v",
+            "command": "python3 -m unittest discover -t=${workspaceFolder} -s=tests -p=test_*.py -v",
+            "options": {
+                "cwd": "forty"
+            },
             "presentation": {
                 "reveal": "always",
                 "panel": "dedicated",
                 "clear": false
             }
         }
-
     ]
 }
