@@ -1,4 +1,4 @@
-import unittest
+from unittest import TestCase
 
 from forty.actions import Action, Actions
 from forty.common import from_iso
@@ -9,7 +9,7 @@ from forty.reducers import get_passed_time as call
 test_config = Config(1, 1)
 
 
-class TestTime(unittest.TestCase):
+class TestGetPassedTime(TestCase):
     def test_default_action_type(self):
         state = call([Action("test", from_iso("2021-01-01T00:00:00"))], test_config)
 

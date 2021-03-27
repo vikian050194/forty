@@ -1,8 +1,9 @@
-import unittest
+from unittest import TestCase
 
 from forty.common import Time
 
-class TestTime(unittest.TestCase):
+
+class TestTime(TestCase):
     def test_correct_value(self):
         value = "12:34:56"
 
