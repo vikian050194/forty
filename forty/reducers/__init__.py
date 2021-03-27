@@ -1,2 +1,3 @@
 from .get_current_status import get_current_status
 from .get_remained_time import get_remained_time
+from .get_passed_time import get_passed_time

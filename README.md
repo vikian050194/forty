@@ -6,6 +6,7 @@
 **forty** can help you track working time, take a break and more
 
 Required Python version is 3.8 or higher
+
 Tested on Ubuntu 20.04
 
 To-do list is [here](TODO.md)

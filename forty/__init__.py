@@ -83,10 +83,16 @@ def on_get(value):
     actions = load_actions()
     if actions and actions[-1].type != Actions.FINISH:
         actions.append(Action(Actions.FINISH))
-    state = get_remained_time(actions, config)
-    value = Time.from_seconds(state.value)
-    print(value)
-    send_message("forty", str(value))
+    
+    remained_time = get_remained_time(actions, config)
+    remained_time_value = Time.from_seconds(remained_time.value)
+    print(remained_time_value)
+    
+    passed_time = get_passed_time(actions, config)
+    passed_time_value = Time.from_seconds(passed_time.value)
+    print(passed_time_value)
+
+    send_message("forty", f"{passed_time_value}/{remained_time_value}")
 
 
 handlers = {
