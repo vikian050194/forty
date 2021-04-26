@@ -11,6 +11,27 @@ Tested on Ubuntu 20.04
 
 To-do list is [here](TODO.md)
 
+## Usage
+
+Rigth now the best way to use it is following one:
+1. Clone repo
+    ```
+    git clone https://github.com/vikian050194/forty.git
+    ```
+2. Install package locally
+    ```
+    pip3 install .
+    ```
+3. Call a generated standalone "shim" script
+    ```
+    forty help
+    ```
+    or just
+    ```
+    forty
+    ```
+
+
 ## Tests
 
 Module for testing is `unittest`

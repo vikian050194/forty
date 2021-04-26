@@ -1,11 +1,11 @@
 from datetime import datetime, timedelta
 from typing import List, Union
 
-from forty.actions import Action, Actions, Commands
-from forty.data import *
-from forty.reducers import *
-from forty.common import Time
-from forty.send_message import send_message
+from .actions import Action, Actions, Commands
+from .data import *
+from .reducers import *
+from .common import to_hms
+from .send_message import send_message
 
 
 def print_option(option: Union[Actions, Commands], hint):
@@ -36,8 +36,8 @@ def on_reset(value):
 
 def on_status(value):
     actions = load_actions()
-    state = get_current_status(actions)
-    print(state.value)
+    status = get_current_status(actions)
+    print(status.value)
 
 
 def on_start(value):
@@ -60,39 +60,51 @@ def on_finish(value):
 
 def on_plus(value):
     actions = load_actions()
-    time = Time(value)
+    time = timedelta(seconds=value)
     if not actions:
         return
     last_action = actions[-1]
-    last_action.timestamp = last_action.timestamp + time.to_timedelta()
+    last_action.timestamp = last_action.timestamp + time
     save_actions(actions)
 
 
 def on_minus(value):
     actions = load_actions()
-    time = Time(value)
+    time = timedelta(seconds=value)
     if not actions:
         return
     last_action = actions[-1]
-    last_action.timestamp = last_action.timestamp - time.to_timedelta()
+    last_action.timestamp = last_action.timestamp - time
     save_actions(actions)
 
 
 def on_get(value):
     config = load_config()
     actions = load_actions()
+
+    status = get_current_status(actions)
+    status_value = status.value if status else "none"
+
+    print(status_value)
+
     if actions and actions[-1].type != Actions.FINISH:
         actions.append(Action(Actions.FINISH))
-    
-    remained_time = get_remained_time(actions, config)
-    remained_time_value = Time.from_seconds(remained_time.value)
-    print(remained_time_value)
-    
-    passed_time = get_passed_time(actions, config)
-    passed_time_value = Time.from_seconds(passed_time.value)
-    print(passed_time_value)
 
-    send_message("forty", f"{passed_time_value}/{remained_time_value}")
+    today_passed_time = get_today_passed_time(actions, config)
+    today_passed_time_value = to_hms(today_passed_time.value)
+    print(today_passed_time_value)
+
+    # today_remained_time = get_today_remained_time(actions, config)
+    # today_remained_time_value = to_hms(today_remained_time.value)
+    today_remained_time = timedelta(hours=config.day) - timedelta(seconds=today_passed_time.value)
+    today_remained_time_value = to_hms(today_remained_time.seconds)
+    print(today_remained_time_value)
+
+    total_remained_time = get_total_remained_time(actions, config)
+    total_remained_time_value = to_hms(total_remained_time.value)
+    print(total_remained_time_value)
+
+    send_message("forty", f"{status_value}:{today_passed_time_value}/{today_remained_time_value}/{total_remained_time_value}")
 
 
 handlers = {

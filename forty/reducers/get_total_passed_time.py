@@ -2,26 +2,25 @@ from datetime import datetime
 
 from forty.common import State, actions_reducer
 from forty.actions import Action, Actions
-from forty.data import load_config
 
 
-class RemainedTimeState(State):
+class PassedTimeState(State):
     def __init__(self, value=None, is_started=False, start_timestamp=None):
         super().__init__(value)
         self.is_started = is_started
         self.start_timestamp = start_timestamp
 
 
-def on_start(state: RemainedTimeState, action: Action):
-    return RemainedTimeState(state.value, True, action.timestamp)
+def on_start(state: PassedTimeState, action: Action):
+    return PassedTimeState(state.value, True, action.timestamp)
 
 
-def on_finish(state: RemainedTimeState, action: Action):
+def on_finish(state: PassedTimeState, action: Action):
     dt = action.timestamp - state.start_timestamp
     dts = dt.seconds
     old_value = state.value
-    new_value = old_value - dts
-    return RemainedTimeState(new_value)
+    new_value = old_value + dts
+    return PassedTimeState(new_value)
 
 
 handlers = {
@@ -30,7 +29,7 @@ handlers = {
 }
 
 
-def get_remained_time_reducer(state, action):
+def get_total_passed_time_reducer(state, action):
     if state is None:
         state = initial_state
 
@@ -40,9 +39,9 @@ def get_remained_time_reducer(state, action):
         return state
 
 
-def get_remained_time(actions, config):
-    initial_state = RemainedTimeState(config.total * config.day * 3600)
-    return actions_reducer(get_remained_time_reducer, actions, initial_state)
+def get_total_passed_time(actions, config):
+    initial_state = PassedTimeState(0)
+    return actions_reducer(get_total_passed_time_reducer, actions, initial_state)
 
 
-__all__ = ["get_remained_time"]
+__all__ = ["get_total_passed_time"]

@@ -1,18 +1,18 @@
 from datetime import datetime
 
-from forty.common import Time, State, actions_reducer
+from forty.common import State, actions_reducer
 from forty.actions import Action, Actions
 
 
-def on_foo(state: State, action: Action):
+def on_action(state: State, action: Action):
     return State(action.type)
 
 
 handlers = {
-    Actions.START: on_foo,
-    Actions.FINISH: on_foo,
-    Actions.PAUSE: on_foo,
-    Actions.RESUME: on_foo
+    Actions.START: on_action,
+    Actions.FINISH: on_action,
+    Actions.PAUSE: on_action,
+    Actions.RESUME: on_action
 }
 
 
@@ -26,7 +26,8 @@ def get_current_status_reducer(state, action):
         return state
 
 
-get_current_status = lambda actions: actions_reducer(get_current_status_reducer, actions)
+def get_current_status(actions):
+    return actions_reducer(get_current_status_reducer, actions)
 
 
 __all__ = ["get_current_status"]

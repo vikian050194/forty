@@ -17,3 +17,11 @@
 - [ ] **get**
 - [ ] **break**
 - [ ] **config**
+
+## Features
+
+- [x] **total passed time**
+- [x] **total remained time**
+- [x] **today passed time**
+- [ ] **today remained time**
+- [ ] **accumulated remained time**
