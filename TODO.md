@@ -1,27 +1,41 @@
 # TODO
 
-## Actions
+- [ ] autocomplete
+- [ ] single version source
 
-- [x] **start**
-- [x] **finish**
-- [ ] **pause**
-- [ ] **resume**
-- [x] **plus**
-- [x] **minus**
+## Actions
+- [x] start
+- [ ] start hh:mm:ss
+- [x] finish
+- [ ] finish hh:mm:ss
+- [ ] plus hh:mm:ss
+- [ ] minus hh:mm:ss
+- [ ] set hh:mm:ss
+- [ ] pause
+- [ ] resume
 
 ## Commands
+- [ ] log
+- [x] get
+- [ ] get state
+- [ ] get day
+- [ ] get total
+- [ ] get passed
+- [ ] get remained
+- [x] project list
+- [x] project get
+- [x] project set
+- [ ] break
+- [ ] break hh:mm:ss
+- [ ] config
 
-- [x] **help**
-- [x] **reset**
-- [x] **status**
-- [ ] **get**
-- [ ] **break**
-- [ ] **config**
+## Configuration
 
-## Features
+### Per project
+- [x] day limit
+- [x] total limit
+- [ ] break
 
-- [x] **total passed time**
-- [x] **total remained time**
-- [x] **today passed time**
-- [ ] **today remained time**
-- [ ] **accumulated remained time**
+### Global
+- [ ] concurrency
+- [ ] notification

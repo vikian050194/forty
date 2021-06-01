@@ -28,6 +28,21 @@
                 "panel": "dedicated",
                 "clear": false
             }
+        },
+        {
+            "label": "Build package",
+            "type": "shell",
+            "group": "build",
+            "command": "pip3 install .",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": false
+            },
+            "problemMatcher": []
         }
     ]
 }

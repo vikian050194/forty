@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from forty.common import State, actions_reducer
-from forty.actions import Action, Actions
+from ..common import State, actions_reducer
+from ..actions import Action, Actions
 
 
 def on_action(state: State, action: Action):
@@ -11,8 +11,6 @@ def on_action(state: State, action: Action):
 handlers = {
     Actions.START: on_action,
     Actions.FINISH: on_action,
-    Actions.PAUSE: on_action,
-    Actions.RESUME: on_action
 }
 
 

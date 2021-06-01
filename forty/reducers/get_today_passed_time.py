@@ -1,9 +1,9 @@
 from datetime import datetime
 from typing import List
 
-from forty.common import State, actions_reducer, to_iso
-from forty.actions import Action, Actions
-from forty.reducers import get_total_passed_time
+from ..common import State, to_iso
+from ..actions import Action
+from . import get_total_passed_time
 
 
 def filter_actions(actions: List[Action], today: str):

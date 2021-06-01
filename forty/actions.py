@@ -8,23 +8,41 @@ from .common import to_iso
 class Actions(str, enum.Enum):
     START = "start"
     FINISH = "finish"
-    PAUSE = "pause"
-    RESUME = "resume"
+    # PAUSE = "pause"
+    # RESUME = "resume"
 
 
 @enum.unique
 class Commands(str, enum.Enum):
     HELP = "help"
-    STATUS = "status"
-    LOG = "log"
-    RESET = "reset"
-    PLUS = "plus"
-    MINUS = "minus"
-    BREAK = "break"
-    CONFIG = "config"
+    PROJECT = "project"
     GET = "get"
+    RESET = "reset"
     UNDO = "undo"
-    REDO = "redo"
+    STATUS = "status"
+    # LOG = "log"
+    # PLUS = "plus"
+    # MINUS = "minus"
+    # BREAK = "break"
+    # CONFIG = "config"
+    # UNDO = "undo"
+    # REDO = "redo"
+
+
+@enum.unique
+class GetOptions(str, enum.Enum):
+    ALL = "all"
+    STATUS = "status"
+    TODAY = "today"
+    TOTAL = "total"
+
+
+@enum.unique
+class ProjectOptions(str, enum.Enum):
+    LIST = "list"
+    NEW = "new"
+    GET = "get"
+    SET = "set"
 
 
 class Action():

@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from forty.common import State, actions_reducer
-from forty.actions import Action, Actions
+from ..common import State, actions_reducer
+from ..actions import Action, Actions
 
 
 class PassedTimeState(State):
@@ -30,9 +30,6 @@ handlers = {
 
 
 def get_total_passed_time_reducer(state, action):
-    if state is None:
-        state = initial_state
-
     if action.type in handlers:
         return handlers[action.type](state, action)
     else:

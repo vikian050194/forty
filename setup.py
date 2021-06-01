@@ -5,8 +5,6 @@ def readme():
     with open('README.md') as f:
         return f.read()
 
-print(find_packages(where='.', exclude='tests**'))
-
 setup(name='forty',
       version='0.1',
       description='Time tracker',
@@ -19,7 +17,7 @@ setup(name='forty',
       ],
       url='https://github.com/vikian050194/forty',
       author='Kirill Vinogradov',
-      author_email='vikian050194@gmail.com.com',
+      author_email='vikian050194@gmail.com',
       license='MIT',
       packages=find_packages(where='.', exclude=['tests*'], include='*'),
       install_requires=[],

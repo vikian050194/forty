@@ -1,5 +1,4 @@
-import enum
-from datetime import datetime, timedelta
+from datetime import datetime
 
 
 def to_iso(value: datetime):
@@ -42,3 +41,22 @@ def from_hms(value: str):
     minutes = int(m) * 60
     seconds = int(s)
     return hours + minutes + seconds
+
+
+def value_decorator(f):
+    def wrap(*args, **kwargs):
+        return f(*args, **kwargs).value
+    return wrap
+
+
+def cut_head(args, default_head_value = None):
+    command = default_head_value
+    options = []
+
+    if len(args) > 0:
+        command = args[0]
+
+    if len(args) > 1:
+        options = args[1:]
+
+    return (command, options)

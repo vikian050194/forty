@@ -5,7 +5,7 @@ from unittest.mock import patch
 from forty.command_line import main
 
 
-class TestConsole(TestCase):
+class TestCommandLine(TestCase):
     def test_basic(self):
         with patch('sys.stdout', new = StringIO()) as output:
             main()
