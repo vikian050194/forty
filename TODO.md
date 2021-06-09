@@ -5,9 +5,9 @@
 
 ## Actions
 - [x] start
-- [ ] start hh:mm:ss
+- [x] start hh:mm:ss
 - [x] finish
-- [ ] finish hh:mm:ss
+- [x] finish hh:mm:ss
 - [ ] plus hh:mm:ss
 - [ ] minus hh:mm:ss
 - [ ] set hh:mm:ss
@@ -17,7 +17,7 @@
 ## Commands
 - [ ] log
 - [x] get
-- [ ] get state
+- [ ] get status
 - [ ] get day
 - [ ] get total
 - [ ] get passed

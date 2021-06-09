@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, time, timedelta
 
 
 def to_iso(value: datetime):
@@ -34,13 +34,41 @@ def to_hms(value: int):
     minutes, seconds = divmod(remainder, 60)
     return f"{sign}{hours:02d}:{minutes:02d}:{seconds:02d}"
 
+def normalize(values):
+    result = [*values]
+    count = len(values)
+    zero = "0"
+    if count == 1:
+        result.append(zero)
+        result.append(zero)
+        return result
+    if count == 2:
+        for i in range(count):
+            if result[i] == "":
+                result[i] = zero
+        result.append(zero)
+        return result
+    if count == 3:
+        for i in range(count):
+            if result[i] == "":
+                result[i] = zero
+        return result
+    raise ValueError()
 
-def from_hms(value: str):
-    [h, m, s] = value.split(':')
+
+def to_int(value: str):
+    [h, m, s] = normalize(value.split(':'))
     hours = int(h) * 3600
     minutes = int(m) * 60
     seconds = int(s)
     return hours + minutes + seconds
+
+
+def to_time(value: str):
+    total_seconds = to_int(value)
+    hours, remainder = divmod(total_seconds, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    return time(hour=hours, minute=minutes, second=seconds)
 
 
 def value_decorator(f):

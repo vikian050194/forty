@@ -1,5 +1,5 @@
 from ..common import State
-from ..project_manager import Config
+from ..managers.project_manager import Config
 
 from . import get_total_passed_time
 

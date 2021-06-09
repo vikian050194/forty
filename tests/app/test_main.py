@@ -1,15 +1,15 @@
 from unittest import TestCase, skip
-from unittest.mock import patch
+from unittest.mock import patch, call
 from tempfile import TemporaryDirectory
 
 from forty import main
 
-
+@skip("e2e")
 @patch("builtins.print")
 class TestMain(TestCase):
     def setUp(self):
         self.temp_dir = TemporaryDirectory()
-        self.home = self.temp_dir.name
+        self.call = lambda options: main(home=self.temp_dir.name, options=options, use_notify=False)
 
     def tearDown(self):
         self.temp_dir.cleanup()
@@ -22,88 +22,89 @@ class TestMain(TestCase):
     def tearDownClass(cls):
         pass
 
-    @skip("test is not ready")
+    @skip("foo")
     def test_foo(self):
         pass
 
-    def test_empty(self, mock_print):
-        main(self.home, [])
-        
-        mock_print.call_args
-        mock_print.call_args_list
-
-    @skip("test is not ready")
+    @skip("ready")
     def test_help(self, mock_print):
-            main(["help"])
+        empty = []
+        invalid = ["not_a_valid_option"]
+        help = ["help"]
+        cases = [empty, invalid, help]
+
+        for case in cases:
+            self.call(case)
+            actual_invocations = len(mock_print.call_args_list)
+            expected_invocations = 6
+            self.assertEqual(actual_invocations, expected_invocations)
+            mock_print.reset_mock()
+
+    @skip("ready")
+    def test_project(self, mock_print):
+        self.call(["project", "get"])
+        mock_print.assert_called_with("")
+        mock_print.reset_mock()
+
+        self.call(["project", "list"])
+        mock_print.assert_not_called()
+        mock_print.reset_mock()
+
+        self.call(["project", "new", "aaa"])
+        self.call(["project", "list"])
+        mock_print.assert_called_with("aaa")
+        mock_print.reset_mock()
+
+        self.call(["project", "new", "bbb"])
+        self.call(["project", "set", "ccc"])
+        mock_print.assert_has_calls([call("aaa"), call("bbb")])
+        mock_print.reset_mock()
+        self.call(["project", "get"])
+        mock_print.assert_called_with("bbb")
+        mock_print.reset_mock()
+
+        self.call(["project", "set", "aaa"])
+        self.call(["project", "get"])
+        mock_print.assert_called_with("aaa")
+        mock_print.reset_mock()
 
     @skip("test is not ready")
-    def test_invalid_option(self, mock_print):
-            main(["not_a_valid_option"])
+    def test_no_project(self, mock_print):
+        self.call(["start"])
+        mock_print.assert_called_with("error: create")
+        mock_print.reset_mock()
 
-    @skip("test is not ready")
-    def test_project_list(self, mock_print):
-            main(["project", "list"])
+        self.call(["finish"])
 
-    @skip("test is not ready")
-    def test_project_get(self, mock_print):
-            main(["project", "get"])
+    @skip("test will be updated")
+    def test_get(self, mock_print):
+        self.call(["project", "new", "aaa"])
+        mock_print.assert_called_with("aaa")
+        mock_print.reset_mock()
 
-    @skip("test is not ready")
-    def test_project_set(self, mock_print):
-            main(["project", "set", "test_project_1"])
+        self.call(["get"])
+        mock_print.assert_called_with("aaa/noned/00:00:00/00:00:00")
+        mock_print.reset_mock()
 
-    @skip("test is not ready")
-    def test_project_new(self, mock_print):
-        main(["project", "new", "test_project_new"])
+        # self.call(["get", "status"])
+        
+        self.call(["start", "12:34:56"])
+        # self.call(["get", "status"])
+        # mock_print.assert_called_with("started")
 
-    @skip("test is not ready")
-    def test_start_work(self, mock_print):
-            main(["start"])
+        self.call(["finish", "13:00:00"])
+        # self.call(["get", "status"])
+        # mock_print.assert_called_with("started")
 
-    @skip("test is not ready")
-    def test_finish_work(self, mock_print):
-            main(["finish"])
+        self.call(["get"])
+        mock_print.assert_called_with("aaa/finished/00:25:04/00:25:04")
+        mock_print.reset_mock()
 
-    @skip("test is not ready")
-    def test_get_all_available_data(self, mock_print):
-            main(["get", "status"])
-
-    @skip("test is not ready")
-    def test_get_today_data(self, mock_print):
-            # few cases are required?
-            main(["get", "today"])
-
-    @skip("test is not ready")
-    def test_get_total_data(self, mock_print):
-            # few cases are required?
-            main(["get", "total"])
-
-    @skip("test is not ready")
-    def test_get_passed_data(self, mock_print):
-            # few cases are required?
-            main(["get", "passed"])
-
-    @skip("test is not ready")
-    def test_get_passed_data(self, mock_print):
-            # few cases are required?
-            main(["get", "remained"])
-
-    @skip("test is not ready")
-    def test_get_today_passed_data(self, mock_print):
-            # few cases are required?
-            main(["get", "today", "passed"])
-
-    @skip("test is not ready")
-    def test_get_today_remained_data(self, mock_print):
-            # few cases are required?
-            main(["get", "today", "remained"])
-
-    @skip("test is not ready")
-    def test_get_total_passed_data(self, mock_print):
-            # few cases are required?
-            main(["get", "total", "passed"])
-
-    @skip("test is not ready")
-    def test_get_total_remained_data(self, mock_print):
-            # few cases are required?
-            main(["get", "total", "remained"])
+        # self.call(["get", "today"])
+        # self.call(["get", "total"])
+        # self.call(["get", "passed"])
+        # self.call(["get", "remained"])
+        # self.call(["get", "today", "passed"])
+        # self.call(["get", "today", "remained"])
+        # self.call(["get", "total", "passed"])
+        # self.call(["get", "total", "remained"])

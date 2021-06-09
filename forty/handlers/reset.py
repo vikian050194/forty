@@ -1,10 +1,10 @@
 from typing import List
 
-from .base import BaseHandler
+from .base import AbstractHandler
 from ..actions import Commands
 
 
-class ResetHandler(BaseHandler):
+class ResetHandler(AbstractHandler):
     @property
     def key(self):
         return Commands.RESET

@@ -2,12 +2,14 @@ import abc
 from typing import List, Union
 
 from ..actions import Commands, Actions
-from ..project_manager import ProjectManager
+from ..managers import ProjectManager, OutputManager, TimeManager
 
 
-class BaseHandler(abc.ABC):
-    def __init__(self, pm: ProjectManager):
+class AbstractHandler(abc.ABC):
+    def __init__(self, pm: ProjectManager, om: OutputManager, tm: TimeManager):
         self.pm = pm
+        self.om = om
+        self.tm = tm
 
     @property
     @abc.abstractmethod
@@ -19,4 +21,4 @@ class BaseHandler(abc.ABC):
         raise NotImplementedError()
 
 
-__all__ = ["BaseHandler"]
+__all__ = ["AbstractHandler"]

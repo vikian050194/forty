@@ -10,7 +10,7 @@ from .reset import *
 from .undo import *
 
 
-handlers: List[BaseHandler] = [
+handlers: List[AbstractHandler] = [
     HelpHandler,
     GetHandler,
     ProjectHandler,

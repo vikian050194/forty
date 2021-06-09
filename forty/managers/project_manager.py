@@ -1,10 +1,11 @@
 import os
+import abc
 import json
 from datetime import datetime
-from pathlib import Path
+from typing import List
 
-from .actions import Action
-from .common import to_ymd
+from ..actions import Action
+from ..common import to_ymd
 
 
 def to_action(data):
@@ -27,7 +28,49 @@ class Config():
         )
 
 
-class ProjectManager():
+class AbstractProjectManager(abc.ABC):
+    @abc.abstractmethod
+    def get_projects_list(self) -> List[str]:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def is_project_selected(self) -> bool:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def select_project(self, project_name: str) -> str:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def load_project(self) -> str:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def save_project(self) -> str:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def load_config(self) -> Config:
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def save_config(self, config: Config):
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def load_actions(self):
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def save_actions(self, actions):
+        raise NotImplementedError()
+
+    @abc.abstractmethod
+    def initialize_new_project(self, project_name: str):
+        raise NotImplementedError()
+
+
+class ProjectManager(AbstractProjectManager):
     def __init__(self, home: str = None):
         self.home = home
         self.dir = f"{self.home}/.forty"
@@ -49,21 +92,22 @@ class ProjectManager():
     def __get_actions_file(self):
         return f"{self.__get_project_dir()}/actions.json"
 
-    def get_projects_list(self):
+    def get_projects_list(self) -> List[str]:
         return [f for f in os.listdir(self.dir) if os.path.isdir(os.path.join(self.dir, f))]
 
-    def is_project_selected(self):
+    def is_project_selected(self) -> bool:
         return self.project != ""
 
-    def select_project(self, project_name: str):
+    def select_project(self, project_name: str) -> str:
         self.project = project_name
+        return self.project
 
-    def load_project(self):
+    def load_project(self) -> str:
         with open(self.file_project, "r") as fr:
             self.project = fr.readline()
             return self.project
 
-    def save_project(self):
+    def save_project(self) -> str:
         with open(self.file_project, "w") as fw:
             fw.write(self.project)
             return self.project

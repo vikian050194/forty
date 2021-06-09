@@ -1,10 +1,10 @@
 from typing import List
 
-from .base import BaseHandler
+from .base import AbstractHandler
 from ..actions import Commands
 
 
-class UndoHandler(BaseHandler):
+class UndoHandler(AbstractHandler):
     @property
     def key(self):
         return Commands.UNDO

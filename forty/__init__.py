@@ -2,14 +2,17 @@ from typing import List
 
 from .actions import Commands
 from .handlers import handlers
-from .project_manager import ProjectManager
+from .managers import ProjectManager, OutputManager, TimeManager
 
 
-def main(home: str, options: List[str]):
+def main(home: str, options: List[str], **kwargs):
     pm = ProjectManager(home=home)
+    om = OutputManager(**kwargs)
+    tm = TimeManager()
+
     hh = {}
     for h in handlers:
-        hi = h(pm)
+        hi = h(pm=pm, om=om, tm=tm)
         hh[hi.key] = hi.handle
 
     command = Commands.HELP

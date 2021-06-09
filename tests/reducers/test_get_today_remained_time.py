@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from forty.actions import Action, Actions
 from forty.common import from_iso, value_decorator
-from forty.project_manager import Config
+from forty.managers.project_manager import Config
 from forty.reducers import get_today_remained_time
 
 

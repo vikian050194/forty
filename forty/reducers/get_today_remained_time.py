@@ -3,7 +3,7 @@ from typing import List
 
 from ..common import State
 from ..actions import Action
-from ..project_manager import Config
+from ..managers.project_manager import Config
 from . import get_today_passed_time
 
 

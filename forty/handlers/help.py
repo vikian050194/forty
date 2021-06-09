@@ -1,6 +1,6 @@
 from typing import Union, List
 
-from .base import BaseHandler
+from .base import AbstractHandler
 from ..actions import Commands, Actions
 
 
@@ -8,14 +8,14 @@ def print_option(option: Union[Actions, Commands], hint):
     print(f"{option.value}\t{hint}")
 
 
-class HelpHandler(BaseHandler):
+class HelpHandler(AbstractHandler):
     @property
     def key(self):
         return Commands.HELP
 
     def handle(self, options: List[str]):
         print("forty", "v0.1.0")
-
+        # TODO use OutputManager
         print_option(Commands.HELP, "get help")
         print_option(Commands.PROJECT, "TBD")
         print_option(Commands.GET, "TBD")

@@ -1,29 +1,35 @@
 from typing import List
 
-from .base import BaseHandler
+from .base import AbstractHandler
 from ..actions import Commands, ProjectOptions
 
 
-def on_get(pm, options):
-    current_project = pm.load_project()
-    print(current_project)
+def on_get(pm, om, options):
+    project = pm.load_project()
+    om.emmit(message=project)
 
 
-def on_list(pm, options):
+def on_list(pm, om, options):
     projects_list = pm.get_projects_list()
-    for project in projects_list:
-        print(project)
+    for project in sorted(projects_list):
+        om.emmit(project, use_notify=False)
 
 
-def on_new(pm, options):
+def on_new(pm, om, options):
     [name] = options
     pm.initialize_new_project(name)
+    om.emmit(name)
 
 
-def on_set(pm, options):
+def on_set(pm, om, options):
     [name] = options
-    pm.select_project(name)
-    pm.save_project()
+    projects_list = pm.get_projects_list()
+    if name in projects_list:
+        pm.select_project(name)
+        pm.save_project()
+        om.emmit(name)
+        return
+    on_list(pm, om, [])
 
 
 handlers = {
@@ -34,7 +40,7 @@ handlers = {
 }
 
 
-class ProjectHandler(BaseHandler):
+class ProjectHandler(AbstractHandler):
     @property
     def key(self):
         return Commands.PROJECT
@@ -50,9 +56,7 @@ class ProjectHandler(BaseHandler):
             args = options[1:]
 
         if command in handlers:
-            return handlers[command](self.pm, args)
-        else:
-            return False
+            handlers[command](self.pm, self.om, args)
 
 
 __all__ = ["ProjectHandler"]

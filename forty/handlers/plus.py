@@ -1,4 +1,4 @@
-class HelpHandler(BaseHandler):
+class HelpHandler(AbstractHandler):
     @property
     def key(self):
         return Commands.HELP

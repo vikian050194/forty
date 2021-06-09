@@ -46,7 +46,7 @@ class ProjectOptions(str, enum.Enum):
 
 
 class Action():
-    def __init__(self, type: Actions, timestamp: datetime = datetime.now(), value: str = None):
+    def __init__(self, type: Actions, timestamp: datetime, value: str = None):
         self.type = type
         self.value = value
         self.timestamp = timestamp

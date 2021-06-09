@@ -1,22 +1,28 @@
 from typing import List
 
-from .base import BaseHandler
-from ..actions import Action, Actions, Commands
+from .base import AbstractHandler
+from ..actions import Action, Actions
+from ..common import to_time
 
 
-class StartHandler(BaseHandler):
+class StartHandler(AbstractHandler):
     @property
     def key(self):
         return Actions.START
 
     def handle(self, options: List[str]):
-        self.pm.load_project()
+        project = self.pm.load_project()
         actions = self.pm.load_actions()
         if actions and actions[-1].type == Actions.START:
             return
-        new_action = Action(Actions.START)
+        timestamp = self.tm.get_datetime()
+        if options:
+            new_time = to_time(options[0])
+            timestamp = self.tm.merge_time(new_time)
+        new_action = Action(type=Actions.START, timestamp=timestamp)
         actions.append(new_action)
         self.pm.save_actions(actions)
+        self.om.emmit(new_action)
 
 
 __all__ = ["StartHandler"]

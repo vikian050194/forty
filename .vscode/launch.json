@@ -24,7 +24,9 @@
             "program": "app.py",
             "console": "integratedTerminal",
             "args": [
-            ]
+            ],
+            "env": {
+            }
         }
     ]
 }
