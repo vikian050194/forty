@@ -12,6 +12,7 @@ class ResetHandler(AbstractHandler):
     def handle(self, options: List[str]):
         self.pm.load_project()
         self.pm.save_actions([])
+        self.om.emmit("all actions are deleted")
 
 
 __all__ = ["ResetHandler"]

@@ -6,7 +6,7 @@ from ..actions import Commands, ProjectOptions
 
 def on_get(pm, om, options):
     project = pm.load_project()
-    om.emmit(message=project)
+    om.emmit(project, use_notify=False)
 
 
 def on_list(pm, om, options):
@@ -18,7 +18,7 @@ def on_list(pm, om, options):
 def on_new(pm, om, options):
     [name] = options
     pm.initialize_new_project(name)
-    om.emmit(name)
+    om.emmit(name, use_notify=False)
 
 
 def on_set(pm, om, options):
@@ -27,7 +27,7 @@ def on_set(pm, om, options):
     if name in projects_list:
         pm.select_project(name)
         pm.save_project()
-        om.emmit(name)
+        om.emmit(name, use_notify=False)
         return
     on_list(pm, om, [])
 

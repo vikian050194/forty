@@ -1,10 +1,10 @@
-from typing import Union, List
+from typing import List
 
 from .base import AbstractHandler
-from ..actions import Commands, Actions
+from ..actions import Commands, Actions, ActionType
 
 
-def print_option(option: Union[Actions, Commands], hint):
+def print_option(option: ActionType, hint):
     print(f"{option.value}\t{hint}")
 
 

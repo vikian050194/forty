@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from ..common import State, actions_reducer, to_ymd
 from ..actions import Action, Actions
 

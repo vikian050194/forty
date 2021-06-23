@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from ..common import State, actions_reducer
 from ..actions import Action, Actions
 
@@ -17,7 +15,7 @@ def on_start(state: PassedTimeState, action: Action):
 
 def on_finish(state: PassedTimeState, action: Action):
     dt = action.timestamp - state.start_timestamp
-    dts = dt.seconds
+    dts = dt.seconds + 24 * 60 * 60 * dt.days
     old_value = state.value
     new_value = old_value + dts
     return PassedTimeState(new_value)

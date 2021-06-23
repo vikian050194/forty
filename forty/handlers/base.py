@@ -1,7 +1,7 @@
 import abc
-from typing import List, Union
+from typing import List
 
-from ..actions import Commands, Actions
+from ..actions import ActionType
 from ..managers import ProjectManager, OutputManager, TimeManager
 
 
@@ -13,7 +13,7 @@ class AbstractHandler(abc.ABC):
 
     @property
     @abc.abstractmethod
-    def key(self) -> Union[Actions, Commands]:
+    def key(self) -> ActionType:
         raise NotImplementedError()
 
     @abc.abstractmethod

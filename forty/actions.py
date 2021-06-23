@@ -1,5 +1,6 @@
 import enum
 from datetime import datetime
+from typing import Union
 
 from .common import to_iso
 
@@ -19,7 +20,6 @@ class Commands(str, enum.Enum):
     GET = "get"
     RESET = "reset"
     UNDO = "undo"
-    STATUS = "status"
     # LOG = "log"
     # PLUS = "plus"
     # MINUS = "minus"
@@ -29,12 +29,17 @@ class Commands(str, enum.Enum):
     # REDO = "redo"
 
 
+ActionType = Union[Actions, Commands]
+
+
 @enum.unique
 class GetOptions(str, enum.Enum):
     ALL = "all"
     STATUS = "status"
     TODAY = "today"
     TOTAL = "total"
+    PASSED = "passed"
+    REMAINED = "remained"
 
 
 @enum.unique
@@ -50,6 +55,14 @@ class Action():
         self.type = type
         self.value = value
         self.timestamp = timestamp
+
+    def __str__(self):
+        return f"{self.type}/{to_iso(self.timestamp)}"
+
+    def __eq__(self, other): 
+        if not isinstance(other, Action):
+            return NotImplementedError()
+        return self.type == other.type and self.timestamp == other.timestamp and self.value == other.value
 
     def to_dict(self):
         return dict(type=self.type, timestamp=to_iso(self.timestamp), value=self.value)

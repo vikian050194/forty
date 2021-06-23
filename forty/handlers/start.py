@@ -14,6 +14,7 @@ class StartHandler(AbstractHandler):
         project = self.pm.load_project()
         actions = self.pm.load_actions()
         if actions and actions[-1].type == Actions.START:
+            self.om.emmit("already started")
             return
         timestamp = self.tm.get_datetime()
         if options:
@@ -22,7 +23,7 @@ class StartHandler(AbstractHandler):
         new_action = Action(type=Actions.START, timestamp=timestamp)
         actions.append(new_action)
         self.pm.save_actions(actions)
-        self.om.emmit(new_action)
+        self.om.emmit(str(new_action))
 
 
 __all__ = ["StartHandler"]

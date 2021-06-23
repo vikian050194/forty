@@ -14,6 +14,7 @@ class FinishHandler(AbstractHandler):
         project = self.pm.load_project()
         actions = self.pm.load_actions()
         if actions and actions[-1].type == Actions.FINISH:
+            self.om.emmit("already finished")
             return
         timestamp = self.tm.get_datetime()
         if options:
@@ -22,7 +23,7 @@ class FinishHandler(AbstractHandler):
         new_action = Action(type=Actions.FINISH, timestamp=timestamp)
         actions.append(new_action)
         self.pm.save_actions(actions)
-        self.om.emmit(new_action)
+        self.om.emmit(str(new_action))
 
 
 __all__ = ["FinishHandler"]

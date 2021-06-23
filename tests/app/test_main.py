@@ -4,12 +4,12 @@ from tempfile import TemporaryDirectory
 
 from forty import main
 
-@skip("e2e")
+# @skip("e2e")
 @patch("builtins.print")
 class TestMain(TestCase):
     def setUp(self):
         self.temp_dir = TemporaryDirectory()
-        self.call = lambda options: main(home=self.temp_dir.name, options=options, use_notify=False)
+        self.call = lambda options: main(home=self.temp_dir.name, options=options)
 
     def tearDown(self):
         self.temp_dir.cleanup()
@@ -26,7 +26,7 @@ class TestMain(TestCase):
     def test_foo(self):
         pass
 
-    @skip("ready")
+    # @skip("ready")
     def test_help(self, mock_print):
         empty = []
         invalid = ["not_a_valid_option"]
@@ -40,7 +40,7 @@ class TestMain(TestCase):
             self.assertEqual(actual_invocations, expected_invocations)
             mock_print.reset_mock()
 
-    @skip("ready")
+    # @skip("ready")
     def test_project(self, mock_print):
         self.call(["project", "get"])
         mock_print.assert_called_with("")
@@ -76,7 +76,7 @@ class TestMain(TestCase):
 
         self.call(["finish"])
 
-    @skip("test will be updated")
+    # @skip("ready")
     def test_get(self, mock_print):
         self.call(["project", "new", "aaa"])
         mock_print.assert_called_with("aaa")
@@ -86,25 +86,36 @@ class TestMain(TestCase):
         mock_print.assert_called_with("aaa/noned/00:00:00/00:00:00")
         mock_print.reset_mock()
 
-        # self.call(["get", "status"])
+        self.call(["get", "status"])
+        mock_print.assert_called_with("aaa/noned")
+        mock_print.reset_mock()
         
         self.call(["start", "12:34:56"])
-        # self.call(["get", "status"])
-        # mock_print.assert_called_with("started")
+        self.call(["get", "status"])
+        mock_print.assert_called_with("aaa/started")
+        mock_print.reset_mock()
 
         self.call(["finish", "13:00:00"])
-        # self.call(["get", "status"])
-        # mock_print.assert_called_with("started")
+        self.call(["get", "status"])
+        mock_print.assert_called_with("aaa/finished")
+        mock_print.reset_mock()
 
         self.call(["get"])
         mock_print.assert_called_with("aaa/finished/00:25:04/00:25:04")
         mock_print.reset_mock()
 
-        # self.call(["get", "today"])
-        # self.call(["get", "total"])
-        # self.call(["get", "passed"])
-        # self.call(["get", "remained"])
-        # self.call(["get", "today", "passed"])
-        # self.call(["get", "today", "remained"])
-        # self.call(["get", "total", "passed"])
-        # self.call(["get", "total", "remained"])
+        self.call(["get", "today"])
+        mock_print.assert_called_with("aaa/finished/00:25:04")
+        mock_print.reset_mock()
+
+        self.call(["get", "total"])
+        mock_print.assert_called_with("aaa/finished/00:25:04")
+        mock_print.reset_mock()
+
+        self.call(["get", "passed"])
+        mock_print.assert_called_with("aaa/finished/00:25:04/00:25:04")
+        mock_print.reset_mock()
+
+        self.call(["get", "remained"])
+        mock_print.assert_called_with("aaa/finished")
+        mock_print.reset_mock()

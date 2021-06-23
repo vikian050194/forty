@@ -9,4 +9,4 @@ class TestCommandLine(TestCase):
     def test_basic(self):
         with patch('sys.stdout', new = StringIO()) as output:
             main()
-            self.assertNotEqual(output.getvalue(), '')
+            self.assertFalse("Traceback" in output.getvalue())

@@ -19,7 +19,7 @@ class Config():
     def __init__(self, day_limit: int = None, total_limit: int = None):
         self.day_limit = day_limit
         self.total_limit = total_limit
-        self.type = type
+        self.today = None
     
     def to_dict(self):
         return dict(
@@ -158,3 +158,6 @@ class ProjectManager(AbstractProjectManager):
         
         default_config = Config(day_limit = None, total_limit = None)
         self.save_config(default_config)
+
+
+__all__ = ["ProjectManager"]

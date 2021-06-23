@@ -17,11 +17,11 @@
 ## Commands
 - [ ] log
 - [x] get
-- [ ] get status
-- [ ] get day
-- [ ] get total
-- [ ] get passed
-- [ ] get remained
+- [x] get status
+- [x] get today
+- [x] get total
+- [x] get passed
+- [x] get remained
 - [x] project list
 - [x] project get
 - [x] project set
@@ -31,10 +31,11 @@
 
 ## Configuration
 
-### Per project
+### Project
 - [x] day limit
 - [x] total limit
 - [ ] break
+- [ ] notification
 
 ### Global
 - [ ] concurrency

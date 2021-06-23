@@ -13,7 +13,15 @@ class UndoHandler(AbstractHandler):
         self.pm.load_project()
         actions = self.pm.load_actions()
         if actions:
-            self.pm.save_actions(actions[:-1])
+            count = 1
+            message = "last 1 action is deleted"
+            if options:
+                count = int(options[0])
+                message = f"last {count} actions are deleted"
+            count = 0 - count
+            self.pm.save_actions(actions[:count])
+            self.om.emmit(message)
+
 
 
 __all__ = ["UndoHandler"]

@@ -28,12 +28,12 @@ def send_message(body: str, expire_time: int = 10):
 
 class AbstractOutputManager(abc.ABC):
     @abc.abstractmethod
-    def emmit(self,  message: str, use_print: bool = True, use_notify: bool = True):
+    def emmit(self,  message: str, use_print: bool = True, use_notify: bool = False):
         raise NotImplementedError()
 
 
 class OutputManager():
-    def __init__(self, use_print: bool = True, use_notify: bool = True):
+    def __init__(self, use_print: bool = True, use_notify: bool = False):
         self.use_print = use_print
         self.use_notify = use_notify
 
@@ -43,10 +43,10 @@ class OutputManager():
     def __print(self, message):
         return print(message)
 
-    def emmit(self,  message: str, use_print: bool = True, use_notify: bool = True):
-        if self.use_print and use_print:
+    def emmit(self,  message: str, use_print: bool = True, use_notify: bool = False):
+        if self.use_print or use_print:
             self.__print(message)
-        if self.use_notify and use_notify:
+        if self.use_notify or use_notify:
             self.__notify(message)
 
 
