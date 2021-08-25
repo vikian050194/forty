@@ -25,6 +25,10 @@
 - [x] project list
 - [x] project get
 - [x] project set
+- [x] undo
+- [x] undo n
+- [ ] redo
+- [ ] redo n
 - [ ] break
 - [ ] break hh:mm:ss
 - [ ] config
@@ -39,4 +43,5 @@
 
 ### Global
 - [ ] concurrency
+- [ ] break
 - [ ] notification

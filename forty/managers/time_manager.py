@@ -38,7 +38,7 @@ class TimeManager(AbstractTimeManager):
         return self.get_datetime().date()
 
     def get_datetime(self) -> datetime:
-        return datetime.now(tz=self.timezone)
+        return datetime.now(tz=self.timezone).replace(microsecond=0)
 
     def merge_time(self, time: time) -> datetime:
         now = self.get_datetime()

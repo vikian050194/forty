@@ -3,13 +3,18 @@ from unittest.mock import patch, call
 from tempfile import TemporaryDirectory
 
 from forty import main
+from forty.configuration import Configuration, OutputFlagValues
+
 
 # @skip("e2e")
 @patch("builtins.print")
 class TestMain(TestCase):
     def setUp(self):
         self.temp_dir = TemporaryDirectory()
-        self.call = lambda options: main(home=self.temp_dir.name, options=options)
+        home=self.temp_dir.name
+        output=OutputFlagValues.HUMAN
+        configuration = Configuration(home=home, output=output)
+        self.call = lambda options: main(options=options, configuration=configuration)
 
     def tearDown(self):
         self.temp_dir.cleanup()
@@ -23,7 +28,7 @@ class TestMain(TestCase):
         pass
 
     @skip("foo")
-    def test_foo(self):
+    def test_model(self):
         pass
 
     # @skip("ready")
@@ -83,11 +88,11 @@ class TestMain(TestCase):
         mock_print.reset_mock()
 
         self.call(["get"])
-        mock_print.assert_called_with("aaa/noned/00:00:00/00:00:00")
+        mock_print.assert_called_with("aaa/none/00:00:00/00:00:00")
         mock_print.reset_mock()
 
         self.call(["get", "status"])
-        mock_print.assert_called_with("aaa/noned")
+        mock_print.assert_called_with("aaa/none")
         mock_print.reset_mock()
         
         self.call(["start", "12:34:56"])

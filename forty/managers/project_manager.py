@@ -6,6 +6,7 @@ from typing import List
 
 from ..actions import Action
 from ..common import to_ymd
+from ..configuration import Configuration
 
 
 def to_action(data):
@@ -71,8 +72,8 @@ class AbstractProjectManager(abc.ABC):
 
 
 class ProjectManager(AbstractProjectManager):
-    def __init__(self, home: str = None):
-        self.home = home
+    def __init__(self, configuration: Configuration):
+        self.home = configuration.home
         self.dir = f"{self.home}/.forty"
         self.project = ""
         self.file_project = f"{self.dir}/PROJECT"

@@ -21,15 +21,15 @@ def on_finish(state: PassedTimeState, action: Action):
     return PassedTimeState(new_value)
 
 
-handlers = {
+controllers = {
     Actions.START: on_start,
     Actions.FINISH: on_finish
 }
 
 
 def get_total_passed_time_reducer(state, action):
-    if action.type in handlers:
-        return handlers[action.type](state, action)
+    if action.type in controllers:
+        return controllers[action.type](state, action)
     else:
         return state
 

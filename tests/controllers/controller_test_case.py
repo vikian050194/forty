@@ -3,13 +3,11 @@ from unittest.mock import create_autospec, Mock, MagicMock
 
 from datetime import datetime
 
-from forty.common import from_iso
 from forty.managers.project_manager import AbstractProjectManager, Config, ProjectManager
-from forty.managers.output_manager import AbstractOutputManager, OutputManager
 from forty.managers.time_manager import AbstractTimeManager, TimeManager
 
 
-class HandlerTestCase(TestCase):
+class ControllerTestCase(TestCase):
     def __init__(self, *args, **kwargs):
         TestCase.__init__(self, *args, **kwargs)
 
@@ -17,16 +15,12 @@ class HandlerTestCase(TestCase):
         # pm: AbstractProjectManager = Mock(spec=ProjectManager, spec_set=True)
         # pm: AbstractProjectManager = MagicMock(spec=ProjectManager, spec_set=True)
 
-        self.om: AbstractOutputManager = create_autospec(spec=OutputManager, spec_set=True, instance=True)
-        # om: AbstractOutputManager = Mock(spec=OutputManager, spec_set=True)
-        # om: AbstractOutputManager = MagicMock(spec=OutputManager, spec_set=True)
-
         self.tm: AbstractTimeManager = create_autospec(spec=TimeManager, spec_set=True, instance=True)
         # tm: AbstractTimeManager = Mock(spec=TimeManager, spec_set=True)
         # tm: AbstractTimeManager = MagicMock(spec=TimeManager, spec_set=True)
 
-        handler = self.handler_class(pm=self.pm, om=self.om, tm=self.tm)
-        self.handle = handler.handle
+        controller = self.controller_class(pm=self.pm, tm=self.tm)
+        self.handle = controller.handle
 
     def setUp(self):
         self.pm.reset_mock()
@@ -36,8 +30,6 @@ class HandlerTestCase(TestCase):
         config.today = "2021-01-01"
         self.pm.load_config = Mock(return_value=config)
     
-        self.om.reset_mock()
-
         self.tm.reset_mock()
         timestamp_now: datetime = create_autospec(spec=datetime, spec_set=True, instance=True)
         timestamp_now.isoformat = Mock(return_value="test_time_now")
@@ -50,11 +42,14 @@ class HandlerTestCase(TestCase):
         pass
 
     @property
-    def handler_class(self):
+    def controller_class(self):
         raise NotImplementedError()
 
     def project_to_return(self, project):
         self.pm.load_project = Mock(return_value=project)
+
+    def projects_to_return(self, projects):
+        self.pm.get_projects_list = Mock(return_value=projects)
 
     def config_to_return(self, config):
         self.pm.load_config = Mock(return_value=config)
@@ -67,4 +62,4 @@ class HandlerTestCase(TestCase):
         self.tm.get_datetime = Mock(return_value=now)
 
 
-__all__ = ["HandlerTestCase"]
+__all__ = ["ControllerTestCase"]

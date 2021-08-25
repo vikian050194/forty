@@ -6,7 +6,7 @@ def on_action(state: State, action: Action):
     return State(action.type)
 
 
-handlers = {
+controllers = {
     Actions.START: on_action,
     Actions.FINISH: on_action,
 }
@@ -16,8 +16,8 @@ def get_current_status_reducer(state, action):
     if state is None:
         state = State()
 
-    if action.type in handlers:
-        return handlers[action.type](state, action)
+    if action.type in controllers:
+        return controllers[action.type](state, action)
     else:
         return state
 

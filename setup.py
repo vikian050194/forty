@@ -1,31 +1,89 @@
+import os
+import shutil
+
 from setuptools import setup, find_packages
+from setuptools.command.develop import develop
+from setuptools.command.install import install
+from pathlib import Path
+
+
+BASH_COMPLETION_FILE = ".bash_completion"
+FORTY_COMPLETION_FILE = "forty_completion"
+COMPLETION_DIR = ".bash_completion.d"
+HOME_DIR = Path.home().as_posix()
+
+TARGET_COMPLETION_DIR = f"{HOME_DIR}/{COMPLETION_DIR}"
+TARGET_BASH_COMPLETION_FILE = f"{HOME_DIR}/{BASH_COMPLETION_FILE}"
+TARGET_FORTY_COMPLETION_FILE = f"{TARGET_COMPLETION_DIR}/{FORTY_COMPLETION_FILE}"
+
+SOURCE_DIR = "forty/completion"
+SOURCE_BASH_COMPLETION_FILE = f"{SOURCE_DIR}/{BASH_COMPLETION_FILE}"
+SOURCE_FORTY_COMPLETION_FILE = f"{SOURCE_DIR}/{FORTY_COMPLETION_FILE}"
+
+
+class PostDevelopCommand(develop):
+    def run(self):
+        develop.run(self)
+
+
+class PostInstallCommand(install):
+    def run(self):
+        self._copy_files()
+        install.run(self)
+
+    def _copy_files(self):
+        if os.geteuid() == 0:
+            raise RuntimeError("Install should be as a non-privileged user")
+
+        if not os.access(SOURCE_DIR, os.R_OK):
+            raise IOError("%s not readable from achive" % SOURCE_DIR)
+
+        if not os.access(TARGET_COMPLETION_DIR, os.W_OK):
+            raise IOError("%s not writeable by user" % TARGET_COMPLETION_DIR)
+
+        # if not os.path.exists(TARGET_BASH_COMPLETION_FILE):
+        shutil.copyfile(src=SOURCE_BASH_COMPLETION_FILE, dst=TARGET_BASH_COMPLETION_FILE)
+
+        if not os.path.exists(TARGET_COMPLETION_DIR):
+            os.makedirs(TARGET_COMPLETION_DIR)
+
+        # if not os.path.exists(TARGET_FORTY_COMPLETION_FILE):
+        shutil.copyfile(src=SOURCE_FORTY_COMPLETION_FILE, dst=TARGET_FORTY_COMPLETION_FILE)
 
 
 def readme():
-    with open('README.md') as f:
+    with open("README.md") as f:
         return f.read()
 
-setup(name='forty',
-      version='0.1',
-      description='Time tracker',
-      long_description=readme(),
-      classifiers=[
-        'Development Status :: 3 - Alpha',
-        'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 3.8',
-        'Topic :: Utilities'
-      ],
-      url='https://github.com/vikian050194/forty',
-      author='Kirill Vinogradov',
-      author_email='vikian050194@gmail.com',
-      license='MIT',
-      packages=find_packages(where='.', exclude=['tests*'], include='*'),
-      install_requires=[],
-      test_suite='nose.collector',
-      tests_require=['nose'],
-      # scripts=['bin/forty'],
-      entry_points = {
-        'console_scripts': ['forty=forty.command_line:main'],
-      },
-      include_package_data=True,
-      zip_safe=False)
+
+attrs = dict(
+    name="forty",
+    version="0.1",
+    description="Time tracker",
+    long_description=readme(),
+    classifiers=[
+        "Development Status :: 3 - Alpha",
+        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python :: 3.8",
+        "Topic :: Utilities"
+    ],
+    url="https://github.com/vikian050194/forty",
+    author="Kirill Vinogradov",
+    author_email="vikian050194@gmail.com",
+    license="MIT",
+    packages=find_packages(where=".", exclude=["tests*"], include="*"),
+    install_requires=[],
+    test_suite="nose.collector",
+    tests_require=["nose"],
+    cmdclass={
+        "develop": PostDevelopCommand,
+        "install": PostInstallCommand,
+    },
+    entry_points = {
+        "console_scripts": ["forty=forty.command_line:main"],
+    },
+    include_package_data=True,
+    zip_safe=False
+)
+
+setup(**attrs)

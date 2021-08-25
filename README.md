@@ -30,6 +30,8 @@ Rigth now the best way to install **forty** is following one:
     git clone https://github.com/vikian050194/forty.git
     ```
 2. Install the package locally
+
+   Privileged user is required because bash completion file will be copied to `etc` directory
     ```
     pip3 install .
     ```

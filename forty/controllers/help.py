@@ -1,6 +1,6 @@
 from typing import List
 
-from .base import AbstractHandler
+from .base import AbstractController
 from ..actions import Commands, Actions, ActionType
 
 
@@ -8,7 +8,7 @@ def print_option(option: ActionType, hint):
     print(f"{option.value}\t{hint}")
 
 
-class HelpHandler(AbstractHandler):
+class HelpController(AbstractController):
     @property
     def key(self):
         return Commands.HELP
@@ -32,4 +32,4 @@ class HelpHandler(AbstractHandler):
         # print_option(Actions.RESUME, "resume work")
 
 
-__all__ = ["HelpHandler"]
+__all__ = ["HelpController"]

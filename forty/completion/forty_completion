@@ -1,0 +1,114 @@
+#/usr/bin/env bash
+
+DEBUG=0
+FORTY_OUTPUT="plain"
+
+function _forty_get_completions()
+{
+  local getValuePattern=$1
+  local getValueOptions="all status today total passed remained"
+  local getValueSuggestions=($(compgen -W "$getValueOptions" -- $getValuePattern))
+  local getValueSuggestionsLen=${#getValueSuggestions[@]}
+  [ $DEBUG -eq 1 ] && echo "getValueSuggestions:${getValueSuggestions[@]}"
+
+  if [ $getValueSuggestionsLen -ne 1 ] || [ ${getValueSuggestions[0]} != $getValuePattern ]; then
+    COMPREPLY=(${getValueSuggestions[@]})
+    return
+  fi
+}
+
+function _forty_project_set_completions()
+{
+  local projectSetValuePattern=$1
+  local projectSetValueOptions=$(forty project list)
+  local projectSetValueSuggestions=($(compgen -W "$projectSetValueOptions" -- $projectSetValuePattern))
+  local projectSetValueSuggestionsLen=${#projectSetValueSuggestions[@]}
+  [ $DEBUG -eq 1 ] && echo "projectSetValueSuggestions:${projectSetValueSuggestions[@]}"
+
+  if [ $projectSetValueSuggestionsLen -ne 1 ] || [ ${projectSetValueSuggestions[0]} != $projectSetValuePattern ]; then
+    COMPREPLY=(${projectSetValueSuggestions[@]})
+    return
+  fi
+}
+
+function _forty_project_completions()
+{
+  local projectSubCommandPattern=$1
+  local projectSubCommandOptions="list new get set"
+  local projectSubCommandSuggestions=($(compgen -W "$projectSubCommandOptions" -- $projectSubCommandPattern))
+  local projectSubCommandSuggestionsLen=${#projectSubCommandSuggestions[@]}
+  [ $DEBUG -eq 1 ] && echo "projectSubCommandSuggestionsLen:$projectSubCommandSuggestionsLen"
+  [ $DEBUG -eq 1 ] && echo "projectSubCommandSuggestions:${projectSubCommandSuggestions[@]}"
+
+  if [ $projectSubCommandSuggestionsLen -ne 1 ] || [ ${projectSubCommandSuggestions[0]} != $projectSubCommandPattern ]; then
+    COMPREPLY=(${projectSubCommandSuggestions[@]})
+    return
+  fi
+
+  local projectSubCommand=${projectSubCommandSuggestions[0]}
+  [ $DEBUG -eq 1 ] && echo "projectSubCommand:$projectSubCommand"
+
+  if [ $totalLen -lt 4 ]; then
+    return
+  fi
+
+  local projectValuePattern=${COMP_WORDS[3]}
+  [ $DEBUG -eq 1 ] && echo "projectValuePattern:$projectValuePattern"
+
+  if [ $projectSubCommand == "set" ]; then
+    _forty_project_set_completions $projectValuePattern 
+    return
+  fi
+}
+
+function _forty_completions()
+{
+  totalLen=${#COMP_WORDS[@]}
+  [ $DEBUG -eq 1 ] && echo "totalLen:$totalLen"
+
+  for (( i=0; i<$totalLen; i++ ));
+  do
+    [ $DEBUG -eq 1 ] && echo "$i:${COMP_WORDS[$i]}"
+  done
+
+
+  if [ $totalLen -lt 2 ]; then
+    return
+  fi
+
+  local commandPattern=${COMP_WORDS[1]}
+  [ $DEBUG -eq 1 ] && echo "commandPattern:$commandPattern"
+
+  local commandOptions="start finish get project undo"
+  local commandSuggestions=($(compgen -W "$commandOptions" -- $commandPattern))
+  [ $DEBUG -eq 1 ] && echo "commandSuggestions:${commandSuggestions[@]}"
+
+  local commandSuggestionsLen=${#commandSuggestions[@]}
+  [ $DEBUG -eq 1 ] && echo "commandSuggestionsLen:$commandSuggestionsLen"
+
+  if [ $commandSuggestionsLen -ne 1 ] || [ ${commandSuggestions[0]} != $commandPattern ]; then
+    COMPREPLY=(${commandSuggestions[@]})
+    return
+  fi
+
+  local command=${commandSuggestions[0]}
+  [ $DEBUG -eq 1 ] && echo "command:$command"
+
+  if [ $totalLen -lt 3 ]; then
+    return
+  fi
+
+  local subCommandPattern=${COMP_WORDS[2]}
+  [ $DEBUG -eq 1 ] && echo "subCommandPattern:$subCommandPattern"
+
+  if [ $command == "project" ]; then
+    _forty_project_completions $subCommandPattern
+    return
+  fi
+  if [ $command == "get" ]; then
+    _forty_get_completions $subCommandPattern
+    return
+  fi
+}
+
+complete -F _forty_completions forty

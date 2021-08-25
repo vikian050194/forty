@@ -19,13 +19,12 @@ class Commands(str, enum.Enum):
     PROJECT = "project"
     GET = "get"
     RESET = "reset"
-    UNDO = "undo"
     # LOG = "log"
     # PLUS = "plus"
     # MINUS = "minus"
     # BREAK = "break"
     # CONFIG = "config"
-    # UNDO = "undo"
+    UNDO = "undo"
     # REDO = "redo"
 
 
@@ -57,7 +56,7 @@ class Action():
         self.timestamp = timestamp
 
     def __str__(self):
-        return f"{self.type}/{to_iso(self.timestamp)}"
+        return f"{self.type} at {to_iso(self.timestamp)}"
 
     def __eq__(self, other): 
         if not isinstance(other, Action):
