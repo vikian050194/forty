@@ -2,22 +2,18 @@ from typing import List
 
 from .base import *
 from .help import *
-from .get import *
+from .status import *
 from .project import *
-from .start import *
-from .finish import *
-from .reset import *
-from .undo import *
+from .work import *
+from .history import *
 
 
 controllers: List[AbstractController] = [
     HelpController,
-    GetController,
+    StatusController,
     ProjectController,
-    StartController,
-    FinishController,
-    ResetController,
-    UndoController
+    WorkController,
+    HistoryController
 ]
 
 

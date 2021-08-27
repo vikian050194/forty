@@ -4,16 +4,16 @@ from ..reducers import *
 from ..common import to_hms
 
 
-class GetModel(AbstractModel):
+class StatusModel(AbstractModel):
     def __magic(self, is_status=False, is_today=False, is_total=False, is_passed=False, is_remained=False):
         project = self.pm.load_project()
         config = self.pm.load_config()
         actions = self.pm.load_actions()
 
         status = get_current_status(actions)
-        status_value = status.value if status else "none"
-        # TODO remove "ed"?
-        status_value = status_value + "ed" if status_value[-1] != "e" else status_value
+        status_value = "none"
+        if status:
+            status_value = status.value
 
         if actions and actions[-1].type != Actions.FINISH:
             actions.append(Action(Actions.FINISH, self.tm.get_datetime()))
@@ -77,4 +77,4 @@ class GetModel(AbstractModel):
         return self.__magic(is_status=False, is_remained=True)
 
 
-__all__ = ["GetModel"]
+__all__ = ["StatusModel"]

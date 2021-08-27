@@ -62,7 +62,7 @@ class TestMain(TestCase):
 
         self.call(["project", "new", "bbb"])
         self.call(["project", "set", "ccc"])
-        mock_print.assert_has_calls([call("aaa"), call("bbb")])
+        mock_print.assert_called_with("project ccc is not found")
         mock_print.reset_mock()
         self.call(["project", "get"])
         mock_print.assert_called_with("bbb")

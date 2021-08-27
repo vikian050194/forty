@@ -7,12 +7,12 @@ from ..views import *
 
 
 class ProjectController(AbstractController):
-    @property
-    def key(self):
-        return Commands.PROJECT
+    def __init__(self, pm, tm):
+        super().__init__(pm, tm)
+        self.handlers[Commands.PROJECT] = self.handle_subcommand
 
-    def handle(self, options: List[str]):
-        controllers = {
+    def handle_subcommand(self, options: List[str]):
+        subhandlers = {
             ProjectOptions.LIST: self.on_list,
             ProjectOptions.NEW: self.on_new,
             ProjectOptions.GET: self.on_get,
@@ -28,8 +28,8 @@ class ProjectController(AbstractController):
         if len(options) > 1:
             args = options[1:]
 
-        if command in controllers:
-            return controllers[command](args)
+        if command in subhandlers:
+            return subhandlers[command](args)
 
     def on_get(self, options):
         model = ProjectModel(self.pm, self.tm)
@@ -55,7 +55,7 @@ class ProjectController(AbstractController):
         if set_project_name:
             return StrView(set_project_name)
         else:
-            return StrView("not found")
+            return StrView(f"project {name} is not found")
 
 
 __all__ = ["ProjectController"]

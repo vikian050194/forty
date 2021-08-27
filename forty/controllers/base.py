@@ -9,15 +9,24 @@ class AbstractController(abc.ABC):
     def __init__(self, pm: ProjectManager, tm: TimeManager):
         self.pm = pm
         self.tm = tm
+        self.handlers = {}
 
     @property
-    @abc.abstractmethod
-    def key(self) -> ActionType:
-        raise NotImplementedError()
+    def keys(self):
+        return self.handlers.keys()
 
-    @abc.abstractmethod
     def handle(self, options: List[str]):
-        raise NotImplementedError()
+        command = None
+        args = []
+
+        if len(options) > 0:
+            command = options[0]
+
+        if len(options) > 1:
+            args = options[1:]
+
+        if command in self.handlers:
+            return self.handlers[command](args)
 
 
 __all__ = ["AbstractController"]

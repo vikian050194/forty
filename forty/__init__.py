@@ -14,7 +14,8 @@ def main(options: List[str], configuration: Configuration):
     cc = {}
     for c in controllers:
         ci = c(pm=pm, tm=tm)
-        cc[ci.key] = ci.handle
+        for new_key in ci.keys:
+            cc[new_key] = ci.handle
 
     command = Commands.HELP
     
@@ -24,10 +25,5 @@ def main(options: List[str], configuration: Configuration):
     if not command in cc:
         command = Commands.HELP
 
-    options_for_controller = []
-
-    if len(options) > 1:
-        options_for_controller = options[1:]
-
-    view = cc[command](options_for_controller)
+    view = cc[command](options)
     om.emmit(view)

@@ -14,7 +14,7 @@ class TestResetController(ControllerTestCase):
         return ProjectController
 
     def test_default(self):
-        view: AbstractView = self.handle([])
+        view: AbstractView = self.handle(["project"])
 
         self.pm.load_project.assert_not_called()
         self.pm.load_actions.assert_not_called()
@@ -22,7 +22,7 @@ class TestResetController(ControllerTestCase):
         self.assertIsNone(view)
 
     def test_get(self):
-        view: StrView = self.handle(["get"])
+        view: StrView = self.handle(["project", "get"])
 
         self.pm.load_project.assert_called_once()
         self.pm.load_actions.assert_not_called()
@@ -32,7 +32,7 @@ class TestResetController(ControllerTestCase):
     def test_list_no_projects(self):
         self.projects_to_return([])
         # TODO should return message
-        view: ListView = self.handle(["list"])
+        view: ListView = self.handle(["project", "list"])
 
         self.pm.load_project.assert_not_called()
         self.pm.get_projects_list.assert_called_once()
@@ -42,7 +42,7 @@ class TestResetController(ControllerTestCase):
     def test_list_few_projects(self):
         self.projects_to_return(["aaa", "bbb", "ccc"])
         
-        view: ListView = self.handle(["list"])
+        view: ListView = self.handle(["project", "list"])
 
         self.pm.load_project.assert_not_called()
         self.pm.get_projects_list.assert_called_once()
@@ -51,7 +51,7 @@ class TestResetController(ControllerTestCase):
 
     @skip("not implemented")
     def test_new_missed_name(self):
-        view: StrView = self.handle(["new"])
+        view: StrView = self.handle(["project", "new"])
 
         self.assertEqual(view.value, "new project name is not specified")
 
@@ -59,27 +59,27 @@ class TestResetController(ControllerTestCase):
     def test_new_not_unique_name(self):
         self.projects_to_return(["aaa", "bbb", "ccc"])
 
-        view: StrView = self.handle(["new", "aaa"])
+        view: StrView = self.handle(["project", "new", "aaa"])
 
         self.assertEqual(view.value, "new project name should be unique")
 
     def test_new(self):
         self.projects_to_return(["aaa", "bbb", "ccc"])
 
-        view: StrView = self.handle(["new", "ddd"])
+        view: StrView = self.handle(["project", "new", "ddd"])
 
         self.assertEqual(view.value, "ddd")
 
     def test_set_wrong_name(self):
         self.projects_to_return(["aaa", "bbb", "ccc"])
 
-        view: StrView = self.handle(["set", "ddd"])
+        view: StrView = self.handle(["project", "set", "ddd"])
 
-        self.assertEqual(view.value, "not found")
+        self.assertEqual(view.value, "project ddd is not found")
 
     def test_set_correct_name(self):
         self.projects_to_return(["aaa", "bbb", "ccc"])
 
-        view: StrView = self.handle(["set", "aaa"])
+        view: StrView = self.handle(["project", "set", "aaa"])
 
         self.assertEqual(view.value, "aaa")

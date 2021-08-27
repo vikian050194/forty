@@ -1,35 +1,34 @@
+from forty.views.base import ListView
 from typing import List
 
 from .base import AbstractController
-from ..actions import Commands, Actions, ActionType
-
-
-def print_option(option: ActionType, hint):
-    print(f"{option.value}\t{hint}")
+from ..actions import Commands, Actions
 
 
 class HelpController(AbstractController):
-    @property
-    def key(self):
-        return Commands.HELP
+    def __init__(self, pm, tm):
+        super().__init__(pm, tm)
+        self.handlers[Commands.HELP] = self.handle_help
 
-    def handle(self, options: List[str]):
-        print("forty", "v0.1.0")
-        # TODO use OutputManager
-        print_option(Commands.HELP, "get help")
-        print_option(Commands.PROJECT, "TBD")
-        print_option(Commands.GET, "TBD")
-        # print_option(Commands.STATUS, "get status")
-        # print_option(Commands.RESET, "reset actions")
-        # print_option(Commands.PLUS, "plus delta time")
-        # print_option(Commands.MINUS, "minus delta time")
-        # print_option(Commands.BREAK, "start pause and automatically finish it after hh:mm:ss")
-        # print_option(Commands.CONFIG, "get or set configuration parameters")
 
-        print_option(Actions.START, "start work")
-        print_option(Actions.FINISH, "finish work")
-        # print_option(Actions.PAUSE, "pause work")
-        # print_option(Actions.RESUME, "resume work")
+    def handle_help(self, options):
+        lines = []
+        list.append(("forty", "v0.1.0"))
+        list.append((Commands.HELP, "get help"))
+        list.append((Commands.PROJECT, "TBD"))
+        list.append((Commands.GET, "TBD"))
+        # list.append((Commands.STATUS, "get status"))
+        # list.append((Commands.RESET, "reset actions"))
+        # list.append((Commands.PLUS, "plus delta time"))
+        # list.append((Commands.MINUS, "minus delta time"))
+        # list.append((Commands.BREAK, "start pause and automatically finish it after hh:mm:ss"))
+        # list.append((Commands.CONFIG, "get or set configuration parameters"))
+
+        list.append((Actions.START, "start work"))
+        list.append((Actions.FINISH, "finish work"))
+        # list.append((Actions.PAUSE, "pause work"))
+        # list.append((Actions.RESUME, "resume work"))
+        return ListView(lines)
 
 
 __all__ = ["HelpController"]

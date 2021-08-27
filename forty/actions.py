@@ -32,8 +32,8 @@ ActionType = Union[Actions, Commands]
 
 
 @enum.unique
-class GetOptions(str, enum.Enum):
-    ALL = "all"
+class StatusOptions(str, enum.Enum):
+    WHATSUP = "whatsup"
     STATUS = "status"
     TODAY = "today"
     TOTAL = "total"

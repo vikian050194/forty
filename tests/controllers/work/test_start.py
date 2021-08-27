@@ -1,48 +1,48 @@
 from forty.views import ActionView, StrView
 from forty.actions import Action, Actions
-from forty.controllers import FinishController
+from forty.controllers import WorkController
 
-from .controller_test_case import ControllerTestCase
+from ..controller_test_case import ControllerTestCase
 
 
-class TestFinishController(ControllerTestCase):
+class TestWorkControllerStartCommand(ControllerTestCase):
     def __init__(self, *args, **kwargs):
         ControllerTestCase.__init__(self, *args, **kwargs)
 
     @property
     def controller_class(self):
-        return FinishController
+        return WorkController
 
     def test_default(self):
         timestamp = self.tm.get_datetime()
 
-        view: ActionView = self.handle([])
+        view: ActionView = self.handle(["start"])
 
         self.pm.load_project.assert_called_once()
         self.pm.load_actions.assert_called_once()
 
-        self.pm.save_actions.assert_called_once_with([Action(type=Actions.FINISH, timestamp=timestamp)])
-        self.assertEqual(view.action.type, Actions.FINISH)
+        self.pm.save_actions.assert_called_once_with([Action(type=Actions.START, timestamp=timestamp)])
+        self.assertEqual(view.action.type, Actions.START)
         # TODO check timestamp
 
     def test_specific_time(self):
         timestamp = self.tm.merge_time()
         
-        view: ActionView = self.handle(["12:34:56"])
+        view: ActionView = self.handle(["start", "12:34:56"])
 
         self.pm.load_project.assert_called_once()
         self.pm.load_actions.assert_called_once()
 
-        self.pm.save_actions.assert_called_once_with([Action(type=Actions.FINISH, timestamp=timestamp)])
-        self.assertEqual(view.action.type, Actions.FINISH)
+        self.pm.save_actions.assert_called_once_with([Action(type=Actions.START, timestamp=timestamp)])
+        self.assertEqual(view.action.type, Actions.START)
         # TODO check merged timestamp
 
     def test_do_nothing(self):
-        self.actions_to_return([Action(type=Actions.FINISH, timestamp=None)])
+        self.actions_to_return([Action(type=Actions.START, timestamp=None)])
 
-        view: StrView = self.handle([])
+        view: StrView = self.handle(["start"])
 
         self.pm.load_project.assert_called_once()
         self.pm.load_actions.assert_called_once()
         self.pm.save_actions.assert_not_called()
-        self.assertEqual(view.value, "already finished")
+        self.assertEqual(view.value, "already started")

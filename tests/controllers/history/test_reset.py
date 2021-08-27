@@ -1,19 +1,19 @@
 from forty.views import StrView
-from forty.controllers import ResetController
+from forty.controllers import HistoryController
 
-from .controller_test_case import ControllerTestCase
+from ..controller_test_case import ControllerTestCase
 
 
-class TestResetController(ControllerTestCase):
+class TestHistoryControllerResetCommand(ControllerTestCase):
     def __init__(self, *args, **kwargs):
         ControllerTestCase.__init__(self, *args, **kwargs)
 
     @property
     def controller_class(self):
-        return ResetController
+        return HistoryController
 
     def test_default(self):
-        view: StrView = self.handle([])
+        view: StrView = self.handle(["reset"])
 
         self.pm.load_project.assert_called_once()
         self.pm.load_actions.assert_not_called()

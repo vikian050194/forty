@@ -1,7 +1,11 @@
 from .base import AbstractModel
 
 
-class UndoModel(AbstractModel):
+class HistoryModel(AbstractModel):
+    def reset(self):
+        self.pm.load_project()
+        self.pm.save_actions([])
+
     def undo(self, count):
         self.pm.load_project()
         actions = self.pm.load_actions()
@@ -16,4 +20,4 @@ class UndoModel(AbstractModel):
         return 0
 
 
-__all__ = ["UndoModel"]
+__all__ = ["HistoryModel"]

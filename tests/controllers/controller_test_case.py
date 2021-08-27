@@ -7,6 +7,16 @@ from forty.managers.project_manager import AbstractProjectManager, Config, Proje
 from forty.managers.time_manager import AbstractTimeManager, TimeManager
 
 
+def get_project_manager_spec():
+    pm: AbstractProjectManager = create_autospec(spec=ProjectManager, spec_set=True, instance=True)
+    return pm
+
+
+def get_time_manager_spec():
+    tm: AbstractTimeManager = create_autospec(spec=TimeManager, spec_set=True, instance=True)
+    return tm
+
+
 class ControllerTestCase(TestCase):
     def __init__(self, *args, **kwargs):
         TestCase.__init__(self, *args, **kwargs)

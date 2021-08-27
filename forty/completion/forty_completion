@@ -3,20 +3,6 @@
 DEBUG=0
 FORTY_OUTPUT="plain"
 
-function _forty_get_completions()
-{
-  local getValuePattern=$1
-  local getValueOptions="all status today total passed remained"
-  local getValueSuggestions=($(compgen -W "$getValueOptions" -- $getValuePattern))
-  local getValueSuggestionsLen=${#getValueSuggestions[@]}
-  [ $DEBUG -eq 1 ] && echo "getValueSuggestions:${getValueSuggestions[@]}"
-
-  if [ $getValueSuggestionsLen -ne 1 ] || [ ${getValueSuggestions[0]} != $getValuePattern ]; then
-    COMPREPLY=(${getValueSuggestions[@]})
-    return
-  fi
-}
-
 function _forty_project_set_completions()
 {
   local projectSetValuePattern=$1
@@ -79,7 +65,7 @@ function _forty_completions()
   local commandPattern=${COMP_WORDS[1]}
   [ $DEBUG -eq 1 ] && echo "commandPattern:$commandPattern"
 
-  local commandOptions="start finish get project undo"
+  local commandOptions="start finish status today total remained passed whatsup undo project"
   local commandSuggestions=($(compgen -W "$commandOptions" -- $commandPattern))
   [ $DEBUG -eq 1 ] && echo "commandSuggestions:${commandSuggestions[@]}"
 
@@ -103,10 +89,6 @@ function _forty_completions()
 
   if [ $command == "project" ]; then
     _forty_project_completions $subCommandPattern
-    return
-  fi
-  if [ $command == "get" ]; then
-    _forty_get_completions $subCommandPattern
     return
   fi
 }

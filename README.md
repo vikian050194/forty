@@ -37,78 +37,85 @@ Rigth now the best way to install **forty** is following one:
     ```
 3. Call installed package via a generated standalone "shim" script
     ```
-    forty help
-    ```
-    or just
-    ```
     forty
     ```
 
 
 ## Usage
 
-**Forty** support concurrent work on different projects like work, freelance or pet-projects
+**forty** supports concurrent work on different projects like work, freelance or pet-projects
 
-Project has following optional options:
-- Day limit
-- Total limit
+There are *actions* and *commands*
 
-There are _actions_ and _commands_
+But from user perspective there is no difference between this two types because it is all the same - just (different) options to invoke from the terminal
 
-But from user perspective there is no difference between this two types because it is all the same - just (different) options to invoke from terminal
+*Actions* are stored and used for calculations
 
-Actions are stored and used for calculations
-
-Commands are "calculations"
-
+*Commands* are calculations and **TODO**
 
 ### Actions
 
-1. Start work
-    ```
-    forty start
-    ```
+**Work**
 
-2. Finish work
-    ```
-    forty finish
-    ```
+Time is optional and it's possible to specify just `h`, `hh` or `hh:mm` - all possible subcases of full format
 
+| Command | Description |
+| --- | --- |
+| `start hh:mm:ss` | Start work |
+| `finish hh:mm:ss` | Finish work |
 
 ### Commands
 
-1. Get full list of all awailable actions and commands
-    ```
-    forty help
-    ```
-    or just
-    ```
-    forty
-    ```
+**Help**
 
-2. Remove all stored actions
-    ```
-    forty reset
-    ```
+| Command | Description |
+| --- | --- |
+| `help` | Help information |
+| `version` | Installed version |
 
-## Features
+**Status**
 
-### Common
-- [ ] number of working day
+| Command | Description |
+| --- | --- |
+| `whatsup` | All possible information at once |
+| `status` | Current status |
+| `today` | Today time |
+| `total` | Total time |
+| `passed` | Passed time |
+| `remained` | Remained time |
 
-### Working time
-- [x] total passed time
-- [x] total remained time
-- [x] today passed time
-- [x] today remained time
+**History**
 
-### Breaks
-- [ ] time passed since latest breake
-- [ ] today breaks count
+| Command | Description |
+| --- | --- |
+| `reset` | Remove all stored actions, clear the whole history |
+| `undo n` | Undo last `n` actions, `n` is optional and default value is `1` |
 
 ### Configuration
-- [x] flexible configuration
 
+There are three ways and layers of configuration
+
+**Environment variables**
+
+| Name | Description | Value |
+| --- | --- | --- |
+| `FORTY_HOME` | Home directory where `.forty` is stored | Any valid pathv|
+| `FORTY_OUTPUT` | Output format | `human`, `plain` or `json` |
+
+**Project-wide**
+
+| Command | Description | Value |
+| --- | --- | --- |
+| `day` | Day time limit | Optional |
+| `total` | Total time limit | Optional |
+| `break` | Total time limit | Optional |
+
+**Global**
+
+| Command | Description | Value |
+| --- | --- | --- |
+| `break` | Day time limit | Optional |
+| `concurrency` | Total time limit | Optional |
 
 ## Tests
 
