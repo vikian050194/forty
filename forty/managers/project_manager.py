@@ -120,6 +120,7 @@ class ProjectManager(AbstractProjectManager):
         with open(self.__get_config_file(), "r") as fr:
             values = json.load(fr)
             config = Config(values["day_limit"], values["total_limit"])
+            # TODO: use tm
             config.today = to_ymd(datetime.now())
             return config
 

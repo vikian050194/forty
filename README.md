@@ -108,14 +108,14 @@ There are three ways and layers of configuration
 | --- | --- | --- |
 | `day` | Day time limit | Optional |
 | `total` | Total time limit | Optional |
-| `break` | Total time limit | Optional |
+| `break` | Default break duration | Optional |
 
 **Global**
 
 | Command | Description | Value |
 | --- | --- | --- |
-| `break` | Day time limit | Optional |
-| `concurrency` | Total time limit | Optional |
+| `break` | Default break duration | Optional |
+| `concurrency` | Auto-stop | Optional |
 
 ## Tests
 

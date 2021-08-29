@@ -1,6 +1,7 @@
 from forty.views.base import StrView, ListView
 from forty.tools import ActionsBuilder as A
 from forty.controllers import StatusController
+from forty.managers.project_manager import Config
 
 from ..controller_test_case import ControllerTestCase
 
@@ -30,3 +31,15 @@ class TestStatusControllerTodayCommand(ControllerTestCase):
         view: ListView = self.handle(["today"])
 
         self.assertListEqual(view.list, ["08:17:18", "-00:17:18"])
+
+    def test_started_yesterday(self):
+        self.now_to_return(day=2)
+        config = Config(day_limit=8, total_limit=40)
+        config.today = "2021-01-02"
+        self.config_to_return(config)
+        actions = A().start().at(day=1).done()
+        self.actions_to_return(actions)
+
+        view: ListView = self.handle(["today"])
+
+        self.assertListEqual(view.list, ["04:34:56", "03:25:04", "04:34:56", "35:25:04"])

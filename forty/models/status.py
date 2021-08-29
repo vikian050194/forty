@@ -5,7 +5,7 @@ from ..common import to_hms
 
 
 class StatusModel(AbstractModel):
-    def __magic(self, is_status=False, is_today=False, is_total=False, is_passed=False, is_remained=False):
+    def _magic(self, is_status=False, is_today=False, is_total=False, is_passed=False, is_remained=False):
         project = self.pm.load_project()
         config = self.pm.load_config()
         actions = self.pm.load_actions()
@@ -46,11 +46,11 @@ class StatusModel(AbstractModel):
         return values
 
     def all(self):
-        return self.__magic(is_status=False, is_today=True, is_total=True, is_passed=True, is_remained=True)
+        return self._magic(is_status=False, is_today=True, is_total=True, is_passed=True, is_remained=True)
 
 
     def status(self):
-        return self.__magic(is_status=True)
+        return self._magic(is_status=True)
 
     def today(self):
         is_passed = False
@@ -59,7 +59,7 @@ class StatusModel(AbstractModel):
         #     option = options[0]
         #     is_passed = option == GetOptions.PASSED
         #     is_remained = option == GetOptions.REMAINED
-        return self.__magic(is_today=True, is_passed=is_passed, is_remained=is_remained)
+        return self._magic(is_today=True, is_passed=is_passed, is_remained=is_remained)
 
     def total(self):
         is_passed = False
@@ -68,13 +68,13 @@ class StatusModel(AbstractModel):
         #     option = options[0]
         #     is_passed = option == GetOptions.PASSED
         #     is_remained = option == GetOptions.REMAINED
-        return self.__magic(is_total=True, is_passed=is_passed, is_remained=is_remained)
+        return self._magic(is_total=True, is_passed=is_passed, is_remained=is_remained)
 
     def passed(self):
-        return self.__magic(is_passed=True)
+        return self._magic(is_passed=True)
 
     def remained(self):
-        return self.__magic(is_status=False, is_remained=True)
+        return self._magic(is_status=False, is_remained=True)
 
 
 __all__ = ["StatusModel"]
