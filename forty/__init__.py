@@ -7,9 +7,9 @@ from .configuration import Configuration
 
 
 def main(options: List[str], configuration: Configuration):
-    pm = ProjectManager(configuration)
-    om = OutputManager(configuration)
     tm = TimeManager()
+    pm = ProjectManager(tm, configuration)
+    om = OutputManager(configuration)
 
     cc = {}
     for c in controllers:

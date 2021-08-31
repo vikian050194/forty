@@ -27,23 +27,35 @@ class TestMain(TestCase):
     def tearDownClass(cls):
         pass
 
-    @skip("foo")
-    def test_model(self):
-        pass
-
-    # @skip("ready")
-    def test_help(self, mock_print):
+    @skip("not ready")
+    def test_void(self, mock_print):
         empty = []
-        invalid = ["not_a_valid_option"]
-        help = ["help"]
-        cases = [empty, invalid, help]
 
-        for case in cases:
-            self.call(case)
-            actual_invocations = len(mock_print.call_args_list)
-            expected_invocations = 6
-            self.assertEqual(actual_invocations, expected_invocations)
-            mock_print.reset_mock()
+        self.call(empty)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 0
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.reset_mock()
+
+    @skip("not ready")
+    def test_invalid(self, mock_print):
+        invalid = ["not_a_valid_option"]
+
+        self.call(invalid)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 0
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.reset_mock()
+
+    @skip("not ready")
+    def test_help(self, mock_print):
+        help = ["help"]
+
+        self.call(help)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 6
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.reset_mock()
 
     # @skip("ready")
     def test_project(self, mock_print):
@@ -87,40 +99,40 @@ class TestMain(TestCase):
         mock_print.assert_called_with("aaa")
         mock_print.reset_mock()
 
-        self.call(["get"])
-        mock_print.assert_called_with("aaa/none/00:00:00/00:00:00")
+        self.call(["whatsup"])
+        mock_print.assert_has_calls([call("00:00:00"), call("00:00:00")])
         mock_print.reset_mock()
 
-        self.call(["get", "status"])
-        mock_print.assert_called_with("aaa/none")
+        self.call(["status"])
+        mock_print.assert_called_with("none")
         mock_print.reset_mock()
         
         self.call(["start", "12:34:56"])
-        self.call(["get", "status"])
-        mock_print.assert_called_with("aaa/started")
+        self.call(["status"])
+        mock_print.assert_called_with("start")
         mock_print.reset_mock()
 
         self.call(["finish", "13:00:00"])
-        self.call(["get", "status"])
-        mock_print.assert_called_with("aaa/finished")
+        self.call(["status"])
+        mock_print.assert_called_with("finish")
         mock_print.reset_mock()
 
-        self.call(["get"])
-        mock_print.assert_called_with("aaa/finished/00:25:04/00:25:04")
+        self.call(["whatsup"])
+        mock_print.assert_called_with("00:25:04")
         mock_print.reset_mock()
 
-        self.call(["get", "today"])
-        mock_print.assert_called_with("aaa/finished/00:25:04")
+        self.call(["today"])
+        mock_print.assert_called_with("00:25:04")
         mock_print.reset_mock()
 
-        self.call(["get", "total"])
-        mock_print.assert_called_with("aaa/finished/00:25:04")
+        self.call(["total"])
+        mock_print.assert_called_with("00:25:04")
         mock_print.reset_mock()
 
-        self.call(["get", "passed"])
-        mock_print.assert_called_with("aaa/finished/00:25:04/00:25:04")
+        self.call(["passed"])
+        mock_print.assert_called_with("00:25:04")
         mock_print.reset_mock()
 
-        self.call(["get", "remained"])
-        mock_print.assert_called_with("aaa/finished")
+        self.call(["remained"])
+        mock_print.assert_not_called()
         mock_print.reset_mock()

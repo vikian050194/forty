@@ -1,5 +1,7 @@
 from unittest import TestCase
 
+from datetime import date
+
 from forty.tools import ActionsBuilder as A
 from forty.common import value_decorator
 from forty.managers.project_manager import Config
@@ -10,7 +12,7 @@ call = value_decorator(get_today_passed_time)
 
 
 def get_config(year=2021, month=1, day=1):
-    today = f"{year:04d}-{month:02d}-{day:02d}"
+    today = date(year, month, day)
     test_config = Config(1, 1)
     test_config.today = today
     return test_config

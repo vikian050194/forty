@@ -5,9 +5,8 @@ from datetime import datetime
 from typing import List
 
 from ..actions import Action
-from ..common import to_ymd
 from ..configuration import Configuration
-
+from ..managers.time_manager import AbstractTimeManager
 
 def to_action(data):
     type = data.get("type")
@@ -72,7 +71,8 @@ class AbstractProjectManager(abc.ABC):
 
 
 class ProjectManager(AbstractProjectManager):
-    def __init__(self, configuration: Configuration):
+    def __init__(self, tm: AbstractTimeManager, configuration: Configuration):
+        self.tm = tm
         self.home = configuration.home
         self.dir = f"{self.home}/.forty"
         self.project = ""
@@ -120,8 +120,7 @@ class ProjectManager(AbstractProjectManager):
         with open(self.__get_config_file(), "r") as fr:
             values = json.load(fr)
             config = Config(values["day_limit"], values["total_limit"])
-            # TODO: use tm
-            config.today = to_ymd(datetime.now())
+            config.today = self.tm.get_date()
             return config
 
     def save_config(self, config: Config):

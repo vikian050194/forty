@@ -1,7 +1,7 @@
 from unittest import TestCase
 from unittest.mock import create_autospec, Mock, MagicMock
 
-from datetime import datetime
+from datetime import datetime, date
 
 from forty.managers.project_manager import AbstractProjectManager, Config, ProjectManager
 from forty.managers.time_manager import AbstractTimeManager, TimeManager
@@ -37,7 +37,7 @@ class ControllerTestCase(TestCase):
         self.pm.load_project = Mock(return_value="test_project")
         self.pm.load_actions = Mock(return_value=[])
         config = Config(day_limit=8, total_limit=40)
-        config.today = "2021-01-01"
+        config.today = date(year=2021, month=1, day=1)
         self.pm.load_config = Mock(return_value=config)
     
         self.tm.reset_mock()
