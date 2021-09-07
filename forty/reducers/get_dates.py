@@ -1,9 +1,9 @@
-from ..common import State, actions_reducer, to_ymd
+from ..common import State, actions_reducer
 from ..actions import Action, Actions
 
 
 def on_action(state: State, action: Action):
-    date = to_ymd(action.timestamp)
+    date = action.timestamp.date()
     dates = [*state.value]
     if not date in dates:
         dates.append(date)

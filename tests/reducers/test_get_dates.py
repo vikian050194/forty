@@ -1,5 +1,7 @@
 from unittest import TestCase
 
+from datetime import date
+
 from forty.tools import ActionsBuilder as A
 from forty.common import value_decorator
 from forty.reducers import get_dates
@@ -29,7 +31,7 @@ class TestGetDates(TestCase):
 
         value = call(actions, test_config)
 
-        self.assertEqual(value, ["2021-01-01"])
+        self.assertEqual(value, [date(2021, 1, 1)])
 
     def test_one_work_interval(self):
         actions = (A()
@@ -39,9 +41,9 @@ class TestGetDates(TestCase):
 
         value = call(actions, test_config)
 
-        self.assertEqual(value, ["2021-01-01"])
+        self.assertEqual(value, [date(2021, 1, 1)])
 
-    def test_two_work_intervals(self):
+    def test_two_work_intervals_in_two_days(self):
         actions = (A()
             .start().at(day=1, second=0)
             .finish().at(day=1, second=10)
@@ -51,4 +53,16 @@ class TestGetDates(TestCase):
 
         value = call(actions, test_config)
 
-        self.assertEqual(value, ["2021-01-01", "2021-01-02"])
+        self.assertEqual(value, [date(2021, 1, 1), date(2021, 1, 2)])
+
+    def test_two_work_intervals_in_one_day(self):
+        actions = (A()
+            .start().at(day=1, second=0)
+            .finish().at(day=1, second=10)
+            .start().at(day=1, second=20)
+            .finish().at(day=1, second=30)
+            .done())
+
+        value = call(actions, test_config)
+
+        self.assertEqual(value, [date(2021, 1, 1)])
