@@ -1,6 +1,6 @@
 from datetime import date
 
-from forty.views.base import StrView, ListView
+from forty.views.base import ListView
 from forty.tools import ActionsBuilder as A
 from forty.controllers import StatusController
 from forty.managers.project_manager import Config

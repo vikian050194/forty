@@ -5,6 +5,7 @@ from ..actions import Commands
 from ..views import StrView
 from ..models import HistoryModel
 
+
 class HistoryController(AbstractController):
     def __init__(self, pm, tm):
         super().__init__(pm, tm)

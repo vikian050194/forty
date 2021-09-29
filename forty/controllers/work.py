@@ -13,7 +13,7 @@ class WorkController(AbstractController):
         self.handlers[Actions.START] = self.handle_start
         self.handlers[Actions.FINISH] = self.handle_finish
 
-    def handle_start(self, options):
+    def handle_start(self, options: List[str]):
         model = StartModel(self.pm, self.tm)
         new_time = to_time(options[0]) if options else None
         new_action = model.start(new_time)
@@ -22,7 +22,7 @@ class WorkController(AbstractController):
         else:
             return StrView("already started")
 
-    def handle_finish(self, options):
+    def handle_finish(self, options: List[str]):
         model = FinishModel(self.pm, self.tm)
         new_time = to_time(options[0]) if options else None
         new_action = model.finish(new_time)

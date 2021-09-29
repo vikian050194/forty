@@ -31,24 +31,24 @@ class ProjectController(AbstractController):
         if command in subhandlers:
             return subhandlers[command](args)
 
-    def on_get(self, options):
+    def on_get(self, options: List[str]):
         model = ProjectModel(self.pm, self.tm)
         current_project = model.get()
         # TODO what if there is no project?
         return StrView(current_project)
 
-    def on_list(self, options):
+    def on_list(self, options: List[str]):
         model = ProjectModel(self.pm, self.tm)
         projects_list = model.list()
         return ListView(projects_list)
         
-    def on_new(self, options):
+    def on_new(self, options: List[str]):
         model = ProjectModel(self.pm, self.tm)
         [name] = options
         new_project_name = model.new(name)
         return StrView(new_project_name)
 
-    def on_set(self, options):
+    def on_set(self, options: List[str]):
         model = ProjectModel(self.pm, self.tm)
         [name] = options
         set_project_name = model.set(name)

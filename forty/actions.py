@@ -16,10 +16,11 @@ class Actions(str, enum.Enum):
 @enum.unique
 class Commands(str, enum.Enum):
     HELP = "help"
+    VERSION = "version"
     PROJECT = "project"
     GET = "get"
     RESET = "reset"
-    # LOG = "log"
+    LOG = "log"
     # PLUS = "plus"
     # MINUS = "minus"
     # BREAK = "break"
@@ -54,9 +55,6 @@ class Action():
         self.type = type
         self.value = value
         self.timestamp = timestamp
-
-    def __str__(self):
-        return f"{self.type} at {to_iso(self.timestamp)}"
 
     def __eq__(self, other): 
         if not isinstance(other, Action):

@@ -2,10 +2,10 @@ from unittest import skip
 from forty.views import AbstractView, StrView, ListView
 from forty.controllers import ProjectController
 
-from .controller_test_case import ControllerTestCase
+from ..controller_test_case import ControllerTestCase
 
 
-class TestResetController(ControllerTestCase):
+class TestProjectController(ControllerTestCase):
     def __init__(self, *args, **kwargs):
         ControllerTestCase.__init__(self, *args, **kwargs)
 

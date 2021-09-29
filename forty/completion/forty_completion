@@ -65,7 +65,7 @@ function _forty_completions()
   local commandPattern=${COMP_WORDS[1]}
   [ $DEBUG -eq 1 ] && echo "commandPattern:$commandPattern"
 
-  local commandOptions="start finish status today total remained passed whatsup undo project"
+  local commandOptions="version help start finish status today total remained passed whatsup log undo project"
   local commandSuggestions=($(compgen -W "$commandOptions" -- $commandPattern))
   [ $DEBUG -eq 1 ] && echo "commandSuggestions:${commandSuggestions[@]}"
 

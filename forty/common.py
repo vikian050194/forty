@@ -34,6 +34,7 @@ def to_hms(value: int):
     minutes, seconds = divmod(remainder, 60)
     return f"{sign}{hours:02d}:{minutes:02d}:{seconds:02d}"
 
+
 def normalize(values):
     result = [*values]
     count = len(values)

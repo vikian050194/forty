@@ -2,7 +2,8 @@ from typing import List
 
 from .actions import Commands
 from .controllers import controllers
-from .managers import ProjectManager, OutputManager, TimeManager
+from .output import OutputManager
+from .managers import ProjectManager, TimeManager
 from .configuration import Configuration
 
 
