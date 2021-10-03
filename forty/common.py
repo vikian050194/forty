@@ -35,6 +35,11 @@ def to_hms(value: int):
     return f"{sign}{hours:02d}:{minutes:02d}:{seconds:02d}"
 
 
+def time_to_str(value: time):
+    seconds = value.hour * 3600 + value.minute * 60 + value.second
+    return to_hms(seconds)
+
+
 def normalize(values):
     result = [*values]
     count = len(values)

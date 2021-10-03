@@ -1,11 +1,12 @@
+from datetime import timedelta
 from .base import AbstractModel
 from ..actions import Action, Actions
 from ..reducers import *
-from ..common import to_hms
+from ..common import to_hms, time_to_str
 
 
 class StatusModel(AbstractModel):
-    def _magic(self, is_status=False, is_today=False, is_total=False, is_passed=False, is_remained=False):
+    def _magic(self, is_status=False, is_today=False, is_total=False, is_passed=False, is_remained=False, is_till=False):
         project = self.pm.load_project()
         config = self.pm.load_config()
         actions = self.pm.load_actions()
@@ -43,10 +44,17 @@ class StatusModel(AbstractModel):
             total_remained_time_value = to_hms(total_remained_time.value)
             values.append(total_remained_time_value)
 
+        if config.day_limit and is_till:
+            today_remained_time = get_today_remained_time(actions, config)
+            today_remained_timedelta = timedelta(seconds=today_remained_time.value)
+            till_time = (self.tm.get_datetime() + today_remained_timedelta).time()
+            till_time_value = time_to_str(till_time)
+            values.append(till_time_value)
+
         return values
 
     def all(self):
-        return self._magic(is_status=False, is_today=True, is_total=True, is_passed=True, is_remained=True)
+        return self._magic(is_status=False, is_today=True, is_total=True, is_passed=True, is_remained=True, is_till=True)
 
 
     def status(self):
@@ -75,6 +83,9 @@ class StatusModel(AbstractModel):
 
     def remained(self):
         return self._magic(is_status=False, is_remained=True)
+
+    def till(self):
+        return self._magic(is_till=True)
 
 
 __all__ = ["StatusModel"]

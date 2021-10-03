@@ -16,6 +16,7 @@ class StatusController(AbstractController):
         self.handlers[StatusOptions.TOTAL] = self.handle_total
         self.handlers[StatusOptions.PASSED] = self.handle_passed
         self.handlers[StatusOptions.REMAINED] = self.handle_remained
+        self.handlers[StatusOptions.TILL] = self.handle_till
 
 
     def handle_whatsup(self, options: List[str]):
@@ -47,6 +48,11 @@ class StatusController(AbstractController):
         model = StatusModel(self.pm, self.tm)
         remained_values = model.remained()
         return ListView(remained_values)
+
+    def handle_till(self, options: List[str]):
+        model = StatusModel(self.pm, self.tm)
+        till_values = model.till()
+        return ListView(till_values)
 
 
 __all__ = ["StatusController"]

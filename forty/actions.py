@@ -40,6 +40,7 @@ class StatusOptions(str, enum.Enum):
     TOTAL = "total"
     PASSED = "passed"
     REMAINED = "remained"
+    TILL = "till"
 
 
 @enum.unique

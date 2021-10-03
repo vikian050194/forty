@@ -83,6 +83,7 @@ Time is optional and it's possible to specify just `h`, `hh` or `hh:mm` - all po
 | `total` | Total time |
 | `passed` | Passed time |
 | `remained` | Remained time |
+| `till` | Today you will work till |
 
 **History**
 

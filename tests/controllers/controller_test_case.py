@@ -1,7 +1,7 @@
 from unittest import TestCase
 from unittest.mock import create_autospec, Mock, MagicMock
 
-from datetime import datetime, date
+from datetime import datetime, date, time
 
 from forty.managers.project_manager import AbstractProjectManager, Config, ProjectManager
 from forty.managers.time_manager import AbstractTimeManager, TimeManager
@@ -21,11 +21,11 @@ class ControllerTestCase(TestCase):
     def __init__(self, *args, **kwargs):
         TestCase.__init__(self, *args, **kwargs)
 
-        self.pm: AbstractProjectManager = create_autospec(spec=ProjectManager, spec_set=True, instance=True)
+        self.pm: AbstractProjectManager = get_project_manager_spec()
         # pm: AbstractProjectManager = Mock(spec=ProjectManager, spec_set=True)
         # pm: AbstractProjectManager = MagicMock(spec=ProjectManager, spec_set=True)
 
-        self.tm: AbstractTimeManager = create_autospec(spec=TimeManager, spec_set=True, instance=True)
+        self.tm: AbstractTimeManager = get_time_manager_spec()
         # tm: AbstractTimeManager = Mock(spec=TimeManager, spec_set=True)
         # tm: AbstractTimeManager = MagicMock(spec=TimeManager, spec_set=True)
 
@@ -68,8 +68,12 @@ class ControllerTestCase(TestCase):
         self.pm.load_actions = Mock(return_value=actions)
 
     def now_to_return(self, year=2021, month=1, day=1, hour=0, minute=0, second=0):
-        now = datetime(year, month, day, hour, minute, second)
-        self.tm.get_datetime = Mock(return_value=now)
+        datetime_value = datetime(year, month, day, hour, minute, second)
+        self.tm.get_datetime = Mock(return_value=datetime_value)
+        date_value = date(year, month, day)
+        self.tm.get_date = Mock(return_value=date_value)
+        time_value = time(hour, minute, second)
+        self.tm.get_time = Mock(return_value=time_value)
 
 
 __all__ = ["ControllerTestCase"]
