@@ -7,20 +7,17 @@
 
 **forty** it a tool that can help you track (working) time, take a break and many more
 
-
 ## Motivation
 
 Firstly, **forty** is a pet-project
 
 Secondly, there are a lot of flexible and powerful time and work trackers but from my point of view all of them is too complex and I don't need a biggest part of provided features
 
-
 ## Requirements
 
 Python version 3.8 or higher
 
 Developed and tested on Ubuntu 20.04
-
 
 ## Installation
 
@@ -39,7 +36,6 @@ Rigth now the best way to install **forty** is following one:
     ```
     forty
     ```
-
 
 ## Usage
 
