@@ -16,34 +16,33 @@ class TestStatusControllerTillCommand(ControllerTestCase):
     def controller_class(self):
         return StatusController
 
-    def test_today_not_started_till_today(self):
-        self.now_to_return(hour=12, minute=34, second=56)
+    def test_today_not_started(self):
         actions = A().done()
         self.actions_to_return(actions)
 
         view: ListView = self.handle(["till"])
 
-        self.assertListEqual(view.list, ["20:34:56"])
-
-    def test_today_not_started_till_tomorrow(self):
-        self.now_to_return(hour=20, minute=30, second=40)
-        actions = A().done()
-        self.actions_to_return(actions)
-
-        view: ListView = self.handle(["till"])
-
-        self.assertListEqual(view.list, ["04:30:40"])
-
+        self.assertListEqual(view.list, [None])
 
     def test_today_started_till_today(self):
         self.now_to_return(hour=12, minute=34, second=56)
-        actions = A().start().at(hour=8).done()
+        actions = A().start().at(hour=9).done()
         self.actions_to_return(actions)
 
         view: ListView = self.handle(["till"])
 
-        self.assertListEqual(view.list, ["16:00:00"])
+        self.assertListEqual(view.list, ["17:00:00"])
 
+    def test_whatsup_started_till_today_overtime(self):
+        self.now_to_return(day=1, hour=19)
+        actions = A().start().at(day=1,hour=9).done()
+        self.actions_to_return(actions)
+
+        view: ListView = self.handle(["till"])
+
+        self.assertListEqual(view.list, ["17:00:00"])
+
+    # TODO should I change this behavior?
     def test_today_started_till_tomorrow(self):
         self.now_to_return(hour=21, minute=22, second=23)
         actions = A().start().at(hour=20, minute=30, second=40).done()
@@ -53,20 +52,11 @@ class TestStatusControllerTillCommand(ControllerTestCase):
 
         self.assertListEqual(view.list, ["04:30:40"])
 
-    def test_today_finished_till_today(self):
+    def test_today_finished(self):
         self.now_to_return(hour=10, minute=11, second=12)
         actions = A().start().at(hour=8).finish().at(hour=9).done()
         self.actions_to_return(actions)
 
         view: ListView = self.handle(["till"])
 
-        self.assertListEqual(view.list, ["17:11:12"])
-
-    def test_today_finished_till_tomorrow(self):
-        self.now_to_return(hour=21, minute=22, second=23)
-        actions = A().start().at(hour=20).finish().at(hour=21).done()
-        self.actions_to_return(actions)
-
-        view: ListView = self.handle(["till"])
-
-        self.assertListEqual(view.list, ["04:22:23"])
+        self.assertListEqual(view.list, [None])

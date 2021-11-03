@@ -1,4 +1,4 @@
-from ..common import State, actions_reducer
+from ..common import State, reduce_actions
 from ..actions import Action, Actions
 
 
@@ -23,7 +23,7 @@ def get_current_status_reducer(state, action):
 
 
 def get_current_status(actions):
-    return actions_reducer(get_current_status_reducer, actions)
+    return reduce_actions(get_current_status_reducer, actions)
 
 
 __all__ = ["get_current_status"]

@@ -1,4 +1,4 @@
-from ..common import State, actions_reducer
+from ..common import State, reduce_actions
 from ..actions import Action, Actions
 
 
@@ -36,7 +36,7 @@ def get_total_passed_time_reducer(state, action):
 
 def get_total_passed_time(actions, config):
     initial_state = PassedTimeState(0)
-    return actions_reducer(get_total_passed_time_reducer, actions, initial_state)
+    return reduce_actions(get_total_passed_time_reducer, actions, initial_state)
 
 
 __all__ = ["get_total_passed_time"]

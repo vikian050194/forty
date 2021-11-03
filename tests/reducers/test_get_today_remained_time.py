@@ -77,3 +77,15 @@ class TestGetTodayRemainedTime(TestCase):
         value = call(actions, get_config(day=test_day))
 
         self.assertEqual(value, 3590)
+
+    def test_overtime(self):
+        test_day = 1
+
+        actions = (A()
+            .start().at(hour=0, minute=0, second=0)
+            .finish().at(hour=2, minute=3, second=4)
+            .done())
+
+        value = call(actions, get_config(day=test_day))
+
+        self.assertEqual(value, -3784)

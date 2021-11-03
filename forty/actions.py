@@ -2,7 +2,7 @@ import enum
 from datetime import datetime
 from typing import Union
 
-from .common import to_iso
+from .common import dt_to_iso
 
 
 @enum.unique
@@ -63,4 +63,4 @@ class Action():
         return self.type == other.type and self.timestamp == other.timestamp and self.value == other.value
 
     def to_dict(self):
-        return dict(type=self.type, timestamp=to_iso(self.timestamp), value=self.value)
+        return dict(type=self.type, timestamp=dt_to_iso(self.timestamp), value=self.value)

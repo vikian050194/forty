@@ -1,9 +1,9 @@
 from unittest import TestCase, skip
 
-from forty.common import to_int
+from forty.common import hms_to_int
 
 
-call = to_int
+call = hms_to_int
 
 
 class TestToInt(TestCase):

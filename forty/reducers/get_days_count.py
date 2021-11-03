@@ -1,4 +1,4 @@
-from ..common import State, actions_reducer
+from ..common import State, reduce_actions
 from ..actions import Action, Actions
 from . import get_dates
 

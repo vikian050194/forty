@@ -2,7 +2,7 @@ from datetime import timedelta
 from .base import AbstractModel
 from ..actions import Action, Actions
 from ..reducers import *
-from ..common import to_hms, time_to_str
+from ..common import int_to_hms, time_to_hms
 
 
 class StatusModel(AbstractModel):
@@ -26,31 +26,34 @@ class StatusModel(AbstractModel):
 
         if is_today or is_passed:
             today_passed_time = get_today_passed_time(actions, config)
-            today_passed_time_value = to_hms(today_passed_time.value)
+            today_passed_time_value = int_to_hms(today_passed_time.value)
             values.append(today_passed_time_value)
 
         if config.day_limit and (is_today or is_remained):
             today_remained_time = get_today_remained_time(actions, config)
-            today_remained_time_value = to_hms(today_remained_time.value)
+            today_remained_time_value = int_to_hms(today_remained_time.value)
             values.append(today_remained_time_value)
 
         if is_total or is_passed:
             total_passed_time = get_total_passed_time(actions, config)
-            total_passed_time_value = to_hms(total_passed_time.value)
+            total_passed_time_value = int_to_hms(total_passed_time.value)
             values.append(total_passed_time_value)
 
         if config.total_limit and (is_total or is_remained):
             total_remained_time = get_total_remained_time(actions, config)
-            total_remained_time_value = to_hms(total_remained_time.value)
+            total_remained_time_value = int_to_hms(total_remained_time.value)
             values.append(total_remained_time_value)
 
-        if config.day_limit and is_till:
-            today_remained_time = get_today_remained_time(actions, config)
-            today_remained_timedelta = timedelta(seconds=today_remained_time.value)
-            till_time = (self.tm.get_datetime() + today_remained_timedelta).time()
-            till_time_value = time_to_str(till_time)
-            values.append(till_time_value)
-
+        if is_till:
+            if config.day_limit and status_value == Actions.START:
+                today_remained_time = get_today_remained_time(actions, config)
+                today_remained_timedelta = timedelta(seconds=today_remained_time.value)
+                till_time = (self.tm.get_datetime() + today_remained_timedelta).time()
+                till_time_value = time_to_hms(till_time)
+                values.append(till_time_value)
+            else:
+                values.append(None)
+                
         return values
 
     def all(self):

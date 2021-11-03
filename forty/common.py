@@ -1,19 +1,19 @@
 from datetime import datetime, time
 
 
-def to_iso(value: datetime):
+def dt_to_iso(value: datetime):
     return value.isoformat(sep='T', timespec='seconds')
 
 
-def from_iso(value: str):
+def iso_to_dt(value: str):
     return datetime.fromisoformat(value)
 
 
-def to_ymd(value: datetime):
+def dt_to_ymd(value: datetime):
     return f"{value.year:04d}-{value.month:02d}-{value.day:02d}"
 
 
-def actions_reducer(reducer, actions, initial_state = None):
+def reduce_actions(reducer, actions, initial_state = None):
     state = initial_state
     for action in actions:
         state = reducer(state, action)
@@ -25,7 +25,7 @@ class State():
         self.value = value
 
 
-def to_hms(value: int):
+def int_to_hms(value: int):
     sign = ""
     if value < 0:
         value = -1 * value
@@ -35,9 +35,9 @@ def to_hms(value: int):
     return f"{sign}{hours:02d}:{minutes:02d}:{seconds:02d}"
 
 
-def time_to_str(value: time):
+def time_to_hms(value: time):
     seconds = value.hour * 3600 + value.minute * 60 + value.second
-    return to_hms(seconds)
+    return int_to_hms(seconds)
 
 
 def normalize(values):
@@ -62,7 +62,7 @@ def normalize(values):
     raise ValueError()
 
 
-def to_int(value: str):
+def hms_to_int(value: str):
     [h, m, s] = normalize(value.split(':'))
     hours = int(h) * 3600
     minutes = int(m) * 60
@@ -70,8 +70,8 @@ def to_int(value: str):
     return hours + minutes + seconds
 
 
-def to_time(value: str):
-    total_seconds = to_int(value)
+def hms_to_time(value: str):
+    total_seconds = hms_to_int(value)
     hours, remainder = divmod(total_seconds, 3600)
     minutes, seconds = divmod(remainder, 60)
     return time(hour=hours, minute=minutes, second=seconds)
@@ -81,16 +81,3 @@ def value_decorator(f):
     def wrap(*args, **kwargs):
         return f(*args, **kwargs).value
     return wrap
-
-
-def cut_head(args, default_head_value = None):
-    command = default_head_value
-    options = []
-
-    if len(args) > 0:
-        command = args[0]
-
-    if len(args) > 1:
-        options = args[1:]
-
-    return (command, options)

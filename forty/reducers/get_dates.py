@@ -1,4 +1,4 @@
-from ..common import State, actions_reducer
+from ..common import State, reduce_actions
 from ..actions import Action, Actions
 
 
@@ -25,7 +25,7 @@ def get_dates_reducer(state, action):
 
 def get_dates(actions, config):
     initial_state = State([])
-    return actions_reducer(get_dates_reducer, actions, initial_state)
+    return reduce_actions(get_dates_reducer, actions, initial_state)
 
 
 __all__ = ["get_dates"]

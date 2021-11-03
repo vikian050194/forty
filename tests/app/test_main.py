@@ -100,7 +100,8 @@ class TestMain(TestCase):
         mock_print.reset_mock()
 
         self.call(["whatsup"])
-        mock_print.assert_has_calls([call("00:00:00"), call("00:00:00")])
+        # TODO should I change this behavior?
+        mock_print.assert_has_calls([call("00:00:00"), call("00:00:00"), call(None)])
         mock_print.reset_mock()
 
         self.call(["status"])
@@ -118,7 +119,7 @@ class TestMain(TestCase):
         mock_print.reset_mock()
 
         self.call(["whatsup"])
-        mock_print.assert_called_with("00:25:04")
+        mock_print.assert_has_calls([call("00:25:04"), call("00:25:04"), call(None)])
         mock_print.reset_mock()
 
         self.call(["today"])
