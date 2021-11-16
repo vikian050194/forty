@@ -26,13 +26,18 @@ Rigth now the best way to install **forty** is following one:
     ```
     git clone https://github.com/vikian050194/forty.git
     ```
-2. Install the package locally
+2. Make directory for custom bash completion scripts and grant full access for everyone (TODO: fix this dirty manual hack)
+    ```
+    mkdir "~/.bash_completion.d"
+    chmod 777 "~/.bash_completion.d"
+    ```
+3. Install the package locally
 
    Privileged user is required because bash completion file will be copied to `etc` directory
     ```
     pip3 install .
     ```
-3. Call installed package via a generated standalone "shim" script
+4. Call installed package via a generated standalone "shim" script
     ```
     forty
     ```
