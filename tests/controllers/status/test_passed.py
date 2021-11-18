@@ -1,4 +1,6 @@
-from forty.views.base import ListView
+from datetime import timedelta
+
+from forty.views.status import PassedStatusView
 from forty.tools import ActionsBuilder as A
 from forty.controllers import StatusController
 
@@ -14,6 +16,7 @@ class TestStatusControllerPassedCommand(ControllerTestCase):
         return StatusController
 
     def test_passed(self):
-        view: ListView = self.handle(["passed"])
+        view: PassedStatusView = self.handle(["passed"])
 
-        self.assertListEqual(view.list, ["00:00:00", "00:00:00"])
+        self.assertEqual(view.today, timedelta())
+        self.assertEqual(view.total, timedelta())

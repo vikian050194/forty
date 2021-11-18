@@ -5,33 +5,31 @@ from datetime import datetime, date, time
 
 from forty.managers.project_manager import AbstractProjectManager, Config, ProjectManager
 from forty.managers.time_manager import AbstractTimeManager, TimeManager
-from forty.controllers.base import AbstractController
+from forty.models.base import AbstractModel
 
 
 def get_project_manager_spec():
+    pm: AbstractProjectManager = create_autospec(spec=ProjectManager, spec_set=True, instance=True)
     # pm: AbstractProjectManager = Mock(spec=ProjectManager, spec_set=True)
     # pm: AbstractProjectManager = MagicMock(spec=ProjectManager, spec_set=True)
-    pm: AbstractProjectManager = create_autospec(spec=ProjectManager, spec_set=True, instance=True)
     return pm
 
 
 def get_time_manager_spec():
+    tm: AbstractTimeManager = create_autospec(spec=TimeManager, spec_set=True, instance=True)
     # tm: AbstractTimeManager = Mock(spec=TimeManager, spec_set=True)
     # tm: AbstractTimeManager = MagicMock(spec=TimeManager, spec_set=True)
-    tm: AbstractTimeManager = create_autospec(spec=TimeManager, spec_set=True, instance=True)
     return tm
 
 
-class ControllerTestCase(TestCase):
+class ModelTestCase(TestCase):
     def __init__(self, *args, **kwargs):
         TestCase.__init__(self, *args, **kwargs)
 
         self.pm: AbstractProjectManager = get_project_manager_spec()
-
         self.tm: AbstractTimeManager = get_time_manager_spec()
 
-        controller = self.controller_class(pm=self.pm, tm=self.tm)
-        self.handle = controller.handle
+        self.model = self.model_class(pm=self.pm, tm=self.tm)
 
     def setUp(self):
         self.pm.reset_mock()
@@ -53,7 +51,7 @@ class ControllerTestCase(TestCase):
         pass
 
     @property
-    def controller_class(self) -> AbstractController:
+    def model_class(self) -> AbstractModel:
         raise NotImplementedError()
 
     def project_to_return(self, project):
@@ -77,4 +75,4 @@ class ControllerTestCase(TestCase):
         self.tm.get_time = Mock(return_value=time_value)
 
 
-__all__ = ["ControllerTestCase"]
+__all__ = ["ModelTestCase"]

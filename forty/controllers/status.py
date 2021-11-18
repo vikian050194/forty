@@ -3,7 +3,6 @@ from typing import List
 from .base import AbstractController
 from ..actions import StatusOptions
 from ..reducers import *
-from ..views import StrView, ListView
 from ..models import StatusModel
 
 
@@ -16,43 +15,36 @@ class StatusController(AbstractController):
         self.handlers[StatusOptions.TOTAL] = self.handle_total
         self.handlers[StatusOptions.PASSED] = self.handle_passed
         self.handlers[StatusOptions.REMAINED] = self.handle_remained
-        self.handlers[StatusOptions.TILL] = self.handle_till
+        self.handlers[StatusOptions.INTERVAL] = self.handle_interval
 
 
     def handle_whatsup(self, options: List[str]):
         model = StatusModel(self.pm, self.tm)
-        all_values = model.all()
-        return ListView(all_values)
+        return model.all()
 
     def handle_status(self, options: List[str]):
         model = StatusModel(self.pm, self.tm)
-        [status_value] = model.status()
-        return StrView(status_value)
+        return model.status()
 
     def handle_today(self, options: List[str]):
         model = StatusModel(self.pm, self.tm)
-        today_values = model.today()
-        return ListView(today_values)
+        return model.today()
 
     def handle_total(self, options: List[str]):
         model = StatusModel(self.pm, self.tm)
-        total_values = model.total()
-        return ListView(total_values)
+        return model.total()
 
     def handle_passed(self, options: List[str]):
         model = StatusModel(self.pm, self.tm)
-        passed_values = model.passed()
-        return ListView(passed_values)
+        return model.passed()
 
     def handle_remained(self, options: List[str]):
         model = StatusModel(self.pm, self.tm)
-        remained_values = model.remained()
-        return ListView(remained_values)
+        return model.remained()
 
-    def handle_till(self, options: List[str]):
+    def handle_interval(self, options: List[str]):
         model = StatusModel(self.pm, self.tm)
-        till_values = model.till()
-        return ListView(till_values)
+        return model.interval()
 
 
 __all__ = ["StatusController"]

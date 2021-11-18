@@ -1,4 +1,5 @@
-from forty.views.base import ListView
+from datetime import timedelta
+from forty.views.status import RemainedStatusView
 from forty.tools import ActionsBuilder as A
 from forty.controllers import StatusController
 
@@ -14,6 +15,7 @@ class TestStatusControllerRemainedCommand(ControllerTestCase):
         return StatusController
 
     def test_remained(self):
-        view: ListView = self.handle(["remained"])
+        view: RemainedStatusView = self.handle(["remained"])
 
-        self.assertListEqual(view.list, ["08:00:00", "40:00:00"])
+        self.assertEqual(view.today, timedelta(hours=8))
+        self.assertEqual(view.total, timedelta(hours=40))

@@ -27,37 +27,35 @@ class TestMain(TestCase):
     def tearDownClass(cls):
         pass
 
-    @skip("not ready")
-    def test_void(self, mock_print):
+    def test_command_is_missed(self, mock_print):
         empty = []
 
         self.call(empty)
         actual_invocations = len(mock_print.call_args_list)
-        expected_invocations = 0
+        expected_invocations = 1
         self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("Error. Command is missed. Please try \"help\".")
         mock_print.reset_mock()
 
-    @skip("not ready")
-    def test_invalid(self, mock_print):
+    def test_unknown_command(self, mock_print):
         invalid = ["not_a_valid_option"]
 
         self.call(invalid)
         actual_invocations = len(mock_print.call_args_list)
-        expected_invocations = 0
+        expected_invocations = 1
         self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("Error. Unknown command \"not_a_valid_option\". Please try \"help\".")
         mock_print.reset_mock()
 
-    @skip("not ready")
     def test_help(self, mock_print):
         help = ["help"]
 
         self.call(help)
         actual_invocations = len(mock_print.call_args_list)
-        expected_invocations = 6
+        expected_invocations = 5
         self.assertEqual(actual_invocations, expected_invocations)
         mock_print.reset_mock()
 
-    # @skip("ready")
     def test_project(self, mock_print):
         self.call(["project", "get"])
         mock_print.assert_called_with("")
@@ -85,7 +83,7 @@ class TestMain(TestCase):
         mock_print.assert_called_with("aaa")
         mock_print.reset_mock()
 
-    @skip("test is not ready")
+    @skip("TODO")
     def test_no_project(self, mock_print):
         self.call(["start"])
         mock_print.assert_called_with("error: create")
@@ -93,47 +91,76 @@ class TestMain(TestCase):
 
         self.call(["finish"])
 
-    # @skip("ready")
-    def test_get(self, mock_print):
+    def test_status(self, mock_print):
         self.call(["project", "new", "aaa"])
         mock_print.assert_called_with("aaa")
         mock_print.reset_mock()
 
         self.call(["whatsup"])
-        # TODO should I change this behavior?
-        mock_print.assert_has_calls([call("00:00:00"), call("00:00:00"), call(None)])
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 7
+        self.assertEqual(actual_invocations, expected_invocations)
+        self.assertEqual(mock_print.call_args_list[0], call("status: None"))
+        self.assertEqual(mock_print.call_args_list[1], call("today_passed_time: 0:00:00"))
+        self.assertEqual(mock_print.call_args_list[2], call("today_remained_time: None"))
+        self.assertEqual(mock_print.call_args_list[3], call("total_passed_time: 0:00:00"))
+        self.assertEqual(mock_print.call_args_list[4], call("total_remained_time: None"))
+        self.assertEqual(mock_print.call_args_list[5], call("from_time: None"))
+        self.assertEqual(mock_print.call_args_list[6], call("to_time: None"))
         mock_print.reset_mock()
 
         self.call(["status"])
-        mock_print.assert_called_with("none")
+        mock_print.assert_called_with("status: None")
         mock_print.reset_mock()
         
         self.call(["start", "12:34:56"])
         self.call(["status"])
-        mock_print.assert_called_with("start")
+        mock_print.assert_called_with("status: start")
         mock_print.reset_mock()
 
         self.call(["finish", "13:00:00"])
         self.call(["status"])
-        mock_print.assert_called_with("finish")
+        mock_print.assert_called_with("status: finish")
         mock_print.reset_mock()
 
         self.call(["whatsup"])
-        mock_print.assert_has_calls([call("00:25:04"), call("00:25:04"), call(None)])
+        # self.assertEqual(mock_print.call_args_list[0], call("status: finish"))
+        self.assertEqual(mock_print.call_args_list[1], call("today_passed_time: 0:25:04"))
+        self.assertEqual(mock_print.call_args_list[2], call("today_remained_time: None"))
+        self.assertEqual(mock_print.call_args_list[3], call("total_passed_time: 0:25:04"))
+        self.assertEqual(mock_print.call_args_list[4], call("total_remained_time: None"))
+        self.assertEqual(mock_print.call_args_list[5], call("from_time: 12:34:56"))
+        self.assertEqual(mock_print.call_args_list[6], call("to_time: None"))
         mock_print.reset_mock()
 
         self.call(["today"])
-        mock_print.assert_called_with("00:25:04")
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 2
+        self.assertEqual(actual_invocations, expected_invocations)
+        self.assertEqual(mock_print.call_args_list[0], call("passed: 0:25:04"))
+        self.assertEqual(mock_print.call_args_list[1], call("remained: None"))
         mock_print.reset_mock()
 
         self.call(["total"])
-        mock_print.assert_called_with("00:25:04")
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 2
+        self.assertEqual(actual_invocations, expected_invocations)
+        self.assertEqual(mock_print.call_args_list[0], call("passed: 0:25:04"))
+        self.assertEqual(mock_print.call_args_list[1], call("remained: None"))
         mock_print.reset_mock()
 
         self.call(["passed"])
-        mock_print.assert_called_with("00:25:04")
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 2
+        self.assertEqual(actual_invocations, expected_invocations)
+        self.assertEqual(mock_print.call_args_list[0], call("today: 0:25:04"))
+        self.assertEqual(mock_print.call_args_list[1], call("total: 0:25:04"))
         mock_print.reset_mock()
 
         self.call(["remained"])
-        mock_print.assert_not_called()
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 2
+        self.assertEqual(actual_invocations, expected_invocations)
+        self.assertEqual(mock_print.call_args_list[0], call("today: None"))
+        self.assertEqual(mock_print.call_args_list[1], call("total: None"))
         mock_print.reset_mock()

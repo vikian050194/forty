@@ -1,9 +1,9 @@
-from datetime import date
+from datetime import date, time, timedelta
 
-from forty.managers.project_manager import Config
-from forty.views.base import ListView
+from forty.views.status import StatusView
 from forty.tools import ActionsBuilder as A
 from forty.controllers import StatusController
+from forty.managers.project_manager import Config
 
 from ..controller_test_case import ControllerTestCase
 
@@ -21,18 +21,42 @@ class TestStatusControllerWhatsupCommand(ControllerTestCase):
         actions = A().start().at(hour=8).done()
         self.actions_to_return(actions)
 
-        view: ListView = self.handle(["whatsup"])
+        view: StatusView = self.handle(["whatsup"])
 
-        self.assertListEqual(view.list, ["04:34:56", "03:25:04", "04:34:56", "35:25:04", "16:00:00"])
+        self.assertEqual(view.today_passed_time, timedelta(hours=4, minutes=34, seconds=56))
+        self.assertEqual(view.today_remained_time, timedelta(hours=3, minutes=25, seconds=4))
+        self.assertEqual(view.total_passed_time, timedelta(hours=4, minutes=34, seconds=56))
+        self.assertEqual(view.total_remained_time, timedelta(hours=35, minutes=25, seconds=4))
+        self.assertEqual(view.from_time, time(hour=8))
+        self.assertEqual(view.to_time, time(hour=16))
+
+    def test_whatsup_finished(self):
+        self.now_to_return(hour=18, minute=0, second=0)
+        actions = A().start().at(hour=8).finish().at(hour=12, minute=34, second=56).done()
+        self.actions_to_return(actions)
+
+        view: StatusView = self.handle(["whatsup"])
+
+        self.assertEqual(view.today_passed_time, timedelta(hours=4, minutes=34, seconds=56))
+        self.assertEqual(view.today_remained_time, timedelta(hours=3, minutes=25, seconds=4))
+        self.assertEqual(view.total_passed_time, timedelta(hours=4, minutes=34, seconds=56))
+        self.assertEqual(view.total_remained_time, timedelta(hours=35, minutes=25, seconds=4))
+        self.assertEqual(view.from_time, time(hour=8))
+        self.assertEqual(view.to_time, None)
 
     def test_whatsup_started_today_overtime(self):
         self.now_to_return(day=1, hour=9, minute=8, second=7)
         actions = A().start().at().done()
         self.actions_to_return(actions)
 
-        view: ListView = self.handle(["whatsup"])
+        view: StatusView = self.handle(["whatsup"])
 
-        self.assertListEqual(view.list, ["09:08:07", "-01:08:07", "09:08:07", "30:51:53", "08:00:00"])
+        self.assertEqual(view.today_passed_time, timedelta(hours=9, minutes=8, seconds=7))
+        self.assertEqual(view.today_remained_time, timedelta(hours=-1, minutes=-8, seconds=-7))
+        self.assertEqual(view.total_passed_time, timedelta(hours=9, minutes=8, seconds=7))
+        self.assertEqual(view.total_remained_time, timedelta(hours=30, minutes=51, seconds=53))
+        self.assertEqual(view.from_time, time())
+        self.assertEqual(view.to_time, time(hour=8))
 
     def test_whatsup_finished_total_overtime(self):
         test_config = Config(day_limit=8, total_limit=40)
@@ -53,15 +77,11 @@ class TestStatusControllerWhatsupCommand(ControllerTestCase):
             .done())
         self.actions_to_return(actions)
 
-        view: ListView = self.handle(["whatsup"])
+        view: StatusView = self.handle(["whatsup"])
 
-        self.assertListEqual(view.list, ["09:00:00", "-01:00:00", "41:00:00", "-01:00:00", None])
-
-    def test_whatsup_finished(self):
-        self.now_to_return(hour=18, minute=0, second=0)
-        actions = A().start().at(hour=8).finish().at(hour=12, minute=34, second=56).done()
-        self.actions_to_return(actions)
-
-        view: ListView = self.handle(["whatsup"])
-
-        self.assertListEqual(view.list, ["04:34:56", "03:25:04", "04:34:56", "35:25:04", None])
+        self.assertEqual(view.today_passed_time, timedelta(hours=9))
+        self.assertEqual(view.today_remained_time, timedelta(hours=-1))
+        self.assertEqual(view.total_passed_time, timedelta(hours=41))
+        self.assertEqual(view.total_remained_time, timedelta(hours=-1))
+        self.assertEqual(view.from_time, time(hour=9))
+        self.assertEqual(view.to_time, None)

@@ -32,7 +32,7 @@
 - [x] total
 - [x] passed
 - [x] remained
-- [x] till
+- [x] interval
 
 **Log**
 

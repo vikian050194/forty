@@ -37,15 +37,42 @@ class OutputManager():
 
 
     def emmit(self,  view: AbstractView):
+        # TODO implement exit codes and add ErrorView
         if type(view) is StrView:
             self.__print_message__(view.value)
+            return 0
         if type(view) is ListView:
             self.__print_list__(view.list)
+            return 0
         if type(view) is ActionView:
             self.__print_object__(view.action)
+            return 0
         if type(view) is LogView:
             self.__print_log__(view.list)
-
+            return 0
+        if type(view) is StatusView:
+            self.__print_object__(view)
+            return 0
+        if type(view) is TodayStatusView:
+            self.__print_object__(view)
+            return 0
+        if type(view) is TotalStatusView:
+            self.__print_object__(view)
+            return 0
+        if type(view) is PassedStatusView:
+            self.__print_object__(view)
+            return 0
+        if type(view) is RemainedStatusView:
+            self.__print_object__(view)
+            return 0
+        if type(view) is IntervalStatusView:
+            self.__print_object__(view)
+            return 0
+        if type(view) is OnlyStatusView:
+            self.__print_object__(view)
+            return 0
+        self.__print_message__("unknown view")
+        return 1
 
 
 __all__ = ["OutputManager"]

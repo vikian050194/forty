@@ -18,7 +18,6 @@ class Commands(str, enum.Enum):
     HELP = "help"
     VERSION = "version"
     PROJECT = "project"
-    GET = "get"
     RESET = "reset"
     LOG = "log"
     # PLUS = "plus"
@@ -40,7 +39,7 @@ class StatusOptions(str, enum.Enum):
     TOTAL = "total"
     PASSED = "passed"
     REMAINED = "remained"
-    TILL = "till"
+    INTERVAL = "interval"
 
 
 @enum.unique

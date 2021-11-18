@@ -1,67 +1,66 @@
 from datetime import timedelta
+
 from .base import AbstractModel
 from ..actions import Action, Actions
 from ..reducers import *
-from ..common import int_to_hms, time_to_hms
+from ..reducers.get_today_passed_time import filter_actions
+from ..views.status import OnlyStatusView, TodayStatusView, TotalStatusView, PassedStatusView, RemainedStatusView, IntervalStatusView, StatusView
+from ..common import int_to_timedelta
 
 
 class StatusModel(AbstractModel):
-    def _magic(self, is_status=False, is_today=False, is_total=False, is_passed=False, is_remained=False, is_till=False):
+    def _magic(self, is_status=False, is_today=False, is_total=False, is_passed=False, is_remained=False, is_interval=False):
         project = self.pm.load_project()
         config = self.pm.load_config()
         actions = self.pm.load_actions()
 
         status = get_current_status(actions)
-        status_value = "none"
+        status_value: Actions = None
         if status:
             status_value = status.value
 
         if actions and actions[-1].type != Actions.FINISH:
             actions.append(Action(Actions.FINISH, self.tm.get_datetime()))
 
-        values = []
+        view = StatusView()
 
         if is_status:
-            values.append(status_value)
+            view.status = status_value
 
         if is_today or is_passed:
             today_passed_time = get_today_passed_time(actions, config)
-            today_passed_time_value = int_to_hms(today_passed_time.value)
-            values.append(today_passed_time_value)
+            view.today_passed_time = int_to_timedelta(today_passed_time.value)
 
         if config.day_limit and (is_today or is_remained):
             today_remained_time = get_today_remained_time(actions, config)
-            today_remained_time_value = int_to_hms(today_remained_time.value)
-            values.append(today_remained_time_value)
+            view.today_remained_time = int_to_timedelta(today_remained_time.value)
 
         if is_total or is_passed:
             total_passed_time = get_total_passed_time(actions, config)
-            total_passed_time_value = int_to_hms(total_passed_time.value)
-            values.append(total_passed_time_value)
+            view.total_passed_time = int_to_timedelta(total_passed_time.value)
 
         if config.total_limit and (is_total or is_remained):
             total_remained_time = get_total_remained_time(actions, config)
-            total_remained_time_value = int_to_hms(total_remained_time.value)
-            values.append(total_remained_time_value)
+            view.total_remained_time = int_to_timedelta(total_remained_time.value)
 
-        if is_till:
+        if is_interval:
+            today_actions = list(filter_actions(actions, config.today))
+            if today_actions:
+                view.from_time = today_actions[0].timestamp.time()
             if config.day_limit and status_value == Actions.START:
                 today_remained_time = get_today_remained_time(actions, config)
-                today_remained_timedelta = timedelta(seconds=today_remained_time.value)
-                till_time = (self.tm.get_datetime() + today_remained_timedelta).time()
-                till_time_value = time_to_hms(till_time)
-                values.append(till_time_value)
-            else:
-                values.append(None)
+                today_remained_timedelta = int_to_timedelta(today_remained_time.value)
+                view.to_time = (self.tm.get_datetime() + today_remained_timedelta).time()
                 
-        return values
+        return view
 
     def all(self):
-        return self._magic(is_status=False, is_today=True, is_total=True, is_passed=True, is_remained=True, is_till=True)
+        return self._magic(is_status=False, is_today=True, is_total=True, is_passed=True, is_remained=True, is_interval=True)
 
 
     def status(self):
-        return self._magic(is_status=True)
+        all_view = self._magic(is_status=True)
+        return OnlyStatusView(status=all_view.status)
 
     def today(self):
         is_passed = False
@@ -70,7 +69,8 @@ class StatusModel(AbstractModel):
         #     option = options[0]
         #     is_passed = option == GetOptions.PASSED
         #     is_remained = option == GetOptions.REMAINED
-        return self._magic(is_today=True, is_passed=is_passed, is_remained=is_remained)
+        all_view = self._magic(is_today=True, is_passed=is_passed, is_remained=is_remained)
+        return TodayStatusView(passed=all_view.today_passed_time, remained=all_view.today_remained_time)
 
     def total(self):
         is_passed = False
@@ -79,16 +79,20 @@ class StatusModel(AbstractModel):
         #     option = options[0]
         #     is_passed = option == GetOptions.PASSED
         #     is_remained = option == GetOptions.REMAINED
-        return self._magic(is_total=True, is_passed=is_passed, is_remained=is_remained)
+        all_view = self._magic(is_total=True, is_passed=is_passed, is_remained=is_remained)
+        return TotalStatusView(passed=all_view.total_passed_time, remained=all_view.total_remained_time)
 
     def passed(self):
-        return self._magic(is_passed=True)
+        all_view = self._magic(is_passed=True)
+        return PassedStatusView(today=all_view.today_passed_time, total=all_view.total_passed_time)
 
     def remained(self):
-        return self._magic(is_status=False, is_remained=True)
+        all_view = self._magic(is_remained=True)
+        return RemainedStatusView(today=all_view.today_remained_time, total=all_view.total_remained_time)
 
-    def till(self):
-        return self._magic(is_till=True)
+    def interval(self):
+        all_view = self._magic(is_interval=True)
+        return IntervalStatusView(from_time=all_view.from_time, till_time=all_view.to_time)
 
 
 __all__ = ["StatusModel"]

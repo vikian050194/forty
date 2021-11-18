@@ -1,4 +1,4 @@
-from datetime import datetime, time
+from datetime import datetime, time, timedelta
 
 
 def dt_to_iso(value: datetime):
@@ -23,6 +23,15 @@ def reduce_actions(reducer, actions, initial_state = None):
 class State():
     def __init__(self, value=None):
         self.value = value
+
+def int_to_time(value: int) -> time:
+    hours, remainder = divmod(value, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    return time(hour=hours, minute=minutes, second=seconds)
+
+
+def int_to_timedelta(value: int) -> timedelta:
+    return timedelta(seconds=value)
 
 
 def int_to_hms(value: int):

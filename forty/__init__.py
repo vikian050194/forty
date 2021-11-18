@@ -1,10 +1,10 @@
 from typing import List
 
-from .actions import Commands
 from .controllers import controllers
 from .output import OutputManager
 from .managers import ProjectManager, TimeManager
 from .configuration import Configuration
+from .views import StrView
 
 
 def main(options: List[str], configuration: Configuration):
@@ -18,13 +18,18 @@ def main(options: List[str], configuration: Configuration):
         for new_key in ci.keys:
             cc[new_key] = ci.handle
 
-    command = Commands.HELP
+    command = None
     
     if len(options) > 0:
         command = options[0]
+    else:
+        om.emmit(StrView(f"Error. Command is missed. Please try \"help\"."))
+        return
 
-    if not command in cc:
-        command = Commands.HELP
-
-    view = cc[command](options)
-    om.emmit(view)
+    if command in cc:
+        view = cc[command](options)
+        om.emmit(view)
+        return
+    else:
+        om.emmit(StrView(f"Error. Unknown command \"{command}\". Please try \"help\"."))        
+        return

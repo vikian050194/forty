@@ -28,8 +28,8 @@ Rigth now the best way to install **forty** is following one:
     ```
 2. Make directory for custom bash completion scripts and grant full access for everyone (TODO: fix this dirty manual hack)
     ```
-    mkdir "~/.bash_completion.d"
-    chmod 777 "~/.bash_completion.d"
+    mkdir "$HOME/.bash_completion.d"
+    chmod 777 "$HOME/.bash_completion.d"
     ```
 3. Install the package locally
 
@@ -84,7 +84,7 @@ Time is optional and it's possible to specify just `h`, `hh` or `hh:mm` - all po
 | `total` | Total time |
 | `passed` | Passed time |
 | `remained` | Remained time |
-| `till` | Today you will work till |
+| `interval` | Today you are working `from` and `to` |
 
 **History**
 

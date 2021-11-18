@@ -1,7 +1,6 @@
 import abc
 from typing import List
 
-from ..actions import ActionType
 from ..managers import ProjectManager, TimeManager
 
 
@@ -27,6 +26,6 @@ class AbstractController(abc.ABC):
 
         if command in self.handlers:
             return self.handlers[command](args)
-
+        return None
 
 __all__ = ["AbstractController"]
