@@ -49,6 +49,11 @@ def time_to_hms(value: time):
     return int_to_hms(seconds)
 
 
+def timedelta_to_hms(value: timedelta):
+    seconds = value.seconds + 24 * 60 * 60 * value.days
+    return int_to_hms(seconds)
+
+
 def normalize(values):
     result = [*values]
     count = len(values)
