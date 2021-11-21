@@ -100,13 +100,13 @@ class TestMain(TestCase):
         actual_invocations = len(mock_print.call_args_list)
         expected_invocations = 7
         self.assertEqual(actual_invocations, expected_invocations)
-        self.assertEqual(mock_print.call_args_list[0], call("status: None"))
-        self.assertEqual(mock_print.call_args_list[1], call("today_passed_time: 00:00:00"))
+        self.assertEqual(mock_print.call_args_list[0], call("status:              None"))
+        self.assertEqual(mock_print.call_args_list[1], call("today_passed_time:   00:00:00"))
         self.assertEqual(mock_print.call_args_list[2], call("today_remained_time: None"))
-        self.assertEqual(mock_print.call_args_list[3], call("total_passed_time: 00:00:00"))
+        self.assertEqual(mock_print.call_args_list[3], call("total_passed_time:   00:00:00"))
         self.assertEqual(mock_print.call_args_list[4], call("total_remained_time: None"))
-        self.assertEqual(mock_print.call_args_list[5], call("from_time: None"))
-        self.assertEqual(mock_print.call_args_list[6], call("to_time: None"))
+        self.assertEqual(mock_print.call_args_list[5], call("from_time:           None"))
+        self.assertEqual(mock_print.call_args_list[6], call("to_time:             None"))
         mock_print.reset_mock()
 
         self.call(["status"])
@@ -124,20 +124,21 @@ class TestMain(TestCase):
         mock_print.reset_mock()
 
         self.call(["whatsup"])
+        # TODO: it is not working by some reason
         # self.assertEqual(mock_print.call_args_list[0], call("status: finish"))
-        self.assertEqual(mock_print.call_args_list[1], call("today_passed_time: 00:25:04"))
+        self.assertEqual(mock_print.call_args_list[1], call("today_passed_time:   00:25:04"))
         self.assertEqual(mock_print.call_args_list[2], call("today_remained_time: None"))
-        self.assertEqual(mock_print.call_args_list[3], call("total_passed_time: 00:25:04"))
+        self.assertEqual(mock_print.call_args_list[3], call("total_passed_time:   00:25:04"))
         self.assertEqual(mock_print.call_args_list[4], call("total_remained_time: None"))
-        self.assertEqual(mock_print.call_args_list[5], call("from_time: 12:34:56"))
-        self.assertEqual(mock_print.call_args_list[6], call("to_time: None"))
+        self.assertEqual(mock_print.call_args_list[5], call("from_time:           12:34:56"))
+        self.assertEqual(mock_print.call_args_list[6], call("to_time:             None"))
         mock_print.reset_mock()
 
         self.call(["today"])
         actual_invocations = len(mock_print.call_args_list)
         expected_invocations = 2
         self.assertEqual(actual_invocations, expected_invocations)
-        self.assertEqual(mock_print.call_args_list[0], call("passed: 00:25:04"))
+        self.assertEqual(mock_print.call_args_list[0], call("passed:   00:25:04"))
         self.assertEqual(mock_print.call_args_list[1], call("remained: None"))
         mock_print.reset_mock()
 
@@ -145,7 +146,7 @@ class TestMain(TestCase):
         actual_invocations = len(mock_print.call_args_list)
         expected_invocations = 2
         self.assertEqual(actual_invocations, expected_invocations)
-        self.assertEqual(mock_print.call_args_list[0], call("passed: 00:25:04"))
+        self.assertEqual(mock_print.call_args_list[0], call("passed:   00:25:04"))
         self.assertEqual(mock_print.call_args_list[1], call("remained: None"))
         mock_print.reset_mock()
 
