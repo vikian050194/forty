@@ -1,5 +1,5 @@
 from datetime import datetime
-from forty.actions import Action, Actions
+from forty.actions import Action, WorkOptions
 
 
 class DoneBuilder():
@@ -35,7 +35,7 @@ class StartBuilder(AtBuilder):
         actions = self.actions
         if self.action:
             actions = [*actions, Action(type=self.action, timestamp=self.timestamp)]
-        return ActionsBuilder(actions, Actions.START, None)
+        return ActionsBuilder(actions, WorkOptions.START, None)
 
 
 class FinishBuilder(AtBuilder):
@@ -43,7 +43,7 @@ class FinishBuilder(AtBuilder):
         actions = self.actions
         if self.action:
             actions = [*actions, Action(type=self.action, timestamp=self.timestamp)]
-        return ActionsBuilder(actions, Actions.FINISH, None)
+        return ActionsBuilder(actions, WorkOptions.FINISH, None)
 
 
 class ActionsBuilder(TestBuilder, StartBuilder, FinishBuilder):

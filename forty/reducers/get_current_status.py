@@ -1,5 +1,5 @@
 from ..common import State, reduce_actions
-from ..actions import Action, Actions
+from ..actions import Action, WorkOptions
 
 
 def on_action(state: State, action: Action):
@@ -7,8 +7,8 @@ def on_action(state: State, action: Action):
 
 
 controllers = {
-    Actions.START: on_action,
-    Actions.FINISH: on_action,
+    WorkOptions.START: on_action,
+    WorkOptions.FINISH: on_action,
 }
 
 

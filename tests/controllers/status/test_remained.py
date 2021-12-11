@@ -15,7 +15,7 @@ class TestStatusControllerRemainedCommand(ControllerTestCase):
         return StatusController
 
     def test_remained(self):
-        view: RemainedStatusView = self.handle(["remained"])
+        view: RemainedStatusView = self.handle(["status", "remained"])
 
         self.assertEqual(view.today, timedelta(hours=8))
         self.assertEqual(view.total, timedelta(hours=40))

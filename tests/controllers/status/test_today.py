@@ -23,7 +23,7 @@ class TestStatusControllerTodayCommand(ControllerTestCase):
         actions = A().start().at(hour=8).done()
         self.actions_to_return(actions)
 
-        view: TodayStatusView = self.handle(["today"])
+        view: TodayStatusView = self.handle(["status", "today"])
 
         self.assertEqual(view.passed, timedelta(hours=6, minutes=15, seconds=16))
         self.assertEqual(view.remained, timedelta(hours=1, minutes=44, seconds=44))
@@ -34,7 +34,7 @@ class TestStatusControllerTodayCommand(ControllerTestCase):
         actions = A().start().at(hour=8).done()
         self.actions_to_return(actions)
 
-        view: TodayStatusView = self.handle(["today"])
+        view: TodayStatusView = self.handle(["status", "today"])
 
         # TODO refactoring: negative timedelta is looking a bit weird
         self.assertEqual(view.passed, timedelta(hours=8, minutes=17, seconds=18))
@@ -49,7 +49,7 @@ class TestStatusControllerTodayCommand(ControllerTestCase):
         actions = A().start().at(day=1).done()
         self.actions_to_return(actions)
 
-        view: TodayStatusView = self.handle(["today"])
+        view: TodayStatusView = self.handle(["status", "today"])
 
         self.assertEqual(view.passed, timedelta(hours=3, minutes=4, seconds=5))
         self.assertEqual(view.remained, timedelta(hours=4, minutes=55, seconds=55))

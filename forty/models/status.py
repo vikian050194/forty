@@ -1,7 +1,7 @@
 from datetime import timedelta
 
 from .base import AbstractModel
-from ..actions import Action, Actions
+from ..actions import Action, WorkOptions
 from ..reducers import *
 from ..reducers.get_today_passed_time import filter_actions
 from ..views.status import OnlyStatusView, TodayStatusView, TotalStatusView, PassedStatusView, RemainedStatusView, IntervalStatusView, StatusView
@@ -15,12 +15,12 @@ class StatusModel(AbstractModel):
         actions = self.pm.load_actions()
 
         status = get_current_status(actions)
-        status_value: Actions = None
+        status_value: WorkOptions = None
         if status:
             status_value = status.value
 
-        if actions and actions[-1].type != Actions.FINISH:
-            actions.append(Action(Actions.FINISH, self.tm.get_datetime()))
+        if actions and actions[-1].type != WorkOptions.FINISH:
+            actions.append(Action(WorkOptions.FINISH, self.tm.get_datetime()))
 
         view = StatusView()
 
@@ -47,7 +47,7 @@ class StatusModel(AbstractModel):
             today_actions = list(filter_actions(actions, config.today))
             if today_actions:
                 view.from_time = today_actions[0].timestamp.time()
-            if config.day_limit and status_value == Actions.START:
+            if config.day_limit and status_value == WorkOptions.START:
                 today_remained_time = get_today_remained_time(actions, config)
                 today_remained_timedelta = int_to_timedelta(today_remained_time.value)
                 view.to_time = (self.tm.get_datetime() + today_remained_timedelta).time()
@@ -58,7 +58,7 @@ class StatusModel(AbstractModel):
         return self._magic(is_status=False, is_today=True, is_total=True, is_passed=True, is_remained=True, is_interval=True)
 
 
-    def status(self):
+    def only(self):
         all_view = self._magic(is_status=True)
         return OnlyStatusView(status=all_view.status)
 
@@ -92,7 +92,7 @@ class StatusModel(AbstractModel):
 
     def interval(self):
         all_view = self._magic(is_interval=True)
-        return IntervalStatusView(from_time=all_view.from_time, till_time=all_view.to_time)
+        return IntervalStatusView(from_time=all_view.from_time, to_time=all_view.to_time)
 
 
 __all__ = ["StatusModel"]

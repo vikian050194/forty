@@ -16,7 +16,7 @@ class TestStatusController(ControllerTestCase):
         return StatusController
 
     def test_total(self):
-        view: TotalStatusView = self.handle(["total"])
+        view: TotalStatusView = self.handle(["status", "total"])
 
         self.assertEqual(view.passed, timedelta())
         self.assertEqual(view.remained, timedelta(hours=40))
@@ -26,7 +26,7 @@ class TestStatusController(ControllerTestCase):
         actions = A().start().at(hour=9).done()
         self.actions_to_return(actions)
 
-        view: TotalStatusView = self.handle(["total"])
+        view: TotalStatusView = self.handle(["status", "total"])
 
         self.assertEqual(view.passed, timedelta(hours=10, minutes=33, seconds=42))
         self.assertEqual(view.remained, timedelta(hours=29, minutes=26, seconds=18))
@@ -36,7 +36,7 @@ class TestStatusController(ControllerTestCase):
         actions = A().start().at(day=1, hour=8).done()
         self.actions_to_return(actions)
 
-        view: TotalStatusView = self.handle(["total"])
+        view: TotalStatusView = self.handle(["status", "total"])
 
         self.assertEqual(view.passed, timedelta(hours=43, minutes=4, seconds=5))
         self.assertEqual(view.remained, timedelta(hours=-3, minutes=-4, seconds=-5))

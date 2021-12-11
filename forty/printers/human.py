@@ -4,7 +4,7 @@ from datetime import time, timedelta
 
 from .base import BasePrinter
 from ..common import time_to_hms, timedelta_to_hms
-from ..actions import Action, Actions
+from ..actions import Action, WorkOptions
 
 
 def to_str(value):
@@ -35,7 +35,7 @@ class HumanPrinter(BasePrinter):
             self.__print__(line)
 
     def print_log(self, list: List[Action]):
-        max_len = max([len(action_type.value) for action_type in Actions])
+        max_len = max([len(action_type.value) for action_type in WorkOptions])
         for item in list:
             line = f"{item.type.ljust(max_len)} {item.timestamp}"
             self.__print__(line)

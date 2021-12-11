@@ -3,7 +3,7 @@ from typing import Optional
 from datetime import time, timedelta
 
 from .base import AbstractView
-from ..actions import Actions
+from ..actions import WorkOptions
 
 
 class TodayStatusView(AbstractView):
@@ -31,19 +31,19 @@ class RemainedStatusView(AbstractView):
 
 
 class IntervalStatusView(AbstractView):
-    def __init__(self, from_time: time, till_time: time):
+    def __init__(self, from_time: time, to_time: time):
         self.from_time = from_time
-        self.till_time = till_time
+        self.to_time = to_time
 
 
 class OnlyStatusView(AbstractView):
-    def __init__(self, status: Optional[Actions]):
+    def __init__(self, status: Optional[WorkOptions]):
         self.status = status
 
 
 class StatusView(AbstractView):
     def __init__(self):
-        self.status: Actions = None
+        self.status: WorkOptions = None
         self.today_passed_time: timedelta = None
         self.today_remained_time: timedelta = None
         self.total_passed_time: timedelta = None

@@ -46,40 +46,36 @@ Rigth now the best way to install **forty** is following one:
 
 **forty** supports concurrent work on different projects like work, freelance or pet-projects
 
-There are *actions* and *commands*
+In general invocation has following format `[NOUN] [VERB] [OPTIONS]`
 
-But from user perspective there is no difference between this two types because it is all the same - just (different) options to invoke from the terminal
+### Work
 
-*Actions* are stored and used for calculations
-
-*Commands* are calculations and **TODO**
-
-### Actions
-
-**Work**
+Format: `forty work [VERB] [OPTION]`
 
 Time is optional and it's possible to specify just `h`, `hh` or `hh:mm` - all possible subcases of full format
 
-| Command | Description |
+| Verb | Description |
 | --- | --- |
 | `start hh:mm:ss` | Start work |
 | `finish hh:mm:ss` | Finish work |
 
-### Commands
+### Help
 
-**Help**
+Format: `forty help [VALUE]`
 
-| Command | Description |
+| Value | Description |
 | --- | --- |
 | `help` | Help information |
 | `version` | Installed version |
 
 **Status**
 
-| Command | Description |
+Format: `forty status [VALUE]`
+
+| Value | Description |
 | --- | --- |
 | `whatsup` | All possible information at once |
-| `status` | Current status |
+| `only` | Current status |
 | `today` | Today time |
 | `total` | Total time |
 | `passed` | Passed time |
@@ -88,7 +84,9 @@ Time is optional and it's possible to specify just `h`, `hh` or `hh:mm` - all po
 
 **History**
 
-| Command | Description |
+Format: `forty history [VERB] [OPTION]`
+
+| Verb | Description |
 | --- | --- |
 | `reset` | Remove all stored actions, clear the whole history |
 | `undo n` | Undo last `n` actions, `n` is optional and default value is `1` |
@@ -106,15 +104,17 @@ There are three ways and layers of configuration
 
 **Project-wide**
 
-| Command | Description | Value |
+| Name | Description | Value |
 | --- | --- | --- |
-| `day` | Day time limit | Optional |
-| `total` | Total time limit | Optional |
-| `break` | Default break duration | Optional |
+| `day_limit` | Day time limit | Optional |
+| `total_limit` | Total time limit | Optional |
+| TODO `break` | Default break duration | Optional |
 
 **Global**
 
-| Command | Description | Value |
+TODO
+
+| Name | Description | Value |
 | --- | --- | --- |
 | `break` | Default break duration | Optional |
 | `concurrency` | Auto-stop | Optional |

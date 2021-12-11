@@ -1,5 +1,5 @@
 from ..common import State, reduce_actions
-from ..actions import Action, Actions
+from ..actions import Action, WorkOptions
 from . import get_dates
 
 

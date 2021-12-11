@@ -1,5 +1,5 @@
 from ..common import State, reduce_actions
-from ..actions import Action, Actions
+from ..actions import Action, WorkOptions
 
 
 class PassedTimeState(State):
@@ -22,8 +22,8 @@ def on_finish(state: PassedTimeState, action: Action):
 
 
 controllers = {
-    Actions.START: on_start,
-    Actions.FINISH: on_finish
+    WorkOptions.START: on_start,
+    WorkOptions.FINISH: on_finish
 }
 
 

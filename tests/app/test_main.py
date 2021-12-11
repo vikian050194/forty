@@ -85,18 +85,18 @@ class TestMain(TestCase):
 
     @skip("TODO")
     def test_no_project(self, mock_print):
-        self.call(["start"])
+        self.call(["work", "start"])
         mock_print.assert_called_with("error: create")
         mock_print.reset_mock()
 
-        self.call(["finish"])
+        self.call(["work", "finish"])
 
     def test_status(self, mock_print):
         self.call(["project", "new", "aaa"])
         mock_print.assert_called_with("aaa")
         mock_print.reset_mock()
 
-        self.call(["whatsup"])
+        self.call(["status", "whatsup"])
         actual_invocations = len(mock_print.call_args_list)
         expected_invocations = 7
         self.assertEqual(actual_invocations, expected_invocations)
@@ -109,21 +109,21 @@ class TestMain(TestCase):
         self.assertEqual(mock_print.call_args_list[6], call("to_time:             None"))
         mock_print.reset_mock()
 
-        self.call(["status"])
+        self.call(["status", "only"])
         mock_print.assert_called_with("status: None")
         mock_print.reset_mock()
         
-        self.call(["start", "12:34:56"])
-        self.call(["status"])
+        self.call(["work", "start", "12:34:56"])
+        self.call(["status", "only"])
         mock_print.assert_called_with("status: start")
         mock_print.reset_mock()
 
-        self.call(["finish", "13:00:00"])
-        self.call(["status"])
+        self.call(["work", "finish", "13:00:00"])
+        self.call(["status", "only"])
         mock_print.assert_called_with("status: finish")
         mock_print.reset_mock()
 
-        self.call(["whatsup"])
+        self.call(["status", "whatsup"])
         # TODO: it is not working by some reason
         # self.assertEqual(mock_print.call_args_list[0], call("status: finish"))
         self.assertEqual(mock_print.call_args_list[1], call("today_passed_time:   00:25:04"))
@@ -134,7 +134,7 @@ class TestMain(TestCase):
         self.assertEqual(mock_print.call_args_list[6], call("to_time:             None"))
         mock_print.reset_mock()
 
-        self.call(["today"])
+        self.call(["status", "today"])
         actual_invocations = len(mock_print.call_args_list)
         expected_invocations = 2
         self.assertEqual(actual_invocations, expected_invocations)
@@ -142,7 +142,7 @@ class TestMain(TestCase):
         self.assertEqual(mock_print.call_args_list[1], call("remained: None"))
         mock_print.reset_mock()
 
-        self.call(["total"])
+        self.call(["status", "total"])
         actual_invocations = len(mock_print.call_args_list)
         expected_invocations = 2
         self.assertEqual(actual_invocations, expected_invocations)
@@ -150,7 +150,7 @@ class TestMain(TestCase):
         self.assertEqual(mock_print.call_args_list[1], call("remained: None"))
         mock_print.reset_mock()
 
-        self.call(["passed"])
+        self.call(["status", "passed"])
         actual_invocations = len(mock_print.call_args_list)
         expected_invocations = 2
         self.assertEqual(actual_invocations, expected_invocations)
@@ -158,10 +158,44 @@ class TestMain(TestCase):
         self.assertEqual(mock_print.call_args_list[1], call("total: 00:25:04"))
         mock_print.reset_mock()
 
-        self.call(["remained"])
+        self.call(["status", "remained"])
         actual_invocations = len(mock_print.call_args_list)
         expected_invocations = 2
         self.assertEqual(actual_invocations, expected_invocations)
         self.assertEqual(mock_print.call_args_list[0], call("today: None"))
         self.assertEqual(mock_print.call_args_list[1], call("total: None"))
+        mock_print.reset_mock()
+
+    def test_history_undo(self, mock_print):
+        self.call(["project", "new", "test_history"])
+
+        self.call(["work", "start", "12:34:56"])
+        self.call(["work", "finish", "13:00:00"])
+
+        self.call(["status", "only"])
+        mock_print.assert_called_with("status: finish")
+        mock_print.reset_mock()
+
+        self.call(["history", "undo"])
+
+        self.call(["status", "only"])
+        mock_print.assert_called_with("status: start")
+        mock_print.reset_mock()
+
+        self.call(["history", "undo"])
+
+        self.call(["status", "only"])
+        mock_print.assert_called_with("status: None")
+        mock_print.reset_mock()
+
+    def test_history_undo(self, mock_print):
+        self.call(["project", "new", "test_history"])
+
+        self.call(["work", "start", "12:34:56"])
+        self.call(["work", "finish", "13:00:00"])
+
+        self.call(["history", "reset"])
+        
+        self.call(["status", "only"])
+        mock_print.assert_called_with("status: None")
         mock_print.reset_mock()

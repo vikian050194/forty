@@ -1,4 +1,4 @@
-from forty.actions import Actions
+from forty.actions import WorkOptions
 from forty.views.status import OnlyStatusView
 from forty.tools import ActionsBuilder as A
 from forty.controllers import StatusController
@@ -6,7 +6,7 @@ from forty.controllers import StatusController
 from ..controller_test_case import ControllerTestCase
 
 
-class TestStatusControllerStatusCommand(ControllerTestCase):
+class TestStatusControllerOnlyCommand(ControllerTestCase):
     def __init__(self, *args, **kwargs):
         ControllerTestCase.__init__(self, *args, **kwargs)
 
@@ -15,7 +15,7 @@ class TestStatusControllerStatusCommand(ControllerTestCase):
         return StatusController
 
     def test_status(self):
-        view: OnlyStatusView = self.handle(["status"])
+        view: OnlyStatusView = self.handle(["status", "only"])
 
         self.assertEqual(view.status, None)
 
@@ -23,14 +23,14 @@ class TestStatusControllerStatusCommand(ControllerTestCase):
         actions = A().start().done()
         self.actions_to_return(actions)
 
-        view: OnlyStatusView = self.handle(["status"])
+        view: OnlyStatusView = self.handle(["status", "only"])
 
-        self.assertEqual(view.status, Actions.START)
+        self.assertEqual(view.status, WorkOptions.START)
 
     def test_status_finished(self):
         actions = A().finish().done()
         self.actions_to_return(actions)
 
-        view: OnlyStatusView = self.handle(["status"])
+        view: OnlyStatusView = self.handle(["status", "only"])
 
-        self.assertEqual(view.status, Actions.FINISH)
+        self.assertEqual(view.status, WorkOptions.FINISH)

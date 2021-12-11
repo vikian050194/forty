@@ -13,7 +13,7 @@ class TestHistoryControllerResetCommand(ControllerTestCase):
         return HistoryController
 
     def test_default(self):
-        view: StrView = self.handle(["reset"])
+        view: StrView = self.handle(["history", "reset"])
 
         self.pm.load_project.assert_called_once()
         self.pm.load_actions.assert_not_called()

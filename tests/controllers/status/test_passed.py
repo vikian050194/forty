@@ -16,7 +16,7 @@ class TestStatusControllerPassedCommand(ControllerTestCase):
         return StatusController
 
     def test_passed(self):
-        view: PassedStatusView = self.handle(["passed"])
+        view: PassedStatusView = self.handle(["status", "passed"])
 
         self.assertEqual(view.today, timedelta())
         self.assertEqual(view.total, timedelta())

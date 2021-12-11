@@ -1,7 +1,7 @@
 from typing import List
 
 from .base import AbstractController
-from ..actions import Commands, Actions, StatusOptions
+from ..actions import Commands, WorkOptions
 from ..views.base import ListView, StrView
 
 class HelpController(AbstractController):
@@ -15,17 +15,9 @@ class HelpController(AbstractController):
         lines = []
         lines.append((Commands.HELP, "get help"))
         lines.append((Commands.PROJECT, "manage projects"))
-        lines.append((Commands.RESET, "reset actions"))
-        # lines.append((StatusOptions.STATUS, "get status"))
-        # lines.append((Commands.PLUS, "plus delta time"))
-        # lines.append((Commands.MINUS, "minus delta time"))
-        # lines.append((Commands.BREAK, "start pause and automatically finish it after hh:mm:ss"))
-        # lines.append((Commands.CONFIG, "get or set configuration parameters"))
-
-        lines.append((Actions.START, "start work"))
-        lines.append((Actions.FINISH, "finish work"))
-        # lines.append((Actions.PAUSE, "pause work"))
-        # lines.append((Actions.RESUME, "resume work"))
+        lines.append((Commands.HISTORY, "history management"))
+        lines.append((Commands.STATUS, "get status"))
+        lines.append((Commands.WORK, "work"))
         return ListView(lines)
 
     def handle_version(self, options: List[str]):

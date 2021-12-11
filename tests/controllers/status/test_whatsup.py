@@ -21,7 +21,7 @@ class TestStatusControllerWhatsupCommand(ControllerTestCase):
         actions = A().start().at(hour=8).done()
         self.actions_to_return(actions)
 
-        view: StatusView = self.handle(["whatsup"])
+        view: StatusView = self.handle(["status", "whatsup"])
 
         self.assertEqual(view.today_passed_time, timedelta(hours=4, minutes=34, seconds=56))
         self.assertEqual(view.today_remained_time, timedelta(hours=3, minutes=25, seconds=4))
@@ -35,7 +35,7 @@ class TestStatusControllerWhatsupCommand(ControllerTestCase):
         actions = A().start().at(hour=8).finish().at(hour=12, minute=34, second=56).done()
         self.actions_to_return(actions)
 
-        view: StatusView = self.handle(["whatsup"])
+        view: StatusView = self.handle(["status", "whatsup"])
 
         self.assertEqual(view.today_passed_time, timedelta(hours=4, minutes=34, seconds=56))
         self.assertEqual(view.today_remained_time, timedelta(hours=3, minutes=25, seconds=4))
@@ -49,7 +49,7 @@ class TestStatusControllerWhatsupCommand(ControllerTestCase):
         actions = A().start().at().done()
         self.actions_to_return(actions)
 
-        view: StatusView = self.handle(["whatsup"])
+        view: StatusView = self.handle(["status", "whatsup"])
 
         self.assertEqual(view.today_passed_time, timedelta(hours=9, minutes=8, seconds=7))
         self.assertEqual(view.today_remained_time, timedelta(hours=-1, minutes=-8, seconds=-7))
@@ -77,7 +77,7 @@ class TestStatusControllerWhatsupCommand(ControllerTestCase):
             .done())
         self.actions_to_return(actions)
 
-        view: StatusView = self.handle(["whatsup"])
+        view: StatusView = self.handle(["status", "whatsup"])
 
         self.assertEqual(view.today_passed_time, timedelta(hours=9))
         self.assertEqual(view.today_remained_time, timedelta(hours=-1))
