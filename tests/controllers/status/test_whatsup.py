@@ -1,6 +1,7 @@
 from datetime import date, time, timedelta
 
 from forty.views.status import StatusView
+from forty.actions import WorkOptions
 from forty.tools import ActionsBuilder as A
 from forty.controllers import StatusController
 from forty.managers.project_manager import Config
@@ -23,6 +24,7 @@ class TestStatusControllerWhatsupCommand(ControllerTestCase):
 
         view: StatusView = self.handle(["status", "whatsup"])
 
+        self.assertEqual(view.status, WorkOptions.START)
         self.assertEqual(view.today_passed_time, timedelta(hours=4, minutes=34, seconds=56))
         self.assertEqual(view.today_remained_time, timedelta(hours=3, minutes=25, seconds=4))
         self.assertEqual(view.total_passed_time, timedelta(hours=4, minutes=34, seconds=56))
@@ -37,6 +39,7 @@ class TestStatusControllerWhatsupCommand(ControllerTestCase):
 
         view: StatusView = self.handle(["status", "whatsup"])
 
+        self.assertEqual(view.status, WorkOptions.FINISH)
         self.assertEqual(view.today_passed_time, timedelta(hours=4, minutes=34, seconds=56))
         self.assertEqual(view.today_remained_time, timedelta(hours=3, minutes=25, seconds=4))
         self.assertEqual(view.total_passed_time, timedelta(hours=4, minutes=34, seconds=56))
@@ -51,6 +54,7 @@ class TestStatusControllerWhatsupCommand(ControllerTestCase):
 
         view: StatusView = self.handle(["status", "whatsup"])
 
+        self.assertEqual(view.status, WorkOptions.START)
         self.assertEqual(view.today_passed_time, timedelta(hours=9, minutes=8, seconds=7))
         self.assertEqual(view.today_remained_time, timedelta(hours=-1, minutes=-8, seconds=-7))
         self.assertEqual(view.total_passed_time, timedelta(hours=9, minutes=8, seconds=7))
@@ -79,6 +83,7 @@ class TestStatusControllerWhatsupCommand(ControllerTestCase):
 
         view: StatusView = self.handle(["status", "whatsup"])
 
+        self.assertEqual(view.status, WorkOptions.FINISH)
         self.assertEqual(view.today_passed_time, timedelta(hours=9))
         self.assertEqual(view.today_remained_time, timedelta(hours=-1))
         self.assertEqual(view.total_passed_time, timedelta(hours=41))

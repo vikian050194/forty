@@ -55,7 +55,7 @@ class StatusModel(AbstractModel):
         return view
 
     def all(self):
-        return self._magic(is_status=False, is_today=True, is_total=True, is_passed=True, is_remained=True, is_interval=True)
+        return self._magic(is_status=True, is_today=True, is_total=True, is_passed=True, is_remained=True, is_interval=True)
 
 
     def only(self):

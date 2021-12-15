@@ -1,6 +1,5 @@
 import enum
 from datetime import datetime
-from typing import Union
 
 from .common import dt_to_iso
 
