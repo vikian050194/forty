@@ -128,7 +128,7 @@ class ProjectManager(AbstractProjectManager):
             raise Exception()
         
         with open(self.__get_config_file(), "w") as fw:
-            json.dump(config.to_dict(), fw)
+            json.dump(obj=config.to_dict(), fp=fw, sort_keys=True, indent=4)
 
     def load_actions(self):
         if not self.is_project_selected():
@@ -143,7 +143,7 @@ class ProjectManager(AbstractProjectManager):
 
         data = list(map(lambda item: item.to_dict(), actions))
         with open(self.__get_actions_file(), "w") as fw:
-            json.dump(data, fw)
+            json.dump(obj=data, fp=fw, sort_keys=True, indent=4)
 
     def initialize_new_project(self, project_name: str):
         self.select_project(project_name)

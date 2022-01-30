@@ -5,7 +5,7 @@
 
 ## About
 
-**forty** it a tool that can help you track (working) time, take a break and many more
+**forty** is a tool that can help you track (working) time, take a break and many more
 
 ## Motivation
 
