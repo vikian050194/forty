@@ -34,7 +34,7 @@ class TestMain(TestCase):
         actual_invocations = len(mock_print.call_args_list)
         expected_invocations = 1
         self.assertEqual(actual_invocations, expected_invocations)
-        mock_print.assert_called_with("Error. Command is missed. Please try \"help\".")
+        mock_print.assert_called_with("Error: Command is missed. Please try \"help\".")
         mock_print.reset_mock()
 
     def test_unknown_command(self, mock_print):
@@ -44,7 +44,7 @@ class TestMain(TestCase):
         actual_invocations = len(mock_print.call_args_list)
         expected_invocations = 1
         self.assertEqual(actual_invocations, expected_invocations)
-        mock_print.assert_called_with("Error. Unknown command \"not_a_valid_option\". Please try \"help\".")
+        mock_print.assert_called_with("Error: Unknown command \"not_a_valid_option\". Please try \"help\".")
         mock_print.reset_mock()
 
     def test_help(self, mock_print):
@@ -72,7 +72,7 @@ class TestMain(TestCase):
 
         self.call(["project", "new", "bbb"])
         self.call(["project", "set", "ccc"])
-        mock_print.assert_called_with("project ccc is not found")
+        mock_print.assert_called_with("Error: project \"ccc\" is not found")
         mock_print.reset_mock()
         self.call(["project", "get"])
         mock_print.assert_called_with("bbb")

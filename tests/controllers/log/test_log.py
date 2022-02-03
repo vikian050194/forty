@@ -1,5 +1,3 @@
-from unittest import skip
-
 from forty.tools import ActionsBuilder as A
 from forty.views import LogView
 from forty.controllers import LogController

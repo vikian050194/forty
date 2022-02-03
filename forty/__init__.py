@@ -4,7 +4,7 @@ from .controllers import controllers
 from .output import OutputManager
 from .managers import ProjectManager, TimeManager
 from .configuration import Configuration
-from .views import StrView
+from .views import ErrorView
 
 
 def main(options: List[str], configuration: Configuration):
@@ -23,13 +23,11 @@ def main(options: List[str], configuration: Configuration):
     if len(options) > 0:
         command = options[0]
     else:
-        om.emmit(StrView(f"Error. Command is missed. Please try \"help\"."))
+        om.emmit(ErrorView(f"Command is missed. Please try \"help\"."))
         return
 
     if command in cc:
         view = cc[command](options)
         om.emmit(view)
-        return
     else:
-        om.emmit(StrView(f"Error. Unknown command \"{command}\". Please try \"help\"."))        
-        return
+        om.emmit(ErrorView(f"Unknown command \"{command}\". Please try \"help\"."))        

@@ -34,7 +34,7 @@ class ProjectController(AbstractController):
     def on_get(self, options: List[str]):
         model = ProjectModel(self.pm, self.tm)
         current_project = model.get()
-        # TODO what if there is no project?
+        # TODO what if there are no projects?
         return StrView(current_project)
 
     def on_list(self, options: List[str]):
@@ -46,7 +46,10 @@ class ProjectController(AbstractController):
         model = ProjectModel(self.pm, self.tm)
         [name] = options
         new_project_name = model.new(name)
-        return StrView(new_project_name)
+        if new_project_name:
+            return StrView(new_project_name)
+        else:
+            return ErrorView(f"project \"{name}\" could not be (re)created")
 
     def on_set(self, options: List[str]):
         model = ProjectModel(self.pm, self.tm)
@@ -55,7 +58,7 @@ class ProjectController(AbstractController):
         if set_project_name:
             return StrView(set_project_name)
         else:
-            return StrView(f"project {name} is not found")
+            return ErrorView(f"project \"{name}\" is not found")
 
 
 __all__ = ["ProjectController"]

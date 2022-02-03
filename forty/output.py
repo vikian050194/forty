@@ -26,6 +26,9 @@ class OutputManager():
     def __print_message__(self, message):
         self.printer.print_message(message)
 
+    def __print_error__(self, message):
+        self.printer.print_error(message)
+
     def __print_list__(self, list):
         self.printer.print_list(list)
 
@@ -37,9 +40,12 @@ class OutputManager():
 
 
     def emmit(self,  view: AbstractView):
-        # TODO implement exit codes and add ErrorView
+        # TODO implement exit codes and add it into ErrorView
         if type(view) is StrView:
             self.__print_message__(view.value)
+            return 0
+        if type(view) is ErrorView:
+            self.__print_error__(view.value)
             return 0
         if type(view) is ListView:
             self.__print_list__(view.list)

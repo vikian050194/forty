@@ -12,8 +12,11 @@ class ProjectModel(AbstractModel):
         return sorted_projects_list
 
     def new(self, name):
-        self.pm.initialize_new_project(name)
-        return name
+        projects_list = self.pm.get_projects_list()
+        if not name in projects_list:
+            self.pm.initialize_new_project(name)
+            return name
+        return None
 
     def set(self, name):
         projects_list = self.pm.get_projects_list()

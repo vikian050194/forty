@@ -49,19 +49,18 @@ class TestProjectController(ControllerTestCase):
         self.pm.save_actions.assert_not_called()
         self.assertListEqual(view.list, ["aaa", "bbb", "ccc"])
 
-    @skip("not implemented")
+    @skip("TODO")
     def test_new_missed_name(self):
         view: StrView = self.handle(["project", "new"])
 
-        self.assertEqual(view.value, "new project name is not specified")
+        self.assertEqual(view.value, "Error: new project name is not specified")
 
-    @skip("not implemented")
     def test_new_not_unique_name(self):
         self.projects_to_return(["aaa", "bbb", "ccc"])
 
         view: StrView = self.handle(["project", "new", "aaa"])
 
-        self.assertEqual(view.value, "new project name should be unique")
+        self.assertEqual(view.value, "project \"aaa\" could not be (re)created")
 
     def test_new(self):
         self.projects_to_return(["aaa", "bbb", "ccc"])
@@ -75,7 +74,7 @@ class TestProjectController(ControllerTestCase):
 
         view: StrView = self.handle(["project", "set", "ddd"])
 
-        self.assertEqual(view.value, "project ddd is not found")
+        self.assertEqual(view.value, "project \"ddd\" is not found")
 
     def test_set_correct_name(self):
         self.projects_to_return(["aaa", "bbb", "ccc"])

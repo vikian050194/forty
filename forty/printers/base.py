@@ -8,6 +8,9 @@ class BasePrinter():
     def print_message(self, message):
         raise NotImplementedError()
 
+    def print_error(self, message):
+        raise NotImplementedError()
+
     def print_list(self, list):
         raise NotImplementedError()
 
