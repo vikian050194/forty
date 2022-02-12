@@ -2,6 +2,7 @@
 
 [![MIT license][license-badge]][license-url]
 [![Maintenance status][status-badge]][status-url]
+[![Code coverage][coverage-badge]][coverage-url]
 
 ## About
 
@@ -134,3 +135,6 @@ python3 -m unittest discover -t=. -s=tests/ -p=test_*.py
 
 [license-url]: https://github.com/vikian050194/forty/blob/master/LICENSE
 [license-badge]: https://img.shields.io/github/license/vikian050194/forty.svg
+
+[coverage-url]: https://codecov.io/gh/vikian050194/forty
+[coverage-badge]: https://img.shields.io/codecov/c/github/vikian050194/forty
