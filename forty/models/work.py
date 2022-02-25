@@ -5,7 +5,7 @@ from ..actions import Action, WorkOptions
 
 
 class WorkModel(AbstractModel):
-    def start(self, new_time: time):
+    def start(self, new_time: time = None):
         project = self.pm.load_project()
         actions = self.pm.load_actions()
 
@@ -22,11 +22,11 @@ class WorkModel(AbstractModel):
         self.pm.save_actions(actions)
         return new_action
 
-    def finish(self, new_time: time):
+    def finish(self, new_time: time = None):
         project = self.pm.load_project()
         actions = self.pm.load_actions()
 
-        if actions and actions[-1].type == WorkOptions.FINISH:
+        if not actions or (actions and actions[-1].type == WorkOptions.FINISH):
             return None
 
         timestamp = self.tm.get_datetime()

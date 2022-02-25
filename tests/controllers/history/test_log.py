@@ -1,6 +1,6 @@
 from forty.tools import ActionsBuilder as A
 from forty.views import LogView
-from forty.controllers import LogController
+from forty.controllers import HistoryController
 
 from ..controller_test_case import ControllerTestCase
 
@@ -11,7 +11,7 @@ class TestLogController(ControllerTestCase):
 
     @property
     def controller_class(self):
-        return LogController
+        return HistoryController
 
     def test_no_actions(self):
         view: LogView = self.handle(["log"])

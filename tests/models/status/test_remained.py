@@ -16,7 +16,7 @@ class TestStatusModelRemainedMethod(ModelTestCase):
     def model_class(self):
         return StatusModel
 
-    def test_default(self):
+    def test_no_actions(self):
         view: RemainedStatusView = self.model.remained()
 
         self.assertEqual(view.today, timedelta(hours=8))

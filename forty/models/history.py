@@ -2,11 +2,16 @@ from .base import AbstractModel
 
 
 class HistoryModel(AbstractModel):
+    def log(self):
+        self.pm.load_project()
+        actions = self.pm.load_actions()
+        return actions
+
     def reset(self):
         self.pm.load_project()
         self.pm.save_actions([])
 
-    def undo(self, count):
+    def undo(self, count = 1):
         self.pm.load_project()
         actions = self.pm.load_actions()
         if actions:

@@ -6,7 +6,6 @@ from .status import *
 from .project import *
 from .work import *
 from .history import *
-from .log import *
 
 
 controllers: List[AbstractController] = [
@@ -15,7 +14,6 @@ controllers: List[AbstractController] = [
     ProjectController,
     WorkController,
     HistoryController,
-    LogController
 ]
 
 

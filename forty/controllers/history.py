@@ -2,7 +2,7 @@ from typing import List
 
 from .base import AbstractController
 from ..actions import Commands, HistoryOptions
-from ..views import StrView
+from ..views import StrView, LogView
 from ..models import HistoryModel
 
 
@@ -10,6 +10,7 @@ class HistoryController(AbstractController):
     def __init__(self, pm, tm):
         super().__init__(pm, tm)
         self.handlers[Commands.HISTORY] = self.handle_subcommand
+        self.handlers[Commands.LOG] = self.handle_log
 
     def handle_subcommand(self, options: List[str]):
         subhandlers = {
@@ -28,6 +29,13 @@ class HistoryController(AbstractController):
 
         if command in subhandlers:
             return subhandlers[command](args)
+
+
+
+    def handle_log(self, options: List[str]):
+        model = HistoryModel(self.pm, self.tm)
+        actions = model.log()
+        return LogView(actions)
 
     def on_reset(self, options: List[str]):
         model = HistoryModel(self.pm, self.tm)

@@ -17,6 +17,7 @@ class TestProjectModelNewMethod(ModelTestCase):
         view: str = self.model.new("test")
 
         self.assertEqual(view, "test")
+        self.pm.initialize_new_project.assert_called_with("test")
 
     def test_already_exists(self):
         self.projects_to_return(["test"])
@@ -24,3 +25,4 @@ class TestProjectModelNewMethod(ModelTestCase):
         view: str = self.model.new("test")
 
         self.assertEqual(view, None)
+        self.pm.initialize_new_project.assert_not_called()
