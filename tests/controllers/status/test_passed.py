@@ -1,7 +1,6 @@
 from datetime import timedelta
 
 from forty.views.status import PassedStatusView
-from forty.tools import ActionsBuilder as A
 from forty.controllers import StatusController
 
 from ..controller_test_case import ControllerTestCase

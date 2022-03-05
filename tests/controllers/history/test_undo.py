@@ -33,7 +33,16 @@ class TestHistoryControllerUndoCommand(ControllerTestCase):
         self.pm.save_actions.assert_called_once_with(["one"])
         self.assertEqual(view.value, "last 2 actions are deleted")
 
-    @skip("TODO")
+    def test_try_two(self):
+        self.actions_to_return(["one"])
+
+        view: StrView = self.handle(["history", "undo", "2"])
+
+        self.pm.load_project.assert_called_once()
+        self.pm.load_actions.assert_called_once()
+        self.pm.save_actions.assert_called_once_with([])
+        self.assertEqual(view.value, "last 1 action is deleted")
+
     def test_no_actions(self):
         self.actions_to_return([])
 

@@ -1,9 +1,8 @@
-from datetime import date, time
+from datetime import time
 
 from forty.views.status import IntervalStatusView
 from forty.tools import ActionsBuilder as A
 from forty.controllers import StatusController
-from forty.managers.project_manager import Config
 
 from ..controller_test_case import ControllerTestCase
 

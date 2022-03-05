@@ -5,7 +5,7 @@ from forty.controllers import HistoryController
 from ..controller_test_case import ControllerTestCase
 
 
-class TestLogController(ControllerTestCase):
+class TestHistoryControllerLogCommand(ControllerTestCase):
     def __init__(self, *args, **kwargs):
         ControllerTestCase.__init__(self, *args, **kwargs)
 
@@ -28,4 +28,3 @@ class TestLogController(ControllerTestCase):
         view: LogView = self.handle(["log"])
 
         self.assertEqual(len(view.list), 2)
-

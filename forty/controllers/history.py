@@ -50,6 +50,8 @@ class HistoryController(AbstractController):
         actual_count = model.undo(count)
         if actual_count == 1:
             message = "last 1 action is deleted"
+        elif actual_count == 0:
+            message = "no actions are deleted"
         else:
             message = f"last {actual_count} actions are deleted"
         return StrView(message)
