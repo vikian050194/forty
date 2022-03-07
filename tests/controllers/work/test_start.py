@@ -1,4 +1,4 @@
-from forty.views import ActionView, StrView
+from forty.views import ActionView, InfoView
 from forty.actions import Action, WorkOptions
 from forty.controllers import WorkController
 
@@ -23,7 +23,7 @@ class TestWorkControllerStartCommand(ControllerTestCase):
 
         self.pm.save_actions.assert_called_once_with([Action(type=WorkOptions.START, timestamp=timestamp)])
         self.assertEqual(view.action.type, WorkOptions.START)
-        # TODO check timestamp
+        self.assertEqual(view.action.timestamp, timestamp)
 
     def test_specific_time(self):
         timestamp = self.tm.merge_time()
@@ -35,12 +35,12 @@ class TestWorkControllerStartCommand(ControllerTestCase):
 
         self.pm.save_actions.assert_called_once_with([Action(type=WorkOptions.START, timestamp=timestamp)])
         self.assertEqual(view.action.type, WorkOptions.START)
-        # TODO check merged timestamp
+        self.assertEqual(view.action.timestamp, timestamp)
 
     def test_do_nothing(self):
         self.actions_to_return([Action(type=WorkOptions.START, timestamp=None)])
 
-        view: StrView = self.handle(["work", "start"])
+        view: InfoView = self.handle(["work", "start"])
 
         self.pm.load_project.assert_called_once()
         self.pm.load_actions.assert_called_once()

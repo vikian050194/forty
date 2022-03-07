@@ -1,6 +1,6 @@
-from unittest import skip
-from forty.views import AbstractView, StrView, ListView
+from forty.views import ListView, InfoView
 from forty.controllers import ProjectController
+from forty.views.base import InfoView
 
 from ..controller_test_case import ControllerTestCase
 
@@ -15,13 +15,13 @@ class TestProjectControllerListCommand(ControllerTestCase):
 
     def test_list_no_projects(self):
         self.projects_to_return([])
-        # TODO should return message
-        view: ListView = self.handle(["project", "list"])
+
+        view: InfoView = self.handle(["project", "list"])
 
         self.pm.load_project.assert_not_called()
         self.pm.get_projects_list.assert_called_once()
         self.pm.save_actions.assert_not_called()
-        self.assertListEqual(view.list, [])
+        self.assertEqual(view.value, "there are no projects")
 
     def test_list_few_projects(self):
         self.projects_to_return(["aaa", "bbb", "ccc"])

@@ -8,6 +8,12 @@ class BasePrinter():
     def print_message(self, message):
         raise NotImplementedError()
 
+    def print_info(self, message):
+        raise NotImplementedError()
+
+    def print_warning(self, message):
+        raise NotImplementedError()
+
     def print_error(self, message):
         raise NotImplementedError()
 

@@ -19,8 +19,14 @@ class HumanPrinter(BasePrinter):
     def print_message(self, message):
         self.__print__(to_str(message))
 
+    def print_info(self, message):
+        self.__print__(f"INFO: {to_str(message)}")
+
+    def print_warning(self, message):
+        self.__print__(f"WARNING: {to_str(message)}")
+
     def print_error(self, message):
-        self.__print__(f"Error: {to_str(message)}")
+        self.__print__(f"ERROR: {to_str(message)}")
 
     def print_list(self, list):
         for item in list:

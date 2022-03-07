@@ -2,7 +2,7 @@ from typing import List
 
 from .base import AbstractController
 from ..actions import Commands, HistoryOptions
-from ..views import StrView, LogView
+from ..views import LogView, InfoView, WarningView
 from ..models import HistoryModel
 
 
@@ -40,21 +40,24 @@ class HistoryController(AbstractController):
     def on_reset(self, options: List[str]):
         model = HistoryModel(self.pm, self.tm)
         model.reset()
-        return StrView("all actions are deleted")
+        return InfoView("all actions are deleted")
 
     def on_undo(self, options: List[str]):
         model = HistoryModel(self.pm, self.tm)
-        count = 1
+        expected_count = 1
         if options:
-            count = int(options[0])
-        actual_count = model.undo(count)
+            expected_count = int(options[0])
+        actual_count = model.undo(expected_count)
         if actual_count == 1:
             message = "last 1 action is deleted"
         elif actual_count == 0:
             message = "no actions are deleted"
         else:
             message = f"last {actual_count} actions are deleted"
-        return StrView(message)
+        if expected_count != actual_count:
+            return WarningView(message)
+        else:
+            return InfoView(message)
 
 
 __all__ = ["HistoryController"]

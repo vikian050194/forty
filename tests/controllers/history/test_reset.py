@@ -1,4 +1,4 @@
-from forty.views import StrView
+from forty.views import InfoView
 from forty.controllers import HistoryController
 
 from ..controller_test_case import ControllerTestCase
@@ -15,8 +15,9 @@ class TestHistoryControllerResetCommand(ControllerTestCase):
     def test_default(self):
         self.actions_to_return(["first", "second", "third"])
 
-        view: StrView = self.handle(["history", "reset"])
+        view: InfoView = self.handle(["history", "reset"])
 
+        self.assertIsInstance(view, InfoView)
         self.pm.load_project.assert_called_once()
         self.pm.load_actions.assert_not_called()
         self.pm.save_actions.assert_called_once_with([])
@@ -25,8 +26,9 @@ class TestHistoryControllerResetCommand(ControllerTestCase):
     def test_no_actions(self):
         self.actions_to_return([])
 
-        view: StrView = self.handle(["history", "reset"])
+        view: InfoView = self.handle(["history", "reset"])
 
+        self.assertIsInstance(view, InfoView)
         self.pm.load_project.assert_called_once()
         self.pm.load_actions.assert_not_called()
         self.pm.save_actions.assert_called_once_with([])

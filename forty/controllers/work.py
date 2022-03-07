@@ -3,7 +3,7 @@ from typing import List
 from .base import AbstractController
 from ..actions import Commands ,WorkOptions
 from ..common import hms_to_time
-from ..views import ActionView, StrView
+from ..views import ActionView, InfoView
 from ..models import WorkModel
 
 
@@ -37,7 +37,7 @@ class WorkController(AbstractController):
         if new_action:
             return ActionView(new_action)
         else:
-            return StrView("already started")
+            return InfoView("already started")
 
     def on_finish(self, options: List[str]):
         model = WorkModel(self.pm, self.tm)
@@ -46,7 +46,7 @@ class WorkController(AbstractController):
         if new_action:
             return ActionView(new_action)
         else:
-            return StrView("already finished")
+            return InfoView("already finished")
 
 
 __all__ = ["WorkController"]

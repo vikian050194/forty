@@ -22,6 +22,12 @@ class ActionView(AbstractView):
         self.action = action
 
 
+class InfoView(StrView):
+    pass
+
+class WarningView(StrView):
+    pass
+
 class ErrorView(StrView):
     pass
 
@@ -30,5 +36,7 @@ __all__ = [
     "StrView",
     "ListView",
     "ActionView",
+    "InfoView",
+    "WarningView",
     "ErrorView"
 ]

@@ -23,11 +23,12 @@ def main(options: List[str], configuration: Configuration):
     if len(options) > 0:
         command = options[0]
     else:
-        om.emmit(ErrorView(f"Command is missed. Please try \"help\"."))
+        om.emmit(ErrorView(f"command is missed, please try \"help\""))
         return
 
     if command in cc:
         view = cc[command](options)
         om.emmit(view)
     else:
-        om.emmit(ErrorView(f"Unknown command \"{command}\". Please try \"help\"."))        
+        om.emmit(ErrorView(f"unknown command \"{command}\", please try \"help\""))
+

@@ -1,6 +1,6 @@
-from unittest import skip
-from forty.views import AbstractView, StrView, ListView
+from forty.views import InfoView, ErrorView
 from forty.controllers import ProjectController
+from forty.views.base import InfoView
 
 from ..controller_test_case import ControllerTestCase
 
@@ -13,22 +13,24 @@ class TestProjectControllerNewCommand(ControllerTestCase):
     def controller_class(self):
         return ProjectController
 
-    @skip("TODO")
-    def test_new_missed_name(self):
-        view: StrView = self.handle(["project", "new"])
+    def test_missed_name(self):
+        view: ErrorView = self.handle(["project", "new"])
 
-        self.assertEqual(view.value, "Error: new project name is not specified")
+        self.assertIsInstance(view, ErrorView)
+        self.assertEqual(view.value, "new project name is not specified")
 
-    def test_new_not_unique_name(self):
+    def test_not_unique_name(self):
         self.projects_to_return(["aaa", "bbb", "ccc"])
 
-        view: StrView = self.handle(["project", "new", "aaa"])
+        view: ErrorView = self.handle(["project", "new", "aaa"])
 
-        self.assertEqual(view.value, "project \"aaa\" could not be (re)created")
+        self.assertIsInstance(view, ErrorView)
+        self.assertEqual(view.value, "project \"aaa\" could not be created")
 
-    def test_new(self):
+    def test_happy_path(self):
         self.projects_to_return(["aaa", "bbb", "ccc"])
 
-        view: StrView = self.handle(["project", "new", "ddd"])
+        view: InfoView = self.handle(["project", "new", "ddd"])
 
+        self.assertIsInstance(view, InfoView)
         self.assertEqual(view.value, "ddd")

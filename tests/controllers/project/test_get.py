@@ -1,5 +1,5 @@
 from unittest import skip
-from forty.views import StrView
+from forty.views import StrView, InfoView
 from forty.controllers import ProjectController
 
 from ..controller_test_case import ControllerTestCase
@@ -13,15 +13,18 @@ class TestProjectControllerGetCommand(ControllerTestCase):
     def controller_class(self):
         return ProjectController
 
-    @skip("TODO")
     def test_get_no_current_project(self):
-        view: StrView = self.handle(["project", "get"])
+        self.project_to_return("")
 
-        self.assertEqual(view.value, "Error: current project is not specified")
+        view: InfoView = self.handle(["project", "get"])
+
+        self.assertIsInstance(view, InfoView)
+        self.assertEqual(view.value, "current project is not specified")
 
     def test_get(self):
         view: StrView = self.handle(["project", "get"])
 
+        self.assertIsInstance(view, StrView)
         self.pm.load_project.assert_called_once()
         self.pm.load_actions.assert_not_called()
         self.pm.save_actions.assert_not_called()

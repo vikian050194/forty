@@ -26,6 +26,12 @@ class OutputManager():
     def __print_message__(self, message):
         self.printer.print_message(message)
 
+    def __print_info__(self, message):
+        self.printer.print_info(message)
+
+    def __print_warning__(self, message):
+        self.printer.print_warning(message)
+
     def __print_error__(self, message):
         self.printer.print_error(message)
 
@@ -40,45 +46,36 @@ class OutputManager():
 
 
     def emmit(self,  view: AbstractView):
-        # TODO implement exit codes and add it into ErrorView
         if type(view) is StrView:
             self.__print_message__(view.value)
-            return 0
-        if type(view) is ErrorView:
+        elif type(view) is InfoView:
+            self.__print_info__(view.value)
+        elif type(view) is WarningView:
+            self.__print_warning__(view.value)
+        elif type(view) is ErrorView:
             self.__print_error__(view.value)
-            return 0
-        if type(view) is ListView:
+        elif type(view) is ListView:
             self.__print_list__(view.list)
-            return 0
-        if type(view) is ActionView:
+        elif type(view) is ActionView:
             self.__print_object__(view.action)
-            return 0
-        if type(view) is LogView:
+        elif type(view) is LogView:
             self.__print_log__(view.list)
-            return 0
-        if type(view) is StatusView:
+        elif type(view) is StatusView:
             self.__print_object__(view)
-            return 0
-        if type(view) is TodayStatusView:
+        elif type(view) is TodayStatusView:
             self.__print_object__(view)
-            return 0
-        if type(view) is TotalStatusView:
+        elif type(view) is TotalStatusView:
             self.__print_object__(view)
-            return 0
-        if type(view) is PassedStatusView:
+        elif type(view) is PassedStatusView:
             self.__print_object__(view)
-            return 0
-        if type(view) is RemainedStatusView:
+        elif type(view) is RemainedStatusView:
             self.__print_object__(view)
-            return 0
-        if type(view) is IntervalStatusView:
+        elif type(view) is IntervalStatusView:
             self.__print_object__(view)
-            return 0
-        if type(view) is OnlyStatusView:
+        elif type(view) is OnlyStatusView:
             self.__print_object__(view)
-            return 0
-        self.__print_message__("unknown view")
-        return 1
+        else:
+            self.__print_message__("unknown view")
 
 
 __all__ = ["OutputManager"]

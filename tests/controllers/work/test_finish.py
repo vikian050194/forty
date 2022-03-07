@@ -1,4 +1,4 @@
-from forty.views import ActionView, StrView
+from forty.views import ActionView, InfoView
 from forty.actions import Action, WorkOptions
 from forty.controllers import WorkController
 from forty.tools import ActionsBuilder as A
@@ -53,7 +53,7 @@ class TestWorkControllerFinishCommand(ControllerTestCase):
     def test_do_nothing(self):
         self.actions_to_return([Action(type=WorkOptions.FINISH, timestamp=None)])
 
-        view: StrView = self.handle(["work", "finish"])
+        view: InfoView = self.handle(["work", "finish"])
 
         self.pm.load_project.assert_called_once()
         self.pm.load_actions.assert_called_once()
