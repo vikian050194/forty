@@ -2,8 +2,9 @@ from typing import List
 
 from .base import AbstractController
 from ..actions import Commands, HistoryOptions
-from ..views import LogView, InfoView, WarningView
+from ..views import LogView, InfoView, WarningView, ListView, StrView
 from ..models import HistoryModel
+from ..common import iso_to_date
 
 
 class HistoryController(AbstractController):
@@ -15,7 +16,9 @@ class HistoryController(AbstractController):
     def handle_subcommand(self, options: List[str]):
         subhandlers = {
             HistoryOptions.RESET: self.on_reset,
-            HistoryOptions.UNDO: self.on_undo
+            HistoryOptions.UNDO: self.on_undo,
+            HistoryOptions.DATE: self.on_date,
+            HistoryOptions.CHECK: self.on_check,
         }
 
         command = None
@@ -30,8 +33,6 @@ class HistoryController(AbstractController):
         if command in subhandlers:
             return subhandlers[command](args)
 
-
-
     def handle_log(self, options: List[str]):
         model = HistoryModel(self.pm, self.tm)
         actions = model.log()
@@ -41,6 +42,14 @@ class HistoryController(AbstractController):
         model = HistoryModel(self.pm, self.tm)
         model.reset()
         return InfoView("all actions are deleted")
+
+    def on_date(self, options: List[str]):
+        model = HistoryModel(self.pm, self.tm)
+        dates = model.date()
+        if dates:
+            return ListView(dates)
+        else:
+            return InfoView("there are no dates")
 
     def on_undo(self, options: List[str]):
         model = HistoryModel(self.pm, self.tm)
@@ -58,6 +67,26 @@ class HistoryController(AbstractController):
             return WarningView(message)
         else:
             return InfoView(message)
+
+    def on_check(self, options: List[str]):
+        model = HistoryModel(self.pm, self.tm)
+        if options:
+            day = iso_to_date(options[0])
+            is_ok = model.check(day)
+            result_str = "OK" if is_ok else "bad"
+            return StrView(f"{options[0]} is {result_str}")
+        else:
+            results = []
+            dates = model.date()
+            for date in dates:
+                is_ok = model.check(date)
+                result_str = "OK" if is_ok else "bad"
+                check_result = f"{date} is {result_str}"
+                results.append(check_result)
+            if results:
+                return ListView(results)
+            else:
+                return InfoView("there is nothing to check")
 
 
 __all__ = ["HistoryController"]

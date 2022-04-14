@@ -31,6 +31,7 @@ class WarningView(StrView):
 class ErrorView(StrView):
     pass
 
+
 __all__ = [
     "AbstractView",
     "StrView",

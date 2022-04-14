@@ -12,6 +12,9 @@ def iso_to_dt(value: str):
 def dt_to_ymd(value: datetime):
     return f"{value.year:04d}-{value.month:02d}-{value.day:02d}"
 
+def iso_to_date(value: str):
+    return datetime.strptime(value, '%Y-%m-%d').date()
+
 
 def reduce_actions(reducer, actions, initial_state = None):
     state = initial_state

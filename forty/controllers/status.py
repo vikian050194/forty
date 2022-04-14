@@ -4,6 +4,7 @@ from .base import AbstractController
 from ..actions import Commands, StatusOptions
 from ..reducers import *
 from ..models import StatusModel
+from ..decorators import check_before
 
 
 class StatusController(AbstractController):
@@ -11,6 +12,7 @@ class StatusController(AbstractController):
         super().__init__(pm, tm)
         self.handlers[Commands.STATUS] = self.handle_subcommand
 
+    @check_before
     def handle_subcommand(self, options: List[str]):
         subhandlers = {
             StatusOptions.WHATSUP: self.on_whatsup,

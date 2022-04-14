@@ -48,5 +48,8 @@ class TimeManager(AbstractTimeManager):
         now = self.get_datetime()
         return datetime.combine(date=date, time=now.time(), tzinfo=self.timezone)
 
+    def merge_date_time(self, date: date, time: time) -> datetime:
+        return datetime.combine(date=date, time=time, tzinfo=self.timezone)
+
 
 __all__ = ["TimeManager"]

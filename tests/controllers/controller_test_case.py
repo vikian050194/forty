@@ -1,7 +1,7 @@
 from unittest import TestCase
-from unittest.mock import create_autospec, Mock, MagicMock
+from unittest.mock import create_autospec, Mock
 
-from datetime import datetime, date, time
+from datetime import datetime, date
 
 from forty.managers.project_manager import AbstractProjectManager, Config, ProjectManager
 from forty.managers.time_manager import AbstractTimeManager, TimeManager
@@ -9,17 +9,8 @@ from forty.controllers.base import AbstractController
 
 
 def get_project_manager_spec():
-    # pm: AbstractProjectManager = Mock(spec=ProjectManager, spec_set=True)
-    # pm: AbstractProjectManager = MagicMock(spec=ProjectManager, spec_set=True)
     pm: AbstractProjectManager = create_autospec(spec=ProjectManager, spec_set=True, instance=True)
     return pm
-
-
-def get_time_manager_spec():
-    # tm: AbstractTimeManager = Mock(spec=TimeManager, spec_set=True)
-    # tm: AbstractTimeManager = MagicMock(spec=TimeManager, spec_set=True)
-    tm: AbstractTimeManager = create_autospec(spec=TimeManager, spec_set=True, instance=True)
-    return tm
 
 
 class ControllerTestCase(TestCase):
@@ -28,7 +19,7 @@ class ControllerTestCase(TestCase):
 
         self.pm: AbstractProjectManager = get_project_manager_spec()
 
-        self.tm: AbstractTimeManager = get_time_manager_spec()
+        self.tm: AbstractTimeManager = TimeManager()
 
         controller = self.controller_class(pm=self.pm, tm=self.tm)
         self.handle = controller.handle
@@ -40,14 +31,6 @@ class ControllerTestCase(TestCase):
         config = Config(day_limit=8, total_limit=40)
         config.today = date(year=2021, month=1, day=1)
         self.pm.load_config = Mock(return_value=config)
-    
-        self.tm.reset_mock()
-        timestamp_now: datetime = create_autospec(spec=datetime, spec_set=True, instance=True)
-        timestamp_now.isoformat = Mock(return_value="test_time_now")
-        self.tm.get_datetime = Mock(return_value=timestamp_now)
-        timestamp_merge: datetime = create_autospec(spec=datetime, spec_set=True, instance=True)
-        timestamp_merge.isoformat = Mock(return_value="test_time_merge")
-        self.tm.merge_time = Mock(return_value=timestamp_merge)
 
     def tearDown(self):
         pass
@@ -71,10 +54,6 @@ class ControllerTestCase(TestCase):
     def now_to_return(self, year=2021, month=1, day=1, hour=0, minute=0, second=0):
         datetime_value = datetime(year, month, day, hour, minute, second)
         self.tm.get_datetime = Mock(return_value=datetime_value)
-        date_value = date(year, month, day)
-        self.tm.get_date = Mock(return_value=date_value)
-        time_value = time(hour, minute, second)
-        self.tm.get_time = Mock(return_value=time_value)
 
 
 __all__ = ["ControllerTestCase"]

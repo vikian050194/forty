@@ -20,7 +20,8 @@ class TestStatusControllerOnlyCommand(ControllerTestCase):
         self.assertEqual(view.status, None)
 
     def test_status_started(self):
-        actions = A().start().done()
+        self.now_to_return()
+        actions = A().start().at().done()
         self.actions_to_return(actions)
 
         view: OnlyStatusView = self.handle(["status", "only"])
@@ -28,7 +29,8 @@ class TestStatusControllerOnlyCommand(ControllerTestCase):
         self.assertEqual(view.status, WorkOptions.START)
 
     def test_status_finished(self):
-        actions = A().finish().done()
+        self.now_to_return()
+        actions = A().finish().at().done()
         self.actions_to_return(actions)
 
         view: OnlyStatusView = self.handle(["status", "only"])

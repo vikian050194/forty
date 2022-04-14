@@ -1,5 +1,3 @@
-from datetime import timedelta
-
 from .base import AbstractModel
 from ..actions import Action, WorkOptions
 from ..reducers import *

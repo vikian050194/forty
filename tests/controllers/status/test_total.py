@@ -1,6 +1,6 @@
 from datetime import timedelta
 
-from forty.views.status import TotalStatusView
+from forty.views import TotalStatusView, ErrorView
 from forty.tools import ActionsBuilder as A
 from forty.controllers import StatusController
 
@@ -36,7 +36,7 @@ class TestStatusController(ControllerTestCase):
         actions = A().start().at(day=1, hour=8).done()
         self.actions_to_return(actions)
 
-        view: TotalStatusView = self.handle(["status", "total"])
+        view: ErrorView = self.handle(["status", "total"])
 
-        self.assertEqual(view.passed, timedelta(hours=43, minutes=4, seconds=5))
-        self.assertEqual(view.remained, timedelta(hours=-3, minutes=-4, seconds=-5))
+        self.assertIsInstance(view, ErrorView)
+        self.assertEqual(view.value, "invalid state at 2021-01-01")

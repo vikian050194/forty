@@ -28,4 +28,5 @@ class AbstractController(abc.ABC):
             return self.handlers[command](args)
         return None
 
+
 __all__ = ["AbstractController"]

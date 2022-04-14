@@ -49,6 +49,8 @@ class ProjectOptions(str, enum.Enum):
 class HistoryOptions(str, enum.Enum):
     RESET = "reset"
     UNDO = "undo"
+    DATE = "date"
+    CHECK = "check"
     # REDO = "redo"
 
 

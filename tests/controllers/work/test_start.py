@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from forty.views import ActionView, InfoView
 from forty.actions import Action, WorkOptions
 from forty.controllers import WorkController
@@ -26,16 +28,17 @@ class TestWorkControllerStartCommand(ControllerTestCase):
         self.assertEqual(view.action.timestamp, timestamp)
 
     def test_specific_time(self):
-        timestamp = self.tm.merge_time()
+        self.now_to_return()
+        expected = Action(type=WorkOptions.START, timestamp=datetime(2021, 1, 1, 12, 34, 56))
         
         view: ActionView = self.handle(["work", "start", "12:34:56"])
 
         self.pm.load_project.assert_called_once()
         self.pm.load_actions.assert_called_once()
 
-        self.pm.save_actions.assert_called_once_with([Action(type=WorkOptions.START, timestamp=timestamp)])
+        self.pm.save_actions.assert_called_once_with([expected])
         self.assertEqual(view.action.type, WorkOptions.START)
-        self.assertEqual(view.action.timestamp, timestamp)
+        self.assertEqual(view.action.timestamp, datetime(2021, 1, 1, 12, 34, 56))
 
     def test_do_nothing(self):
         self.actions_to_return([Action(type=WorkOptions.START, timestamp=None)])

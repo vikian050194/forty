@@ -1,8 +1,8 @@
 import abc
 
-from .views import *
-from .printers import *
-from .configuration import Configuration, OutputFlagValues
+from ..views import *
+from ..printers import *
+from ..configuration import Configuration, OutputFlagValues
 
 
 class AbstractOutputManager(abc.ABC):
@@ -11,7 +11,7 @@ class AbstractOutputManager(abc.ABC):
         raise NotImplementedError()
 
 
-class OutputManager():
+class OutputManager(AbstractOutputManager):
     def __init__(self, configuration: Configuration):
         self.configuration = configuration
         self.printer: BasePrinter = None

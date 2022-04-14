@@ -1,8 +1,7 @@
 from typing import List
 
 from .controllers import controllers
-from .output import OutputManager
-from .managers import ProjectManager, TimeManager
+from .managers import ProjectManager, TimeManager, OutputManager
 from .configuration import Configuration
 from .views import ErrorView
 
