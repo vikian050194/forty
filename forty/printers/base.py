@@ -1,28 +1,39 @@
 import builtins
 
+from datetime import date, datetime, time, timedelta
+
+from ..views import MessageView
+from ..common import date_to_yms, dt_to_iso, time_to_hms, timedelta_to_hms
+
+
+def to_str(value):
+    if type(value) is time:
+        return time_to_hms(value)
+    if type(value) is timedelta:
+        return timedelta_to_hms(value)
+    if type(value) is date:
+        return date_to_yms(value)
+    if type(value) is datetime:
+        return dt_to_iso(value)
+    return value
+
 
 class BasePrinter():
     def __print__(self, message):
         builtins.print(message)
 
-    def print_message(self, message):
-        raise NotImplementedError()
-
-    def print_info(self, message):
-        raise NotImplementedError()
-
-    def print_warning(self, message):
-        raise NotImplementedError()
-
-    def print_error(self, message):
-        raise NotImplementedError()
-
-    def print_list(self, list):
+    def print_str(self, message: str):
         raise NotImplementedError()
 
     def print_object(self, object):
         raise NotImplementedError()
 
+    def print_message(self, message: MessageView):
+        raise NotImplementedError()
+
+    def print_list(self, list):
+        raise NotImplementedError()
+    
     def print_log(self, list):
         raise NotImplementedError()
 

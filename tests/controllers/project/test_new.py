@@ -1,6 +1,5 @@
 from forty.views import InfoView, ErrorView
 from forty.controllers import ProjectController
-from forty.views.base import InfoView
 
 from ..controller_test_case import ControllerTestCase
 

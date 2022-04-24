@@ -2,7 +2,7 @@ from typing import List
 
 from .base import AbstractController
 from ..actions import Commands, HistoryOptions
-from ..views import LogView, InfoView, WarningView, ListView, StrView
+from ..views import ActionLogView, LogView, InfoView, WarningView, ListView, StrView
 from ..models import HistoryModel
 from ..common import iso_to_date
 
@@ -36,6 +36,7 @@ class HistoryController(AbstractController):
     def handle_log(self, options: List[str]):
         model = HistoryModel(self.pm, self.tm)
         actions = model.log()
+        actions = list(map(lambda a: ActionLogView(a.type, a.value, a.timestamp), actions))
         return LogView(actions)
 
     def on_reset(self, options: List[str]):

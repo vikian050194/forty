@@ -25,8 +25,8 @@ class TestWorkControllerFinishCommand(ControllerTestCase):
         view: ActionView = self.handle(["work", "finish"])
 
         self.assertIsInstance(view, ActionView)
-        self.assertEqual(view.action.type, WorkOptions.FINISH)
-        self.assertEqual(view.action.timestamp, action_timestamp)
+        self.assertEqual(view.type, WorkOptions.FINISH)
+        self.assertEqual(view.timestamp, action_timestamp)
 
 
         self.assertEqual(self.pm.load_project.call_count, 3)
@@ -46,8 +46,8 @@ class TestWorkControllerFinishCommand(ControllerTestCase):
         view: ActionView = self.handle(["work", "finish", "12:34:56"])
 
         self.assertIsInstance(view, ActionView)
-        self.assertEqual(view.action.type, WorkOptions.FINISH)
-        self.assertEqual(view.action.timestamp, datetime(2021, 1, 1, 12, 34, 56))
+        self.assertEqual(view.type, WorkOptions.FINISH)
+        self.assertEqual(view.timestamp, datetime(2021, 1, 1, 12, 34, 56))
 
         self.assertEqual(self.pm.load_project.call_count, 3)
         self.assertEqual(self.pm.load_actions.call_count, 3)
@@ -94,8 +94,8 @@ class TestWorkControllerFinishCommand(ControllerTestCase):
         view: ActionView = self.handle(["work", "finish", "2021-01-01", "10:00:00"])
 
         self.assertIsInstance(view, ActionView)
-        self.assertEqual(view.action.type, WorkOptions.FINISH)
-        self.assertEqual(view.action.timestamp, datetime(2021, 1, 1, 10, 0, 0))
+        self.assertEqual(view.type, WorkOptions.FINISH)
+        self.assertEqual(view.timestamp, datetime(2021, 1, 1, 10, 0, 0))
 
         self.assertEqual(self.pm.load_project.call_count, 3)
         self.assertEqual(self.pm.load_actions.call_count, 3)
@@ -114,8 +114,8 @@ class TestWorkControllerFinishCommand(ControllerTestCase):
         view: ActionView = self.handle(["work", "finish", "2021-01-01", "10:00:00"])
 
         self.assertIsInstance(view, ActionView)
-        self.assertEqual(view.action.type, WorkOptions.FINISH)
-        self.assertEqual(view.action.timestamp, datetime(2021, 1, 1, 10, 0, 0))
+        self.assertEqual(view.type, WorkOptions.FINISH)
+        self.assertEqual(view.timestamp, datetime(2021, 1, 1, 10, 0, 0))
 
         self.assertEqual(self.pm.load_project.call_count, 3)
         self.assertEqual(self.pm.load_actions.call_count, 3)

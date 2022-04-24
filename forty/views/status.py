@@ -41,7 +41,7 @@ class OnlyStatusView(AbstractView):
         self.status = status
 
 
-class StatusView(AbstractView):
+class FullStatusView(AbstractView):
     def __init__(self):
         self.status: WorkOptions = None
         self.today_passed_time: timedelta = None
@@ -59,5 +59,5 @@ __all__ = [
     "RemainedStatusView",
     "IntervalStatusView",
     "OnlyStatusView",
-    "StatusView"
+    "FullStatusView"
 ]

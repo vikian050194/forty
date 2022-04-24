@@ -1,6 +1,6 @@
 from datetime import date, time, timedelta
 
-from forty.views.status import StatusView
+from forty.views.status import FullStatusView
 from forty.actions import WorkOptions
 from forty.tools import ActionsBuilder as A
 from forty.controllers import StatusController
@@ -22,7 +22,7 @@ class TestStatusControllerWhatsupCommand(ControllerTestCase):
         actions = A().start().at(hour=8).done()
         self.actions_to_return(actions)
 
-        view: StatusView = self.handle(["status", "whatsup"])
+        view: FullStatusView = self.handle(["status", "whatsup"])
 
         self.assertEqual(view.status, WorkOptions.START)
         self.assertEqual(view.today_passed_time, timedelta(hours=4, minutes=34, seconds=56))
@@ -37,7 +37,7 @@ class TestStatusControllerWhatsupCommand(ControllerTestCase):
         actions = A().start().at(hour=8).finish().at(hour=12, minute=34, second=56).done()
         self.actions_to_return(actions)
 
-        view: StatusView = self.handle(["status", "whatsup"])
+        view: FullStatusView = self.handle(["status", "whatsup"])
 
         self.assertEqual(view.status, WorkOptions.FINISH)
         self.assertEqual(view.today_passed_time, timedelta(hours=4, minutes=34, seconds=56))
@@ -52,7 +52,7 @@ class TestStatusControllerWhatsupCommand(ControllerTestCase):
         actions = A().start().at().done()
         self.actions_to_return(actions)
 
-        view: StatusView = self.handle(["status", "whatsup"])
+        view: FullStatusView = self.handle(["status", "whatsup"])
 
         self.assertEqual(view.status, WorkOptions.START)
         self.assertEqual(view.today_passed_time, timedelta(hours=9, minutes=8, seconds=7))
@@ -81,7 +81,7 @@ class TestStatusControllerWhatsupCommand(ControllerTestCase):
             .done())
         self.actions_to_return(actions)
 
-        view: StatusView = self.handle(["status", "whatsup"])
+        view: FullStatusView = self.handle(["status", "whatsup"])
 
         self.assertEqual(view.status, WorkOptions.FINISH)
         self.assertEqual(view.today_passed_time, timedelta(hours=9))

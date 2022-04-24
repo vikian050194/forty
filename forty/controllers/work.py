@@ -38,7 +38,7 @@ class WorkController(AbstractController):
         new_time = hms_to_time(options[0]) if options else None
         new_action = model.start(new_time)
         if new_action:
-            return ActionView(new_action)
+            return ActionView(new_action.type, new_action.value, new_action.timestamp)
         else:
             return InfoView("already started")
 
@@ -54,7 +54,7 @@ class WorkController(AbstractController):
             new_date = iso_to_date(options[0])
         new_action = model.finish(new_date=new_date, new_time=new_time)
         if new_action:
-            return ActionView(new_action)
+            return ActionView(new_action.type, new_action.value, new_action.timestamp)
         else:
             return InfoView("already finished")
 

@@ -1,36 +1,14 @@
 from typing import List
 
-from datetime import time, timedelta
+from forty.views.log import ActionLogView
 
-from .base import BasePrinter
-from ..common import time_to_hms, timedelta_to_hms
-from ..actions import Action, WorkOptions
-
-
-def to_str(value):
-    if type(value) is time:
-        return time_to_hms(value)
-    if type(value) is timedelta:
-        return timedelta_to_hms(value)
-    return value
+from .base import BasePrinter, to_str
+from ..actions import WorkOptions
 
 
 class HumanPrinter(BasePrinter):
-    def print_message(self, message):
-        self.__print__(to_str(message))
-
-    def print_info(self, message):
-        self.__print__(f"INFO: {to_str(message)}")
-
-    def print_warning(self, message):
-        self.__print__(f"WARNING: {to_str(message)}")
-
-    def print_error(self, message):
-        self.__print__(f"ERROR: {to_str(message)}")
-
-    def print_list(self, list):
-        for item in list:
-            self.__print__(item)
+    def print_str(self, message):
+        self.__print__(to_str(message.value))
 
     def print_object(self, object):
         object_dict = object.__dict__
@@ -43,7 +21,14 @@ class HumanPrinter(BasePrinter):
             line = f"{key}:{' '.ljust(delta_space)}{to_str(object_dict[key])}"
             self.__print__(line)
 
-    def print_log(self, list: List[Action]):
+    def print_message(self, message):
+        self.__print__(f"{message.level}: {to_str(message.value)}")
+
+    def print_list(self, list):
+        for item in list:
+            self.__print__(item)
+    
+    def print_log(self, list: List[ActionLogView]):
         max_len = max([len(action_type.value) for action_type in WorkOptions])
         for item in list:
             line = f"{item.type.ljust(max_len)} {item.timestamp}"

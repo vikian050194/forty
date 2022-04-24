@@ -23,17 +23,11 @@ class OutputManager(AbstractOutputManager):
         if configuration.output == OutputFlagValues.JSON:
             self.printer = JsonPrinter()
 
-    def __print_message__(self, message):
+    def __print_str__(self, message):
+        self.printer.print_str(message)
+
+    def __print_message__(self, message: MessageView):
         self.printer.print_message(message)
-
-    def __print_info__(self, message):
-        self.printer.print_info(message)
-
-    def __print_warning__(self, message):
-        self.printer.print_warning(message)
-
-    def __print_error__(self, message):
-        self.printer.print_error(message)
 
     def __print_list__(self, list):
         self.printer.print_list(list)
@@ -47,20 +41,20 @@ class OutputManager(AbstractOutputManager):
 
     def emmit(self,  view: AbstractView):
         if type(view) is StrView:
-            self.__print_message__(view.value)
+            self.__print_str__(view)
         elif type(view) is InfoView:
-            self.__print_info__(view.value)
+            self.__print_message__(view)
         elif type(view) is WarningView:
-            self.__print_warning__(view.value)
+            self.__print_message__(view)
         elif type(view) is ErrorView:
-            self.__print_error__(view.value)
+            self.__print_message__(view)
         elif type(view) is ListView:
             self.__print_list__(view.list)
         elif type(view) is ActionView:
-            self.__print_object__(view.action)
+            self.__print_object__(view)
         elif type(view) is LogView:
             self.__print_log__(view.list)
-        elif type(view) is StatusView:
+        elif type(view) is FullStatusView:
             self.__print_object__(view)
         elif type(view) is TodayStatusView:
             self.__print_object__(view)
@@ -75,7 +69,7 @@ class OutputManager(AbstractOutputManager):
         elif type(view) is OnlyStatusView:
             self.__print_object__(view)
         else:
-            self.__print_message__("unknown view")
+            self.__print_str__("unknown view")
 
 
 __all__ = ["OutputManager"]

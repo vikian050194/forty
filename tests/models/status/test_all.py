@@ -1,6 +1,6 @@
 from datetime import time, date, timedelta
 from forty.managers.project_manager import Config
-from forty.views import StatusView
+from forty.views import FullStatusView
 from forty.models import StatusModel
 from forty.tools import ActionsBuilder as A
 from forty.actions import WorkOptions
@@ -17,7 +17,7 @@ class TestStatusModelIntervalMethod(ModelTestCase):
         return StatusModel
 
     def test_no_actions(self):
-        view: StatusView = self.model.all()
+        view: FullStatusView = self.model.all()
 
         self.assertEqual(view.status, None)
         self.assertEqual(view.today_passed_time, timedelta())
@@ -35,7 +35,7 @@ class TestStatusModelIntervalMethod(ModelTestCase):
         actions = A().start().at(hour=9).done()
         self.actions_to_return(actions)
 
-        view: StatusView = self.model.all()
+        view: FullStatusView = self.model.all()
 
         self.assertEqual(view.status, WorkOptions.START)
         self.assertEqual(view.today_passed_time, timedelta(hours=4))
@@ -50,7 +50,7 @@ class TestStatusModelIntervalMethod(ModelTestCase):
         actions = A().start().at(hour=9).finish().at(hour=13).done()
         self.actions_to_return(actions)
 
-        view: StatusView = self.model.all()
+        view: FullStatusView = self.model.all()
 
         self.assertEqual(view.status, WorkOptions.FINISH)
         self.assertEqual(view.today_passed_time, timedelta(hours=4))
@@ -72,7 +72,7 @@ class TestStatusModelIntervalMethod(ModelTestCase):
                 .done())
         self.actions_to_return(actions)
 
-        view: StatusView = self.model.all()
+        view: FullStatusView = self.model.all()
 
         self.assertEqual(view.status, WorkOptions.START)
         self.assertEqual(view.today_passed_time, timedelta(hours=4))
@@ -96,7 +96,7 @@ class TestStatusModelIntervalMethod(ModelTestCase):
                 .done())
         self.actions_to_return(actions)
 
-        view: StatusView = self.model.all()
+        view: FullStatusView = self.model.all()
 
         self.assertEqual(view.status, WorkOptions.FINISH)
         self.assertEqual(view.today_passed_time, timedelta(hours=4))

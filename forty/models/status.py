@@ -2,7 +2,7 @@ from .base import AbstractModel
 from ..actions import Action, WorkOptions
 from ..reducers import *
 from ..reducers.get_today_passed_time import filter_actions
-from ..views.status import OnlyStatusView, TodayStatusView, TotalStatusView, PassedStatusView, RemainedStatusView, IntervalStatusView, StatusView
+from ..views.status import OnlyStatusView, TodayStatusView, TotalStatusView, PassedStatusView, RemainedStatusView, IntervalStatusView, FullStatusView
 from ..common import int_to_timedelta
 
 
@@ -20,7 +20,7 @@ class StatusModel(AbstractModel):
         if actions and actions[-1].type != WorkOptions.FINISH:
             actions.append(Action(WorkOptions.FINISH, self.tm.get_datetime()))
 
-        view = StatusView()
+        view = FullStatusView()
 
         if is_status:
             view.status = status_value

@@ -61,6 +61,10 @@
 
 ## Configuration
 
+**Flags**
+
+- [ ] output format
+
 **Environment**
 
 - [x] home directory
