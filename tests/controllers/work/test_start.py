@@ -18,7 +18,7 @@ class TestWorkControllerStartCommand(ControllerTestCase):
     def test_default(self):
         timestamp = self.tm.get_datetime()
 
-        view: ActionView = self.handle(["work", "start"])
+        view: ActionView = self.handle(["start"])
 
         self.pm.load_project.assert_called_once()
         self.pm.load_actions.assert_called_once()
@@ -31,7 +31,7 @@ class TestWorkControllerStartCommand(ControllerTestCase):
         self.now_to_return()
         expected = Action(type=WorkOptions.START, timestamp=datetime(2021, 1, 1, 12, 34, 56))
         
-        view: ActionView = self.handle(["work", "start", "12:34:56"])
+        view: ActionView = self.handle(["start", "12:34:56"])
 
         self.pm.load_project.assert_called_once()
         self.pm.load_actions.assert_called_once()
@@ -43,7 +43,7 @@ class TestWorkControllerStartCommand(ControllerTestCase):
     def test_do_nothing(self):
         self.actions_to_return([Action(type=WorkOptions.START, timestamp=None)])
 
-        view: InfoView = self.handle(["work", "start"])
+        view: InfoView = self.handle(["start"])
 
         self.pm.load_project.assert_called_once()
         self.pm.load_actions.assert_called_once()

@@ -4,12 +4,17 @@ from .controllers import controllers
 from .managers import ProjectManager, TimeManager, OutputManager
 from .configuration import Configuration
 from .views import ErrorView
+from .actions import Commands
 
 
 def main(options: List[str], configuration: Configuration):
     tm = TimeManager()
     pm = ProjectManager(tm, configuration)
     om = OutputManager(configuration)
+
+    # TODO improve defaults mechanism
+    defaults = dict()
+    defaults[Commands.STATUS] = configuration.status
 
     cc = {}
     for c in controllers:
@@ -26,6 +31,8 @@ def main(options: List[str], configuration: Configuration):
         return
 
     if command in cc:
+        if len(options) < 2 and command in defaults:
+            options.append(defaults.get(command))
         view = cc[command](options)
         om.emmit(view)
     else:

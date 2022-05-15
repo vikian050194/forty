@@ -3,7 +3,7 @@ from typing import List
 # from forty.decorators.check_after import check_after
 
 from .base import AbstractController
-from ..actions import Commands ,WorkOptions
+from ..actions import WorkOptions
 from ..common import hms_to_time, iso_to_date
 from ..views import ActionView, InfoView
 from ..models import WorkModel
@@ -13,25 +13,8 @@ from ..decorators import check_after
 class WorkController(AbstractController):
     def __init__(self, pm, tm):
         super().__init__(pm, tm)
-        self.handlers[Commands.WORK] = self.handle_subcommand
-
-    def handle_subcommand(self, options: List[str]):
-        subhandlers = {
-            WorkOptions.START: self.on_start,
-            WorkOptions.FINISH: self.on_finish
-        }
-
-        command = None
-        args = []
-
-        if len(options) > 0:
-            command = options[0]
-
-        if len(options) > 1:
-            args = options[1:]
-
-        if command in subhandlers:
-            return subhandlers[command](args)
+        self.handlers[WorkOptions.START] = self.on_start
+        self.handlers[WorkOptions.FINISH] = self.on_finish
 
     def on_start(self, options: List[str]):
         model = WorkModel(self.pm, self.tm)

@@ -14,7 +14,7 @@ class TestHistoryControllerDateCommand(ControllerTestCase):
         return HistoryController
 
     def test_one_day_no_actions(self):
-        view: StrView = self.handle(["history", "check", "2021-01-01"])
+        view: StrView = self.handle(["check", "2021-01-01"])
 
         self.assertIsInstance(view, StrView)
         self.pm.load_project.assert_called_once()
@@ -25,7 +25,7 @@ class TestHistoryControllerDateCommand(ControllerTestCase):
         actions = A().start().at().done()
         self.actions_to_return(actions)
 
-        view: StrView = self.handle(["history", "check", "2021-01-01"])
+        view: StrView = self.handle(["check", "2021-01-01"])
 
         self.assertIsInstance(view, StrView)
         self.assertEqual(view.value, "2021-01-01 is bad")
@@ -34,13 +34,13 @@ class TestHistoryControllerDateCommand(ControllerTestCase):
         actions = A().start().at().finish().at().done()
         self.actions_to_return(actions)
 
-        view: StrView = self.handle(["history", "check", "2021-01-01"])
+        view: StrView = self.handle(["check", "2021-01-01"])
 
         self.assertIsInstance(view, StrView)
         self.assertEqual(view.value, "2021-01-01 is OK")
 
     def test_all_days_no_actions(self):
-        view: InfoView = self.handle(["history", "check"])
+        view: InfoView = self.handle(["check"])
 
         self.assertIsInstance(view, InfoView)
         self.pm.load_project.assert_called_once()
@@ -51,7 +51,7 @@ class TestHistoryControllerDateCommand(ControllerTestCase):
         actions = A().start().at().done()
         self.actions_to_return(actions)
 
-        view: ListView = self.handle(["history", "check"])
+        view: ListView = self.handle(["check"])
 
         self.assertIsInstance(view, ListView)
         self.assertEqual(view.list, ["2021-01-01 is bad"])
@@ -60,7 +60,7 @@ class TestHistoryControllerDateCommand(ControllerTestCase):
         actions = A().start().at().finish().at().done()
         self.actions_to_return(actions)
 
-        view: ListView = self.handle(["history", "check"])
+        view: ListView = self.handle(["check"])
 
         self.assertIsInstance(view, ListView)
         self.assertEqual(view.list, ["2021-01-01 is OK"])
@@ -74,7 +74,7 @@ class TestHistoryControllerDateCommand(ControllerTestCase):
             .done())
         self.actions_to_return(actions)
 
-        view: ListView = self.handle(["history", "check"])
+        view: ListView = self.handle(["check"])
 
         self.assertIsInstance(view, ListView)
         self.assertEqual(view.list, ["2021-01-01 is OK", "2021-01-02 is OK"])
@@ -87,7 +87,7 @@ class TestHistoryControllerDateCommand(ControllerTestCase):
             .done())
         self.actions_to_return(actions)
 
-        view: ListView = self.handle(["history", "check"])
+        view: ListView = self.handle(["check"])
 
         self.assertIsInstance(view, ListView)
         self.assertEqual(view.list, ["2021-01-01 is OK", "2021-01-02 is bad"])

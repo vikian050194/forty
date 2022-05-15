@@ -26,7 +26,8 @@
 
 **Status**
 
-- [x] whatsup
+- [x] only
+- [x] full
 - [x] status
 - [x] today
 - [x] total
@@ -37,10 +38,13 @@
 **Log**
 
 - [x] log
+- [ ] log hh:mm:ss hh:mm:ss
+
 
 **Check**
 
 - [ ] check
+- [x] check hh:mm:ss hh:mm:ss
 
 **Project**
 

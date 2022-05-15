@@ -33,7 +33,7 @@ class TestStatusControllerIntervalCommand(ControllerTestCase):
 
         self.assertEqual(view.to_time, time(hour=17))
 
-    def test_whatsup_started_till_today_overtime(self):
+    def test_full_started_till_today_overtime(self):
         self.now_to_return(day=1, hour=19)
         actions = A().start().at(day=1,hour=9).done()
         self.actions_to_return(actions)

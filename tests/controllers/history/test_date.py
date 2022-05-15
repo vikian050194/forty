@@ -16,7 +16,7 @@ class TestHistoryControllerDateCommand(ControllerTestCase):
         return HistoryController
 
     def test_no_actions(self):
-        view: InfoView = self.handle(["history", "date"])
+        view: InfoView = self.handle(["date"])
 
         self.pm.load_project.assert_called_once()
         self.pm.load_actions.assert_called_once()
@@ -27,7 +27,7 @@ class TestHistoryControllerDateCommand(ControllerTestCase):
         actions = A().start().at().finish().at().done()
         self.actions_to_return(actions)
 
-        view: ListView = self.handle(["history", "date"])
+        view: ListView = self.handle(["date"])
 
         self.assertEqual(len(view.list), 1)
         self.assertListEqual(view.list, [date(year=2021, month=1, day=1)])

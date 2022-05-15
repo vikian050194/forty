@@ -1,7 +1,7 @@
 from typing import List
 
 from .base import AbstractController
-from ..actions import Commands, HistoryOptions
+from ..actions import HistoryOptions
 from ..views import ActionLogView, LogView, InfoView, WarningView, ListView, StrView
 from ..models import HistoryModel
 from ..common import iso_to_date
@@ -10,30 +10,13 @@ from ..common import iso_to_date
 class HistoryController(AbstractController):
     def __init__(self, pm, tm):
         super().__init__(pm, tm)
-        self.handlers[Commands.HISTORY] = self.handle_subcommand
-        self.handlers[Commands.LOG] = self.handle_log
+        self.handlers[HistoryOptions.LOG] = self.on_log
+        self.handlers[HistoryOptions.RESET] = self.on_reset
+        self.handlers[HistoryOptions.UNDO] = self.on_undo
+        self.handlers[HistoryOptions.DATE] = self.on_date
+        self.handlers[HistoryOptions.CHECK] = self.on_check
 
-    def handle_subcommand(self, options: List[str]):
-        subhandlers = {
-            HistoryOptions.RESET: self.on_reset,
-            HistoryOptions.UNDO: self.on_undo,
-            HistoryOptions.DATE: self.on_date,
-            HistoryOptions.CHECK: self.on_check,
-        }
-
-        command = None
-        args = []
-
-        if len(options) > 0:
-            command = options[0]
-
-        if len(options) > 1:
-            args = options[1:]
-
-        if command in subhandlers:
-            return subhandlers[command](args)
-
-    def handle_log(self, options: List[str]):
+    def on_log(self, options: List[str]):
         model = HistoryModel(self.pm, self.tm)
         actions = model.log()
         actions = list(map(lambda a: ActionLogView(a.type, a.value, a.timestamp), actions))

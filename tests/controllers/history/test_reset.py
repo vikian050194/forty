@@ -15,7 +15,7 @@ class TestHistoryControllerResetCommand(ControllerTestCase):
     def test_default(self):
         self.actions_to_return(["first", "second", "third"])
 
-        view: InfoView = self.handle(["history", "reset"])
+        view: InfoView = self.handle(["reset"])
 
         self.assertIsInstance(view, InfoView)
         self.pm.load_project.assert_called_once()
@@ -26,7 +26,7 @@ class TestHistoryControllerResetCommand(ControllerTestCase):
     def test_no_actions(self):
         self.actions_to_return([])
 
-        view: InfoView = self.handle(["history", "reset"])
+        view: InfoView = self.handle(["reset"])
 
         self.assertIsInstance(view, InfoView)
         self.pm.load_project.assert_called_once()

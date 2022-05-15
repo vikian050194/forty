@@ -15,9 +15,7 @@ class HelpController(AbstractController):
         lines = []
         lines.append((Commands.HELP, "get help"))
         lines.append((Commands.PROJECT, "manage projects"))
-        lines.append((Commands.HISTORY, "history management"))
         lines.append((Commands.STATUS, "get status"))
-        lines.append((Commands.WORK, "work"))
         return ListView(lines)
 
     def handle_version(self, options: List[str]):

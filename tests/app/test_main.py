@@ -3,7 +3,7 @@ from unittest.mock import patch, call
 from tempfile import TemporaryDirectory
 
 from forty import main
-from forty.configuration import Configuration, OutputFlagValues
+from forty.configuration import make_config, OutputFlagValues
 
 
 # @skip("e2e")
@@ -13,7 +13,7 @@ class TestMain(TestCase):
         self.temp_dir = TemporaryDirectory()
         home=self.temp_dir.name
         output=OutputFlagValues.HUMAN
-        configuration = Configuration(home=home, output=output)
+        configuration = make_config(home=home, output=output)
         self.call = lambda options: main(options=options, configuration=configuration)
 
     def tearDown(self):
@@ -52,7 +52,7 @@ class TestMain(TestCase):
 
         self.call(help)
         actual_invocations = len(mock_print.call_args_list)
-        expected_invocations = 5
+        expected_invocations = 3
         self.assertEqual(actual_invocations, expected_invocations)
         mock_print.reset_mock()
 
@@ -85,18 +85,18 @@ class TestMain(TestCase):
 
     @skip("TODO")
     def test_no_project(self, mock_print):
-        self.call(["work", "start"])
+        self.call(["start"])
         mock_print.assert_called_with("error: create")
         mock_print.reset_mock()
 
-        self.call(["work", "finish"])
+        self.call(["finish"])
 
     def test_status(self, mock_print):
         self.call(["project", "new", "aaa"])
         mock_print.assert_called_with("INFO: aaa")
         mock_print.reset_mock()
 
-        self.call(["status", "whatsup"])
+        self.call(["status", "full"])
         actual_invocations = len(mock_print.call_args_list)
         expected_invocations = 7
         self.assertEqual(actual_invocations, expected_invocations)
@@ -113,17 +113,17 @@ class TestMain(TestCase):
         mock_print.assert_called_with("status: None")
         mock_print.reset_mock()
         
-        self.call(["work", "start", "12:34:56"])
+        self.call(["start", "12:34:56"])
         self.call(["status", "only"])
         mock_print.assert_called_with("status: start")
         mock_print.reset_mock()
 
-        self.call(["work", "finish", "13:00:00"])
+        self.call(["finish", "13:00:00"])
         self.call(["status", "only"])
         mock_print.assert_called_with("status: finish")
         mock_print.reset_mock()
 
-        self.call(["status", "whatsup"])
+        self.call(["status", "full"])
         # TODO: it is not working by some reason
         # self.assertEqual(mock_print.call_args_list[0], call("status: finish"))
         self.assertEqual(mock_print.call_args_list[1], call("today_passed_time:   00:25:04"))
@@ -169,20 +169,20 @@ class TestMain(TestCase):
     def test_history_undo(self, mock_print):
         self.call(["project", "new", "test_history"])
 
-        self.call(["work", "start", "12:34:56"])
-        self.call(["work", "finish", "13:00:00"])
+        self.call(["start", "12:34:56"])
+        self.call(["finish", "13:00:00"])
 
         self.call(["status", "only"])
         mock_print.assert_called_with("status: finish")
         mock_print.reset_mock()
 
-        self.call(["history", "undo"])
+        self.call(["undo"])
 
         self.call(["status", "only"])
         mock_print.assert_called_with("status: start")
         mock_print.reset_mock()
 
-        self.call(["history", "undo"])
+        self.call(["undo"])
 
         self.call(["status", "only"])
         mock_print.assert_called_with("status: None")
@@ -191,10 +191,10 @@ class TestMain(TestCase):
     def test_history_undo(self, mock_print):
         self.call(["project", "new", "test_history"])
 
-        self.call(["work", "start", "12:34:56"])
-        self.call(["work", "finish", "13:00:00"])
+        self.call(["start", "12:34:56"])
+        self.call(["finish", "13:00:00"])
 
-        self.call(["history", "reset"])
+        self.call(["reset"])
         
         self.call(["status", "only"])
         mock_print.assert_called_with("status: None")

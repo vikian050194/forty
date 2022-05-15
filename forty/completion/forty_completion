@@ -47,40 +47,10 @@ function _forty_project_completions()
   fi
 }
 
-function _forty_work_completions()
-{
-  local workSubCommandPattern=$1
-  local workSubCommandOptions="start finish"
-  local workSubCommandSuggestions=($(compgen -W "$workSubCommandOptions" -- $workSubCommandPattern))
-  local workSubCommandSuggestionsLen=${#workSubCommandSuggestions[@]}
-  [ $DEBUG -eq 1 ] && echo "workSubCommandSuggestionsLen:$workSubCommandSuggestionsLen"
-  [ $DEBUG -eq 1 ] && echo "workSubCommandSuggestions:${workSubCommandSuggestions[@]}"
-
-  if [ $workSubCommandSuggestionsLen -ne 1 ] || [ ${workSubCommandSuggestions[0]} != $workSubCommandPattern ]; then
-    COMPREPLY=(${workSubCommandSuggestions[@]})
-    return 0
-  fi
-
-  local workSubCommand=${workSubCommandSuggestions[0]}
-  [ $DEBUG -eq 1 ] && echo "workSubCommand:$workSubCommand"
-
-  if [ $totalLen -lt 4 ]; then
-    return 0
-  fi
-
-  local workValuePattern=${COMP_WORDS[3]}
-  [ $DEBUG -eq 1 ] && echo "workValuePattern:$workValuePattern"
-
-  # if [ $workSubCommand == "set" ]; then
-  #   _forty_work_set_completions $workValuePattern
-  #   return 0
-  # fi
-}
-
 function _forty_status_completions()
 {
   local statusSubCommandPattern=$1
-  local statusSubCommandOptions="today total remained passed interval whatsup only"
+  local statusSubCommandOptions="today total remained passed interval full only"
   local statusSubCommandSuggestions=($(compgen -W "$statusSubCommandOptions" -- $statusSubCommandPattern))
   local statusSubCommandSuggestionsLen=${#statusSubCommandSuggestions[@]}
   [ $DEBUG -eq 1 ] && echo "statusSubCommandSuggestionsLen:$statusSubCommandSuggestionsLen"
@@ -107,36 +77,6 @@ function _forty_status_completions()
   # fi
 }
 
-function _forty_history_completions()
-{
-  local historySubCommandPattern=$1
-  local historySubCommandOptions="reset undo"
-  local historySubCommandSuggestions=($(compgen -W "$historySubCommandOptions" -- $historySubCommandPattern))
-  local historySubCommandSuggestionsLen=${#historySubCommandSuggestions[@]}
-  [ $DEBUG -eq 1 ] && echo "historySubCommandSuggestionsLen:$historySubCommandSuggestionsLen"
-  [ $DEBUG -eq 1 ] && echo "historySubCommandSuggestions:${historySubCommandSuggestions[@]}"
-
-  if [ $historySubCommandSuggestionsLen -ne 1 ] || [ ${historySubCommandSuggestions[0]} != $historySubCommandPattern ]; then
-    COMPREPLY=(${historySubCommandSuggestions[@]})
-    return 0
-  fi
-
-  local historySubCommand=${historySubCommandSuggestions[0]}
-  [ $DEBUG -eq 1 ] && echo "historySubCommand:$historySubCommand"
-
-  if [ $totalLen -lt 4 ]; then
-    return 0
-  fi
-
-  local historyValuePattern=${COMP_WORDS[3]}
-  [ $DEBUG -eq 1 ] && echo "historyValuePattern:$historyValuePattern"
-
-  # if [ $historySubCommand == "set" ]; then
-  #   _forty_history_set_completions $historyValuePattern
-  #   return 0
-  # fi
-}
-
 function _forty_completions()
 {
   totalLen=${#COMP_WORDS[@]}
@@ -155,7 +95,14 @@ function _forty_completions()
   local commandPattern=${COMP_WORDS[1]}
   [ $DEBUG -eq 1 ] && echo "commandPattern:$commandPattern"
 
-  local commandOptions="version help work status log project history"
+  local helpCommands="version help"
+  local workCommands="start finish"
+  local statusCommands="status"
+  local projectCommands="project"
+  local historyCommands="reset undo log date check"
+
+  local commandOptions="$helpCommands $workCommands $statusCommands $projectCommands $historyCommands"
+
   local commandSuggestions=($(compgen -W "$commandOptions" -- $commandPattern))
   [ $DEBUG -eq 1 ] && echo "commandSuggestions:${commandSuggestions[@]}"
 
@@ -182,18 +129,8 @@ function _forty_completions()
     return 0
   fi
 
-  if [ $command == "work" ]; then
-    _forty_work_completions $subCommandPattern
-    return 0
-  fi
-
   if [ $command == "status" ]; then
     _forty_status_completions $subCommandPattern
-    return 0
-  fi
-
-  if [ $command == "history" ]; then
-    _forty_history_completions $subCommandPattern
     return 0
   fi
 }

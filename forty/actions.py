@@ -9,14 +9,11 @@ class Commands(str, enum.Enum):
     HELP = "help"
     VERSION = "version"
     PROJECT = "project"
-    LOG = "log"
     # PLUS = "plus"
     # MINUS = "minus"
     # BREAK = "break"
     # CONFIG = "config"
     STATUS = "status"
-    HISTORY = "history"
-    WORK = "work"
 
 @enum.unique
 class WorkOptions(str, enum.Enum):
@@ -28,7 +25,7 @@ class WorkOptions(str, enum.Enum):
 
 @enum.unique
 class StatusOptions(str, enum.Enum):
-    WHATSUP = "whatsup"
+    FULL = "full"
     ONLY = "only"
     TODAY = "today"
     TOTAL = "total"
@@ -47,6 +44,7 @@ class ProjectOptions(str, enum.Enum):
 
 @enum.unique
 class HistoryOptions(str, enum.Enum):
+    LOG = "log"
     RESET = "reset"
     UNDO = "undo"
     DATE = "date"

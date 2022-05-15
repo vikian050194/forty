@@ -47,24 +47,35 @@ Rigth now the best way to install **forty** is following one:
 
 **forty** supports concurrent work on different projects like work, freelance or pet-projects
 
-In general invocation has following format `[NOUN] [VERB] [OPTIONS]`
+In general invocation has following format `forty [COMMAND] [OPTIONS]`
 
 ### Work
 
-Format: `forty work [VERB] [OPTION]`
+Format: `forty [COMMAND] [OPTION]`
 
 Time is optional and it's possible to specify just `h`, `hh` or `hh:mm` - all possible subcases of full format
+Date is optional, but must be specified in full format `yyyy-mm-dd`
 
 | Verb | Description |
 | --- | --- |
-| `start hh:mm:ss` | Start work |
-| `finish hh:mm:ss` | Finish work |
+| `start YYYY-MM-DD hh:mm:ss` | Start work |
+| `finish YYYY-MM-DD hh:mm:ss` | Finish work |
+
+**Examples**
+
+- `forty start`
+- `forty start 10`
+- `forty start 10:32`
+- `forty start :32`
+- `forty start 10:32:45`
+- `forty start ::45`
+- `forty start 2022-04-28 20:45:17`
 
 ### Help
 
-Format: `forty help [VALUE]`
+Format: `forty [COMMAND]`
 
-| Value | Description |
+| Command | Description |
 | --- | --- |
 | `help` | Help information |
 | `version` | Installed version |
@@ -75,7 +86,7 @@ Format: `forty status [VALUE]`
 
 | Value | Description |
 | --- | --- |
-| `whatsup` | All possible information at once |
+| `full` | All information |
 | `only` | Current status |
 | `today` | Today time |
 | `total` | Total time |
@@ -85,9 +96,9 @@ Format: `forty status [VALUE]`
 
 **History**
 
-Format: `forty history [VERB] [OPTION]`
+Format: `forty [COMMAND] [OPTION]`
 
-| Verb | Description |
+| Command | Description |
 | --- | --- |
 | `reset` | Remove all stored actions, clear the whole history |
 | `undo n` | Undo last `n` actions, `n` is optional and default value is `1` |

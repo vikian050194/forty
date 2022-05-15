@@ -1,15 +1,13 @@
 from unittest import TestCase
 
-from forty.configuration import Configuration, OutputFlagValues
+from forty.configuration import make_config, OutputFlagValues
 from forty.managers import OutputManager
 from forty.views import *
 
 
 class OutputHumanTestCase(TestCase):
     def setUp(self):
-        home="test"
-        output=OutputFlagValues.HUMAN
-        configuration = Configuration(home=home, output=output)
+        configuration = make_config(output=OutputFlagValues.HUMAN)
         om = OutputManager(configuration)
 
         self.call = lambda view: om.emmit(view)

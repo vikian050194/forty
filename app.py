@@ -2,18 +2,17 @@
 
 from os import environ
 from sys import argv
-from pathlib import Path
 
 from forty import main
-from forty.configuration import Configuration
+from forty.configuration import make_config
 
 
 if __name__ == "__main__":
-    home = Path.home().as_posix()
-    home = environ.get("FORTY_HOME", home)
+    home = environ.get("FORTY_HOME", None)
     output = environ.get("FORTY_OUTPUT", None)
+    status = environ.get("FORTY_STATUS", None)
 
-    configuration = Configuration(home, output)
+    configuration = make_config(home=home, output=output, status=status)
 
     options = argv[1:]
     main(options=options, configuration=configuration)

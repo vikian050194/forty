@@ -15,7 +15,7 @@ class StatusController(AbstractController):
     @check_before
     def handle_subcommand(self, options: List[str]):
         subhandlers = {
-            StatusOptions.WHATSUP: self.on_whatsup,
+            StatusOptions.FULL: self.on_full,
             StatusOptions.ONLY: self.on_only,
             StatusOptions.TODAY: self.on_today,
             StatusOptions.TOTAL: self.on_total,
@@ -36,9 +36,9 @@ class StatusController(AbstractController):
         if command in subhandlers:
             return subhandlers[command](args)
 
-    def on_whatsup(self, options: List[str]):
+    def on_full(self, options: List[str]):
         model = StatusModel(self.pm, self.tm)
-        return model.all()
+        return model.full()
 
     def on_only(self, options: List[str]):
         model = StatusModel(self.pm, self.tm)
