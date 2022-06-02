@@ -40,6 +40,18 @@ class TestWorkControllerStartCommand(ControllerTestCase):
         self.assertEqual(view.type, WorkOptions.START)
         self.assertEqual(view.timestamp, datetime(2021, 1, 1, 12, 34, 56))
 
+    def test_specific_date_and_time(self):
+        expected = Action(type=WorkOptions.START, timestamp=datetime(2022, 6, 2, 12, 34, 56))
+        
+        view: ActionView = self.handle(["start", "2022-06-02", "12:34:56"])
+
+        self.pm.load_project.assert_called_once()
+        self.pm.load_actions.assert_called_once()
+
+        self.pm.save_actions.assert_called_once_with([expected])
+        self.assertEqual(view.type, WorkOptions.START)
+        self.assertEqual(view.timestamp, datetime(2022, 6, 2, 12, 34, 56))
+
     def test_do_nothing(self):
         self.actions_to_return([Action(type=WorkOptions.START, timestamp=None)])
 

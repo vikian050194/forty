@@ -1,4 +1,4 @@
-from datetime import datetime, time
+from datetime import date, datetime, time
 from unittest.mock import Mock
 
 from forty.actions import Action, WorkOptions
@@ -37,14 +37,35 @@ class TestWorkModelStartMethod(ModelTestCase):
         self.assertEqual(updated_actions[0], expected)
 
     # TODO refactoring
+    def test_custom_date_and_time(self):
+        self.actions_to_return([])
+        start_time = time(hour=8, minute=12, second=34)
+        start_date = date(year=2022, month=6, day=2)
+        expected = Action(WorkOptions.START, datetime(2022, 6, 2, 8, 12, 34), None)
+
+        view: Action = self.model.start(new_date=start_date, new_time=start_time)
+
+        self.assertEqual(view.value, None)
+        self.assertEqual(view.type, WorkOptions.START)
+        self.assertEqual(view.timestamp, datetime(2022, 6, 2, 8, 12, 34))
+        
+        self.pm.load_project.assert_called_once()
+        self.pm.load_actions.assert_called_once()
+        self.pm.save_actions.assert_called_once()
+        args, _ = self.pm.save_actions.call_args_list[0]
+        (updated_actions,) = args
+        self.assertEqual(len(updated_actions), 1)
+        self.assertEqual(updated_actions[0], expected)
+
+    # TODO refactoring
     def test_two_actions_custom_time(self):
         actions = A().start().finish().done()
         self.actions_to_return(actions)
         self.tm.merge_time = Mock(return_value=datetime(2021, 1, 1, 8, 12, 34))
-        start_time: time = time(hour=8, minute=12, second=34)
+        start_time = time(hour=8, minute=12, second=34)
         expected = Action(WorkOptions.START, datetime(2021, 1, 1, 8, 12, 34), None)
 
-        view: Action = self.model.start(start_time)
+        view: Action = self.model.start(new_time=start_time)
 
         self.assertEqual(view.value, None)
         self.assertEqual(view.type, WorkOptions.START)

@@ -18,8 +18,14 @@ class WorkController(AbstractController):
 
     def on_start(self, options: List[str]):
         model = WorkModel(self.pm, self.tm)
-        new_time = hms_to_time(options[0]) if options else None
-        new_action = model.start(new_time)
+        new_time = None
+        new_date = None
+        if len(options) == 1:
+            new_time = hms_to_time(options[0])
+        if len(options) == 2:
+            new_time = hms_to_time(options[1])
+            new_date = iso_to_date(options[0])
+        new_action = model.start(new_date=new_date, new_time=new_time)
         if new_action:
             return ActionView(new_action.type, new_action.value, new_action.timestamp)
         else:

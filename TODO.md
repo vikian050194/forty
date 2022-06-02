@@ -38,13 +38,13 @@
 **Log**
 
 - [x] log
-- [ ] log hh:mm:ss hh:mm:ss
+- [ ] log yyyy-mm-dd
 
 
 **Check**
 
-- [ ] check
-- [x] check hh:mm:ss hh:mm:ss
+- [x] check
+- [x] check yyyy-mm-dd
 
 **Project**
 
