@@ -58,7 +58,7 @@ def readme():
 
 attrs = dict(
     name="forty",
-    version="0.2.0",
+    version="0.3.0",
     description="CLI time tracker",
     long_description=readme(),
     classifiers=[
@@ -80,7 +80,7 @@ attrs = dict(
         "install": PostInstallCommand,
     },
     entry_points = {
-        "console_scripts": ["forty=forty.command_line:main"],
+        "console_scripts": ["forty=forty.app:run"],
     },
     include_package_data=True,
     zip_safe=False

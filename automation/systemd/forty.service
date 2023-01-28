@@ -1,0 +1,12 @@
+[Unit]
+Description=forty startup script
+
+[Service]
+User=kirill
+Type=simple
+RemainAfterExit=yes
+ExecStart=/usr/bin/python3 -m forty start
+ExecStop=/usr/bin/python3 -m forty finish
+
+[Install]
+WantedBy=multi-user.target

@@ -32,7 +32,7 @@ Rigth now the best way to install **forty** is following one:
     mkdir "$HOME/.bash_completion.d"
     chmod 777 "$HOME/.bash_completion.d"
     ```
-3. Install the package locally
+3. Install the package globally
 
    Privileged user is required because bash completion file will be copied to `etc` directory
     ```
@@ -42,12 +42,30 @@ Rigth now the best way to install **forty** is following one:
     ```
     forty
     ```
+    or run Python module
+    ```
+    python3 forty
+    ```
 
 ## Usage
 
 **forty** supports concurrent work on different projects like work, freelance or pet-projects
 
 In general invocation has following format `forty [COMMAND] [OPTIONS]`
+
+### Automation
+
+Use service to get advantage of auto-start and auto-finish
+
+```
+bash automation/setup.sh
+```
+
+To remove service
+
+```
+bash automation/clean.sh
+```
 
 ### Work
 
@@ -113,6 +131,7 @@ There are three ways and layers of configuration
 | --- | --- | --- |
 | `FORTY_HOME` | Home directory where `.forty` is stored | Any valid pathv|
 | `FORTY_OUTPUT` | Output format | `human`, `plain` or `json` |
+| `FORTY_STATUS` | Status type | See valid values above |
 
 **Project-wide**
 
@@ -121,6 +140,7 @@ There are three ways and layers of configuration
 | `day_limit` | Day time limit | Optional |
 | `total_limit` | Total time limit | Optional |
 | TODO `break` | Default break duration | Optional |
+| TODO `lunch` | Default lunch duration | Optional |
 
 **Global**
 
@@ -129,6 +149,7 @@ TODO
 | Name | Description | Value |
 | --- | --- | --- |
 | `break` | Default break duration | Optional |
+| `lunch` | Default break duration | Optional |
 | `concurrency` | Auto-stop | Optional |
 
 ## Tests
