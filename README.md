@@ -164,13 +164,25 @@ python3 -m unittest discover -t=. -s=tests/ -p=test_*.py
 
 ### Coverage
 
-To make HTML coverage report run following commands
-
+Generate coverage results
 ```
 coverage run -m unittest
-coverage html
 ```
 
+To get total coverage percent
+```
+coverage report --format=total
+```
+
+To make text report
+```
+coverage report --format=text
+```
+
+To make HTML coverage report run following commands
+```
+coverage html
+```
 
 [status-url]: https://github.com/vikian050194/forty/pulse
 [status-badge]: https://img.shields.io/github/last-commit/vikian050194/forty.svg
