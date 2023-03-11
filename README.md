@@ -47,6 +47,14 @@ Rigth now the best way to install **forty** is following one:
     python3 forty
     ```
 
+## Development
+
+```
+virtualenv venv
+source venv/bin/activate
+pip install -e .
+```
+
 ## Usage
 
 **forty** supports concurrent work on different projects like work, freelance or pet-projects

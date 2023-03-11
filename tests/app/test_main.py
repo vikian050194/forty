@@ -2,7 +2,7 @@ from unittest import TestCase, skip
 from unittest.mock import patch, call
 from tempfile import TemporaryDirectory
 
-from forty import main
+from forty.main import main
 from forty.configuration import make_config, OutputFlagValues
 
 

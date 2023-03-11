@@ -1,7 +1,7 @@
 from os import environ
 from sys import argv
 
-from forty import main
+from forty.main import main
 from forty.configuration import make_config
 
 
