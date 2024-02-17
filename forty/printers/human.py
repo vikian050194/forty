@@ -3,7 +3,7 @@ from typing import List
 from forty.views.log import ActionLogView
 
 from .base import BasePrinter, to_str
-from ..actions import WorkOptions
+from forty.actions import WorkOptions
 
 
 class HumanPrinter(BasePrinter):

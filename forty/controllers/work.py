@@ -3,11 +3,11 @@ from typing import List
 # from forty.decorators.check_after import check_after
 
 from .base import AbstractController
-from ..actions import WorkOptions
-from ..common import hms_to_time, iso_to_date
-from ..views import ActionView, InfoView
-from ..models import WorkModel
-from ..decorators import check_after
+from forty.actions import WorkOptions
+from forty.common import hms_to_time, iso_to_date
+from forty.views import ActionView, InfoView
+from forty.models import WorkModel
+from forty.decorators import check_after
 
 
 class WorkController(AbstractController):

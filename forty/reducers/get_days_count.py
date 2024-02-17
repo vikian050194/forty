@@ -1,5 +1,5 @@
-from ..common import State
-from . import get_dates
+from forty.common import State
+from forty import get_dates
 
 
 def get_days_count(actions, config):

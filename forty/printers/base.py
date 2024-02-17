@@ -2,8 +2,8 @@ import builtins
 
 from datetime import date, datetime, time, timedelta
 
-from ..views import MessageView
-from ..common import date_to_yms, dt_to_iso, time_to_hms, timedelta_to_hms
+from forty.views import MessageView
+from forty.common import date_to_yms, dt_to_iso, time_to_hms, timedelta_to_hms
 
 
 def to_str(value):

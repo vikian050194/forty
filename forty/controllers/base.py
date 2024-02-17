@@ -1,7 +1,7 @@
 import abc
 from typing import List
 
-from ..managers import ProjectManager, TimeManager
+from forty.managers import ProjectManager, TimeManager
 
 
 class AbstractController(abc.ABC):

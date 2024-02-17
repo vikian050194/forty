@@ -1,9 +1,9 @@
 from .base import AbstractModel
-from ..actions import Action, WorkOptions
-from ..reducers import *
-from ..reducers.get_today_passed_time import filter_actions
-from ..views.status import OnlyStatusView, TodayStatusView, TotalStatusView, PassedStatusView, RemainedStatusView, IntervalStatusView, FullStatusView
-from ..common import int_to_timedelta
+from forty.actions import Action, WorkOptions
+from forty.reducers import *
+from forty.reducers.get_today_passed_time import filter_actions
+from forty.views.status import OnlyStatusView, TodayStatusView, TotalStatusView, PassedStatusView, RemainedStatusView, IntervalStatusView, FullStatusView
+from forty.common import int_to_timedelta
 
 
 class StatusModel(AbstractModel):

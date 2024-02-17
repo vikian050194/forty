@@ -10,9 +10,7 @@
 
 ## Motivation
 
-Firstly, **forty** is a pet-project
-
-Secondly, there are a lot of flexible and powerful time and work trackers but from my point of view all of them is too complex and I don't need a biggest part of provided features
+There are a lot of flexible and powerful time and work trackers but as for me all of them are too complex and I don't need a biggest part of provided features
 
 ## Requirements
 

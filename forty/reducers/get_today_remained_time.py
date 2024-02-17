@@ -2,10 +2,10 @@ from typing import List
 
 from datetime import timedelta
 
-from ..common import State
-from ..actions import Action
-from ..managers.project_manager import Config
-from . import get_today_passed_time
+from forty.common import State
+from forty.actions import Action
+from forty.managers.project_manager import Config
+from forty.reducers import get_today_passed_time
 
 
 def get_today_remained_time(actions: List[Action], config: Config):

@@ -1,10 +1,10 @@
 from typing import List
 
 from .base import AbstractController
-from ..actions import HistoryOptions
-from ..views import ActionLogView, LogView, InfoView, WarningView, ListView, StrView
-from ..models import HistoryModel
-from ..common import iso_to_date
+from forty.actions import HistoryOptions
+from forty.views import ActionLogView, LogView, InfoView, WarningView, ListView, StrView
+from forty.models import HistoryModel
+from forty.common import iso_to_date
 
 
 class HistoryController(AbstractController):

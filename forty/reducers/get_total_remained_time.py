@@ -1,12 +1,13 @@
-from ..common import State
-from ..managers.project_manager import Config
+from datetime import timedelta
+from forty.common import State
+from forty.managers.project_manager import Config
 
-from . import get_total_passed_time
+from forty.reducers import get_total_passed_time
 
 
 def get_total_remained_time(actions, config: Config):
     total_passed_time = get_total_passed_time(actions, config)
-    value = config.total_limit * 3600 - total_passed_time.value
+    value = config.total_limit * int(timedelta(hours=1).total_seconds()) - total_passed_time.value
     state = State(value)
     return state
 

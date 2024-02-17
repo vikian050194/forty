@@ -1,10 +1,10 @@
 from typing import List
 
 from .base import AbstractController
-from ..actions import Commands, StatusOptions
-from ..reducers import *
-from ..models import StatusModel
-from ..decorators import check_before
+from forty.actions import Commands, StatusOptions
+from forty.reducers import *
+from forty.models import StatusModel
+from forty.decorators import check_before
 
 
 class StatusController(AbstractController):

@@ -1,5 +1,5 @@
-from ..views import ErrorView
-from ..models import HistoryModel
+from forty.views import ErrorView
+from forty.models import HistoryModel
 
 
 def check_after(func):

@@ -1,7 +1,7 @@
 from .base import AbstractModel
-from ..actions import WorkOptions
-from ..reducers import get_dates, get_current_status
-from ..reducers.get_today_passed_time import filter_actions
+from forty.actions import WorkOptions
+from forty.reducers import get_dates, get_current_status
+from forty.reducers.get_today_passed_time import filter_actions
 
 
 class HistoryModel(AbstractModel):

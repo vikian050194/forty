@@ -3,7 +3,7 @@ from forty.actions import StatusOptions
 
 from forty.configuration.output import OutputFlagValues
 
-from .configuration import Configuration
+from forty.configuration import Configuration
 
 
 def make_config(**kwargs):

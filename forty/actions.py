@@ -1,7 +1,7 @@
 import enum
 from datetime import datetime
 
-from .common import dt_to_iso
+from forty.common import dt_to_iso
 
 
 @enum.unique

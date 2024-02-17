@@ -1,8 +1,8 @@
 from typing import List
 
-from .base import AbstractController
-from ..actions import Commands, WorkOptions
-from ..views.base import ListView, StrView
+from forty.controllers.base import AbstractController
+from forty.actions import Commands, WorkOptions
+from forty.views.base import ListView, StrView
 
 class HelpController(AbstractController):
     def __init__(self, pm, tm):

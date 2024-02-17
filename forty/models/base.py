@@ -1,6 +1,6 @@
 import abc
 
-from ..managers import ProjectManager, TimeManager
+from forty.managers import ProjectManager, TimeManager
 
 
 class AbstractModel(abc.ABC):

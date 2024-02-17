@@ -1,8 +1,8 @@
 import abc
 
-from ..views import *
-from ..printers import *
-from ..configuration import Configuration, OutputFlagValues
+from forty.views import *
+from forty.printers import *
+from forty.configuration import Configuration, OutputFlagValues
 
 
 class AbstractOutputManager(abc.ABC):

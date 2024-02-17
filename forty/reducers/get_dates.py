@@ -1,5 +1,5 @@
-from ..common import State, reduce_actions
-from ..actions import Action, WorkOptions
+from forty.common import State, reduce_actions
+from forty.actions import Action, WorkOptions
 
 
 def on_action(state: State, action: Action):

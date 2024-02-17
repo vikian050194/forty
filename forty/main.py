@@ -1,10 +1,10 @@
 from typing import List
 
-from .controllers import controllers
-from .managers import ProjectManager, TimeManager, OutputManager
-from .configuration import Configuration
-from .views import ErrorView
-from .actions import Commands
+from forty.controllers import controllers
+from forty.managers import ProjectManager, TimeManager, OutputManager
+from forty.configuration import Configuration
+from forty.views import ErrorView
+from forty.actions import Commands
 
 
 def main(options: List[str], configuration: Configuration):

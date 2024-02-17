@@ -7,7 +7,6 @@ from forty.tools import ActionsBuilder as A
 
 from ..model_test_case import ModelTestCase
 
-
 class TestWorkModelStartMethod(ModelTestCase):
     def __init__(self, *args, **kwargs):
         ModelTestCase.__init__(self, *args, **kwargs)

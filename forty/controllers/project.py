@@ -1,9 +1,9 @@
 from typing import List
 
 from .base import AbstractController
-from ..actions import Commands, ProjectOptions
-from ..models import ProjectModel
-from ..views import *
+from forty.actions import Commands, ProjectOptions
+from forty.models import ProjectModel
+from forty.views import *
 
 
 class ProjectController(AbstractController):

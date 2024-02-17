@@ -1,7 +1,7 @@
 from datetime import time, date
 
 from .base import AbstractModel
-from ..actions import Action, WorkOptions
+from forty.actions import Action, WorkOptions
 
 
 class WorkModel(AbstractModel):

@@ -5,8 +5,8 @@ from datetime import datetime
 from typing import List
 
 from .time_manager import AbstractTimeManager
-from ..actions import Action
-from ..configuration import Configuration
+from forty.actions import Action
+from forty.configuration import Configuration
 
 def to_action(data):
     type = data.get("type")

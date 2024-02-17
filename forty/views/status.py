@@ -3,7 +3,7 @@ from typing import Optional
 from datetime import time, timedelta
 
 from .base import AbstractView
-from ..actions import WorkOptions
+from forty.actions import WorkOptions
 
 
 class TodayStatusView(AbstractView):
