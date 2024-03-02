@@ -1,17 +1,16 @@
-from unittest import skip
 from forty.views import StrView, InfoView
-from forty.controllers import ProjectController
+from forty.controllers.project.internal import ProjectGetController
 
 from ..controller_test_case import ControllerTestCase
 
 
-class TestProjectControllerGetCommand(ControllerTestCase):
+class TestProjectGetController(ControllerTestCase):
     def __init__(self, *args, **kwargs):
         ControllerTestCase.__init__(self, *args, **kwargs)
 
     @property
     def controller_class(self):
-        return ProjectController
+        return ProjectGetController
 
     def test_get_no_current_project(self):
         self.project_to_return("")

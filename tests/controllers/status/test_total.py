@@ -2,21 +2,21 @@ from datetime import timedelta
 
 from forty.views import TotalStatusView, ErrorView
 from forty.tools import ActionsBuilder as A
-from forty.controllers import StatusController
+from forty.controllers.status.internal import StatusTotalController
 
 from ..controller_test_case import ControllerTestCase
 
 
-class TestStatusController(ControllerTestCase):
+class TestStatusTotalController(ControllerTestCase):
     def __init__(self, *args, **kwargs):
         ControllerTestCase.__init__(self, *args, **kwargs)
 
     @property
     def controller_class(self):
-        return StatusController
+        return StatusTotalController
 
     def test_total(self):
-        view: TotalStatusView = self.handle(["status", "total"])
+        view: TotalStatusView = self.handle([])
 
         self.assertEqual(view.passed, timedelta())
         self.assertEqual(view.remained, timedelta(hours=40))
@@ -26,7 +26,7 @@ class TestStatusController(ControllerTestCase):
         actions = A().start().at(hour=9).done()
         self.actions_to_return(actions)
 
-        view: TotalStatusView = self.handle(["status", "total"])
+        view: TotalStatusView = self.handle([])
 
         self.assertEqual(view.passed, timedelta(hours=10, minutes=33, seconds=42))
         self.assertEqual(view.remained, timedelta(hours=29, minutes=26, seconds=18))
@@ -36,7 +36,7 @@ class TestStatusController(ControllerTestCase):
         actions = A().start().at(day=1, hour=8).done()
         self.actions_to_return(actions)
 
-        view: ErrorView = self.handle(["status", "total"])
+        view: ErrorView = self.handle([])
 
         self.assertIsInstance(view, ErrorView)
         self.assertEqual(view.value, "invalid state at 2021-01-01")

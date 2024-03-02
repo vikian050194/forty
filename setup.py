@@ -58,7 +58,7 @@ def readme():
 
 attrs = dict(
     name="forty",
-    version="0.3.1",
+    version="0.4.0",
     description="CLI time tracker",
     long_description=readme(),
     classifiers=[

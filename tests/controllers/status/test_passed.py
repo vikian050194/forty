@@ -1,21 +1,21 @@
 from datetime import timedelta
 
 from forty.views.status import PassedStatusView
-from forty.controllers import StatusController
+from forty.controllers.status.internal import StatusPassedController
 
 from ..controller_test_case import ControllerTestCase
 
 
-class TestStatusControllerPassedCommand(ControllerTestCase):
+class TestStatusPassedController(ControllerTestCase):
     def __init__(self, *args, **kwargs):
         ControllerTestCase.__init__(self, *args, **kwargs)
 
     @property
     def controller_class(self):
-        return StatusController
+        return StatusPassedController
 
     def test_passed(self):
-        view: PassedStatusView = self.handle(["status", "passed"])
+        view: PassedStatusView = self.handle([])
 
         self.assertEqual(view.today, timedelta())
         self.assertEqual(view.total, timedelta())

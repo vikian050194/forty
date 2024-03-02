@@ -5,7 +5,8 @@ from datetime import datetime, date
 
 from forty.managers.project_manager import AbstractProjectManager, Config, ProjectManager
 from forty.managers.time_manager import AbstractTimeManager, TimeManager
-from forty.controllers.base import AbstractController
+from forty.controllers.abstract import AbstractController
+from forty.options import Options
 
 
 def get_project_manager_spec():
@@ -22,7 +23,7 @@ class ControllerTestCase(TestCase):
         self.tm: AbstractTimeManager = TimeManager()
 
         controller = self.controller_class(pm=self.pm, tm=self.tm)
-        self.handle = controller.handle
+        self.handle = lambda values, complete = False: controller.handle(Options(values, complete))
 
     def setUp(self):
         self.pm.reset_mock()

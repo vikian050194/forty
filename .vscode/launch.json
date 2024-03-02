@@ -3,7 +3,7 @@
     "configurations": [
         {
             "name": "Python: Module",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "module": "unittest",
             "args": [
@@ -12,18 +12,23 @@
         },
         {
             "name": "Python: Current File",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
         },
         {
             "name": "Python: Run App",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
-            "program": "app.py",
+            "program": "forty/app.py",
             "console": "integratedTerminal",
             "args": [
+                // "complete",
+                // "project",
+                // "list"
+                // "test"
+                "version"
             ],
             "env": {
             }

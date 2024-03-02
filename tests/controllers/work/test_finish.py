@@ -2,19 +2,19 @@ from datetime import datetime
 
 from forty.views import ActionView, InfoView, ErrorView
 from forty.actions import Action, WorkOptions
-from forty.controllers import WorkController
+from forty.controllers.finish import FinishController
 from forty.tools import ActionsBuilder as A
 
 from ..controller_test_case import ControllerTestCase
 
 
-class TestWorkControllerFinishCommand(ControllerTestCase):
+class TestFinishController(ControllerTestCase):
     def __init__(self, *args, **kwargs):
         ControllerTestCase.__init__(self, *args, **kwargs)
 
     @property
     def controller_class(self):
-        return WorkController
+        return FinishController
 
     def test_default(self):
         self.now_to_return()
@@ -22,7 +22,7 @@ class TestWorkControllerFinishCommand(ControllerTestCase):
         actions=[Action(type=WorkOptions.START, timestamp=action_timestamp)]
         self.actions_to_return(actions)
 
-        view: ActionView = self.handle(["finish"])
+        view: ActionView = self.handle([])
 
         self.assertIsInstance(view, ActionView)
         self.assertEqual(view.type, WorkOptions.FINISH)
@@ -43,7 +43,7 @@ class TestWorkControllerFinishCommand(ControllerTestCase):
         self.actions_to_return(actions)
         expected = Action(type=WorkOptions.FINISH, timestamp=datetime(2021, 1, 1, 12, 34, 56))
 
-        view: ActionView = self.handle(["finish", "12:34:56"])
+        view: ActionView = self.handle(["12:34:56"])
 
         self.assertIsInstance(view, ActionView)
         self.assertEqual(view.type, WorkOptions.FINISH)
@@ -62,7 +62,7 @@ class TestWorkControllerFinishCommand(ControllerTestCase):
         actions = A().start().at().finish().at().done()
         self.actions_to_return(actions)
 
-        view: InfoView = self.handle(["finish"])
+        view: InfoView = self.handle([])
 
         self.assertIsInstance(view, InfoView)
         self.assertEqual(view.value, "already finished")
@@ -76,7 +76,7 @@ class TestWorkControllerFinishCommand(ControllerTestCase):
         self.now_to_return(day=2)
         self.actions_to_return(actions)
 
-        view: ErrorView = self.handle(["finish"])
+        view: ErrorView = self.handle([])
 
         self.assertIsInstance(view, ErrorView)
         self.assertEqual(view.value, "invalid state at 2021-01-01")
@@ -91,7 +91,7 @@ class TestWorkControllerFinishCommand(ControllerTestCase):
         self.actions_to_return(actions)
         expected = Action(type=WorkOptions.FINISH, timestamp=datetime(2021, 1, 1, 10, 0, 0))
 
-        view: ActionView = self.handle(["finish", "2021-01-01", "10:00:00"])
+        view: ActionView = self.handle(["2021-01-01", "10:00:00"])
 
         self.assertIsInstance(view, ActionView)
         self.assertEqual(view.type, WorkOptions.FINISH)
@@ -111,7 +111,7 @@ class TestWorkControllerFinishCommand(ControllerTestCase):
         self.actions_to_return(actions)
         expected = Action(type=WorkOptions.FINISH, timestamp=datetime(2021, 1, 1, 10, 0, 0))
 
-        view: ActionView = self.handle(["finish", "2021-01-01", "10:00:00"])
+        view: ActionView = self.handle(["2021-01-01", "10:00:00"])
 
         self.assertIsInstance(view, ActionView)
         self.assertEqual(view.type, WorkOptions.FINISH)

@@ -168,6 +168,12 @@ Module for testing is `unittest`
 python3 -m unittest discover -t=. -s=tests/ -p=test_*.py
 ```
 
+or
+
+```
+./shell/test.sh
+```
+
 ### Coverage
 
 Generate coverage results
@@ -188,6 +194,12 @@ coverage report --format=text
 To make HTML coverage report run following commands
 ```
 coverage html
+```
+
+or
+
+```
+./shell/coverage.sh
 ```
 
 [status-url]: https://github.com/vikian050194/forty/pulse

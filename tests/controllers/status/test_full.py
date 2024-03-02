@@ -3,26 +3,26 @@ from datetime import date, time, timedelta
 from forty.views.status import FullStatusView
 from forty.actions import WorkOptions
 from forty.tools import ActionsBuilder as A
-from forty.controllers import StatusController
+from forty.controllers.status.internal import StatusFullController
 from forty.managers.project_manager import Config
 
 from ..controller_test_case import ControllerTestCase
 
 
-class TestStatusControllerFullCommand(ControllerTestCase):
+class TestStatusFullController(ControllerTestCase):
     def __init__(self, *args, **kwargs):
         ControllerTestCase.__init__(self, *args, **kwargs)
 
     @property
     def controller_class(self):
-        return StatusController
+        return StatusFullController
 
     def test_full_started(self):
         self.now_to_return(hour=12, minute=34, second=56)
         actions = A().start().at(hour=8).done()
         self.actions_to_return(actions)
 
-        view: FullStatusView = self.handle(["status", "full"])
+        view: FullStatusView = self.handle([])
 
         self.assertEqual(view.status, WorkOptions.START)
         self.assertEqual(view.today_passed_time, timedelta(hours=4, minutes=34, seconds=56))
@@ -37,7 +37,7 @@ class TestStatusControllerFullCommand(ControllerTestCase):
         actions = A().start().at(hour=8).finish().at(hour=12, minute=34, second=56).done()
         self.actions_to_return(actions)
 
-        view: FullStatusView = self.handle(["status", "full"])
+        view: FullStatusView = self.handle([])
 
         self.assertEqual(view.status, WorkOptions.FINISH)
         self.assertEqual(view.today_passed_time, timedelta(hours=4, minutes=34, seconds=56))
@@ -52,7 +52,7 @@ class TestStatusControllerFullCommand(ControllerTestCase):
         actions = A().start().at().done()
         self.actions_to_return(actions)
 
-        view: FullStatusView = self.handle(["status", "full"])
+        view: FullStatusView = self.handle([])
 
         self.assertEqual(view.status, WorkOptions.START)
         self.assertEqual(view.today_passed_time, timedelta(hours=9, minutes=8, seconds=7))
@@ -81,7 +81,7 @@ class TestStatusControllerFullCommand(ControllerTestCase):
             .done())
         self.actions_to_return(actions)
 
-        view: FullStatusView = self.handle(["status", "full"])
+        view: FullStatusView = self.handle([])
 
         self.assertEqual(view.status, WorkOptions.FINISH)
         self.assertEqual(view.today_passed_time, timedelta(hours=9))

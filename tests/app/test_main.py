@@ -44,7 +44,7 @@ class TestMain(TestCase):
         actual_invocations = len(mock_print.call_args_list)
         expected_invocations = 1
         self.assertEqual(actual_invocations, expected_invocations)
-        mock_print.assert_called_with("ERROR: unknown command \"not_a_valid_option\", please try \"help\"")
+        mock_print.assert_called_with('ERROR: command "not_a_valid_option" is not found, please try "help"')
         mock_print.reset_mock()
 
     def test_help(self, mock_print):

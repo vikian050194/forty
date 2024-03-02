@@ -2,24 +2,24 @@ from datetime import time
 
 from forty.views.status import IntervalStatusView
 from forty.tools import ActionsBuilder as A
-from forty.controllers import StatusController
+from forty.controllers.status.internal import StatusIntervalController
 
 from ..controller_test_case import ControllerTestCase
 
 
-class TestStatusControllerIntervalCommand(ControllerTestCase):
+class TestStatusIntervalController(ControllerTestCase):
     def __init__(self, *args, **kwargs):
         ControllerTestCase.__init__(self, *args, **kwargs)
 
     @property
     def controller_class(self):
-        return StatusController
+        return StatusIntervalController
 
     def test_today_not_started(self):
         actions = A().done()
         self.actions_to_return(actions)
 
-        view: IntervalStatusView = self.handle(["status", "interval"])
+        view: IntervalStatusView = self.handle([])
 
         self.assertEqual(view.from_time, None)
         self.assertEqual(view.to_time, None)
@@ -29,7 +29,7 @@ class TestStatusControllerIntervalCommand(ControllerTestCase):
         actions = A().start().at(hour=9).done()
         self.actions_to_return(actions)
 
-        view: IntervalStatusView = self.handle(["status", "interval"])
+        view: IntervalStatusView = self.handle([])
 
         self.assertEqual(view.to_time, time(hour=17))
 
@@ -38,7 +38,7 @@ class TestStatusControllerIntervalCommand(ControllerTestCase):
         actions = A().start().at(day=1,hour=9).done()
         self.actions_to_return(actions)
 
-        view: IntervalStatusView = self.handle(["status", "interval"])
+        view: IntervalStatusView = self.handle([])
 
         self.assertEqual(view.from_time, time(hour=9))
         self.assertEqual(view.to_time, time(hour=17))
@@ -48,7 +48,7 @@ class TestStatusControllerIntervalCommand(ControllerTestCase):
         actions = A().start().at(hour=20, minute=30, second=40).done()
         self.actions_to_return(actions)
 
-        view: IntervalStatusView = self.handle(["status", "interval"])
+        view: IntervalStatusView = self.handle([])
 
         self.assertEqual(view.from_time, time(hour=20, minute=30, second=40))
         # TODO should I change this behavior?
@@ -59,7 +59,7 @@ class TestStatusControllerIntervalCommand(ControllerTestCase):
         actions = A().start().at(hour=8).finish().at(hour=9).done()
         self.actions_to_return(actions)
 
-        view: IntervalStatusView = self.handle(["status", "interval"])
+        view: IntervalStatusView = self.handle([])
 
         self.assertEqual(view.from_time, time(hour=8))
         self.assertEqual(view.to_time, None)
