@@ -8,6 +8,8 @@
 
 **forty** is a tool that can help you track (working) time, take a break and many more
 
+Also there is [todo list](./TODO.md).
+
 ## Motivation
 
 There are a lot of flexible and powerful time and work trackers but as for me all of them are too complex and I don't need a biggest part of provided features
