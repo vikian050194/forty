@@ -37,7 +37,25 @@ class CompositeController(AbstractController):
                     # TODO fix enum and string mixed usage
                     if key.value == command:
                         # TODO extract options instance
-                        return self.handlers[command].handle(Options(args, True))
+                        if len(args) == 2:
+                            return self.handlers[command].handle(Options(args, True))
+                        if len(args) == 1:
+                            pattern = args[0]
+                            # is it OK?
+                            dynamic_suggestions = self.handlers[command].handle(Options(args, True))
+                            for suggestion in dynamic_suggestions.list:
+                                if suggestion.startswith(pattern):
+                                    suggestions.append(suggestion)
+                            if suggestion:
+                                return ListView(suggestions)
+                            else:
+                                return ListView(dynamic_suggestions)
+
+                        # do I need it?
+                        if len(args) == 0:
+                            return self.handlers[command].handle(Options(args, False))
+
+                        return ErrorView(f'unexpected arguments "{args}"')
 
                     # TODO fix enum and string mixed usage
                     if str(key.value).startswith(command):
