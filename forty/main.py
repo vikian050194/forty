@@ -86,8 +86,8 @@ def main(options: List[str], configuration: Configuration):
     if command == "complete":
         command = options[1] if len(options) > 1 else None
         opt = Options(values=options[1:], complete=True)
-
-    if len(opt.values) < 2 and command in defaults:
-        opt.values.append(defaults.get(command))
+    else:
+        if len(opt.values) < 2 and command in defaults:
+            opt.values.append(defaults.get(command))
     view = root_controller.handle(opt)
     om.emmit(view)

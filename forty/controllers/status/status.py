@@ -1,13 +1,6 @@
-from typing import List
-from forty.controllers.abstract import AbstractController
+from forty.actions import Commands
 
-from forty.controllers.composite import CompositeController
-
-from forty.actions import Commands, StatusOptions
-from forty.options import Options
-from forty.reducers import *
-from forty.models import StatusModel
-from forty.views.base import AbstractView
+from ..composite import CompositeController
 
 
 class StatusController(CompositeController):

@@ -1,5 +1,4 @@
 from forty.actions import Commands
-from forty.views import *
 
 from ..composite import CompositeController
 

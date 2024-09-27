@@ -11,7 +11,7 @@ class VersionController(AbstractController):
         return [Commands.VERSION]
 
     def handle(self, options: Options) -> AbstractView:
-        return StrView("v0.4.0")
+        return StrView("v0.4.1")
 
 
 __all__ = ["VersionController"]

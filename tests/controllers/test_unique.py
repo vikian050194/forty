@@ -1,14 +1,12 @@
 # from unittest.case import TestCase
-# from unittest import skip
 
 # from .controller_test_case import get_project_manager_spec
 
-# from forty.controllers import controllers
+# import forty.controllers as controllers
 # from forty.managers import TimeManager
 
 
 # class TestFinishController(TestCase):
-#     @skip("TODO")
 #     def test_unique_keys(self):
 #         keys = set()
 

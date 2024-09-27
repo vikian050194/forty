@@ -47,6 +47,294 @@ class TestMain(TestCase):
         mock_print.assert_called_with('ERROR: command "not_a_valid_option" is not found, please try "help"')
         mock_print.reset_mock()
 
+    def test_complete_all(self, mock_print):
+        complete = ["complete"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 11
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("help")
+        mock_print.reset_mock()
+
+# TODO move to unit tests
+    def test_complete_project(self, mock_print):
+        complete = ["complete", "pr"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("project")
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
+    def test_complete_project_all_subs(self, mock_print):
+        complete = ["complete", "project"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 4
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("set")
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
+    def test_complete_project_list(self, mock_print):
+        complete = ["complete", "project", "li"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("list")
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
+    def test_complete_project_get(self, mock_print):
+        complete = ["complete", "project", "g"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("get")
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
+    def test_complete_project_set(self, mock_print):
+        complete = ["complete", "project", "s"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("set")
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
+    def test_complete_project_set_particular(self, mock_print):
+        self.call(["project", "new", "test1"])
+        mock_print.reset_mock()
+
+        complete = ["complete", "project", "set", "te"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("test1")
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
+    def test_complete_project_new(self, mock_print):
+        complete = ["complete", "project", "n"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("new")
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
+    def test_complete_status(self, mock_print):
+        complete = ["complete", "stat"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("status")
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
+    def test_complete_status_all_subs(self, mock_print):
+        complete = ["complete", "status"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 7
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("total")
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
+    def test_complete_status_full(self, mock_print):
+        complete = ["complete", "status", "f"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("full")
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
+    def test_complete_status_interval(self, mock_print):
+        complete = ["complete", "status", "i"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("interval")
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
+    def test_complete_status_only(self, mock_print):
+        complete = ["complete", "status", "o"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("only")
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
+    def test_complete_status_passed(self, mock_print):
+        complete = ["complete", "status", "p"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("passed")
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
+    def test_complete_status_remained(self, mock_print):
+        complete = ["complete", "status", "r"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("remained")
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
+    def test_complete_status_today(self, mock_print):
+        complete = ["complete", "status", "tod"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("today")
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
+    def test_complete_status_total(self, mock_print):
+        complete = ["complete", "status", "tot"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("total")
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
+    def test_complete_start(self, mock_print):
+        complete = ["complete", "star"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("start")
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
+    def test_complete_start(self, mock_print):
+        complete = ["complete", "fi"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("finish")
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
+    def test_complete_log(self, mock_print):
+        complete = ["complete", "l"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("log")
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
+    def test_complete_undo(self, mock_print):
+        complete = ["complete", "u"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("undo")
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
+    def test_complete_reset(self, mock_print):
+        complete = ["complete", "r"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("reset")
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
+    def test_complete_check(self, mock_print):
+        complete = ["complete", "c"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("check")
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
+    def test_complete_date(self, mock_print):
+        complete = ["complete", "d"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("date")
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
+    def test_complete_version(self, mock_print):
+        complete = ["complete", "v"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("version")
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
+    def test_complete_help(self, mock_print):
+        complete = ["complete", "h"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("help")
+        mock_print.reset_mock()
+
     def test_help(self, mock_print):
         help = ["help"]
 
