@@ -162,8 +162,6 @@ TODO
 
 ## Tests
 
-TDD is cool and I use it here!
-
 Module for testing is `unittest`
 
 ```
