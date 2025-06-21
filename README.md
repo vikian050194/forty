@@ -8,7 +8,7 @@
 
 **forty** is a tool that can help you track (working) time, take a break and many more
 
-Also there is [todo list](./TODO.md).
+By the way, there is [todo list](./TODO.md).
 
 ## Motivation
 
