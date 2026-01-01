@@ -1,6 +1,6 @@
 from datetime import timedelta, date
 
-from forty.managers.project_manager import Config
+from forty.managers.file_manager import Config
 from forty.views import RemainedStatusView
 from forty.models import StatusModel
 from forty.tools import ActionsBuilder as A
@@ -22,8 +22,8 @@ class TestStatusModelRemainedMethod(ModelTestCase):
         self.assertEqual(view.today, timedelta(hours=8))
         self.assertEqual(view.total, timedelta(hours=40))
         
-        self.pm.load_project.assert_called_once()
-        self.pm.load_actions.assert_called_once()
+        self.fm.load_project.assert_called_once()
+        self.fm.load_actions.assert_called_once()
 
     def test_today_overtime(self):
         actions = A().start().at(hour=9).finish().at(hour=18).done()

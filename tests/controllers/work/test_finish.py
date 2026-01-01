@@ -29,9 +29,9 @@ class TestFinishController(ControllerTestCase):
         self.assertEqual(view.timestamp, action_timestamp)
 
 
-        self.assertEqual(self.pm.load_project.call_count, 3)
-        self.assertEqual(self.pm.load_actions.call_count, 3)
-        args, _ = self.pm.save_actions.call_args_list[0]
+        self.assertEqual(self.fm.load_project.call_count, 3)
+        self.assertEqual(self.fm.load_actions.call_count, 3)
+        args, _ = self.fm.save_actions.call_args_list[0]
         (updated_actions,) = args
         self.assertEqual(len(updated_actions), 2)
         self.assertEqual(updated_actions[0], actions[0])
@@ -49,9 +49,9 @@ class TestFinishController(ControllerTestCase):
         self.assertEqual(view.type, WorkOptions.FINISH)
         self.assertEqual(view.timestamp, datetime(2021, 1, 1, 12, 34, 56))
 
-        self.assertEqual(self.pm.load_project.call_count, 3)
-        self.assertEqual(self.pm.load_actions.call_count, 3)
-        args, _ = self.pm.save_actions.call_args_list[0]
+        self.assertEqual(self.fm.load_project.call_count, 3)
+        self.assertEqual(self.fm.load_actions.call_count, 3)
+        args, _ = self.fm.save_actions.call_args_list[0]
         (updated_actions,) = args
         self.assertEqual(len(updated_actions), 2)
         self.assertEqual(updated_actions[0], actions[0])
@@ -67,9 +67,9 @@ class TestFinishController(ControllerTestCase):
         self.assertIsInstance(view, InfoView)
         self.assertEqual(view.value, "already finished")
 
-        self.assertEqual(self.pm.load_project.call_count, 3)
-        self.assertEqual(self.pm.load_actions.call_count, 3)
-        self.pm.save_actions.assert_not_called()
+        self.assertEqual(self.fm.load_project.call_count, 3)
+        self.assertEqual(self.fm.load_actions.call_count, 3)
+        self.fm.save_actions.assert_not_called()
 
     def test_last_day_is_not_finished(self):
         actions = A().start().at().done()
@@ -81,9 +81,9 @@ class TestFinishController(ControllerTestCase):
         self.assertIsInstance(view, ErrorView)
         self.assertEqual(view.value, "invalid state at 2021-01-01")
 
-        self.assertEqual(self.pm.load_project.call_count, 5)
-        self.assertEqual(self.pm.load_actions.call_count, 5)
-        self.assertEqual(self.pm.save_actions.call_count, 2)
+        self.assertEqual(self.fm.load_project.call_count, 5)
+        self.assertEqual(self.fm.load_actions.call_count, 5)
+        self.assertEqual(self.fm.save_actions.call_count, 2)
 
     def test_specify_date(self):
         actions = A().start().at().done()
@@ -97,9 +97,9 @@ class TestFinishController(ControllerTestCase):
         self.assertEqual(view.type, WorkOptions.FINISH)
         self.assertEqual(view.timestamp, datetime(2021, 1, 1, 10, 0, 0))
 
-        self.assertEqual(self.pm.load_project.call_count, 3)
-        self.assertEqual(self.pm.load_actions.call_count, 3)
-        args, _ = self.pm.save_actions.call_args_list[0]
+        self.assertEqual(self.fm.load_project.call_count, 3)
+        self.assertEqual(self.fm.load_actions.call_count, 3)
+        args, _ = self.fm.save_actions.call_args_list[0]
         (updated_actions,) = args
         self.assertEqual(len(updated_actions), 2)
         self.assertEqual(updated_actions[0], actions[0])
@@ -117,9 +117,9 @@ class TestFinishController(ControllerTestCase):
         self.assertEqual(view.type, WorkOptions.FINISH)
         self.assertEqual(view.timestamp, datetime(2021, 1, 1, 10, 0, 0))
 
-        self.assertEqual(self.pm.load_project.call_count, 3)
-        self.assertEqual(self.pm.load_actions.call_count, 3)
-        args, _ = self.pm.save_actions.call_args_list[0]
+        self.assertEqual(self.fm.load_project.call_count, 3)
+        self.assertEqual(self.fm.load_actions.call_count, 3)
+        args, _ = self.fm.save_actions.call_args_list[0]
         (updated_actions,) = args
         self.assertEqual(len(updated_actions), 2)
         self.assertEqual(updated_actions[0], actions[0])

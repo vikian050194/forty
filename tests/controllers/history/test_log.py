@@ -16,9 +16,9 @@ class TestLogController(ControllerTestCase):
     def test_no_actions(self):
         view: LogView = self.handle([])
 
-        self.pm.load_project.assert_called_once()
-        self.pm.load_actions.assert_called_once()
-        self.pm.save_actions.assert_not_called()
+        self.fm.load_project.assert_called_once()
+        self.fm.load_actions.assert_called_once()
+        self.fm.save_actions.assert_not_called()
         self.assertEqual(view.list, [])
 
     def test_few_actions(self):

@@ -1,18 +1,18 @@
 from typing import List
-from forty.controllers.check import CheckController
 
+from forty.controllers.check import CheckController
 from forty.controllers.composite import CompositeController
 from forty.controllers.date import DateController
 from forty.controllers.finish import FinishController
 from forty.controllers.help import HelpController
 from forty.controllers.log import LogController
-from forty.controllers.project import *
+from forty.controllers.project import ProjectController
 from forty.controllers.reset import ResetController
 from forty.controllers.start import StartController
-from forty.controllers.status import *
+from forty.controllers.status import StatusController
 from forty.controllers.undo import UndoController
 from forty.controllers.version import VersionController
-from forty.managers import ProjectManager, TimeManager, OutputManager
+from forty.managers import FileManager, TimeManager, OutputManager
 from forty.configuration import Configuration
 from forty.options import Options
 from forty.actions import Commands
@@ -20,45 +20,30 @@ from forty.actions import Commands
 
 def main(options: List[str], configuration: Configuration):
     tm = TimeManager()
-    pm = ProjectManager(tm, configuration)
+    fm = FileManager(tm, configuration)
     om = OutputManager(configuration)
 
     # TODO improve defaults mechanism
     defaults = dict()
     defaults[Commands.STATUS] = configuration.status
 
-    project_subs = [
-        ProjectListController(pm, tm),
-        ProjectNewController(pm, tm),
-        ProjectGetController(pm, tm),
-        ProjectSetController(pm, tm)
-    ]
-    project_controller = ProjectController(pm, tm, project_subs)
+    project_controller = ProjectController(fm, tm)
 
-    status_subs = [
-        StatusFullController(pm, tm),
-        StatusIntervalController(pm, tm),
-        StatusOnlyController(pm, tm),
-        StatusPassedController(pm, tm),
-        StatusRemainedController(pm, tm),
-        StatusTodayController(pm, tm),
-        StatusTotalController(pm, tm)
-    ]
-    status_controller = StatusController(pm, tm, status_subs)
+    status_controller = StatusController(fm, tm)
 
-    start_controller = StartController(pm, tm)
-    finish_controller = FinishController(pm, tm)
+    start_controller = StartController(fm, tm)
+    finish_controller = FinishController(fm, tm)
 
     # TODO probably following 5 controllers should be behind single composite controller
-    log_controller = LogController(pm, tm)
-    undo_controller = UndoController(pm, tm)
-    reset_controller = ResetController(pm, tm)
-    check_controller = CheckController(pm, tm)
-    date_controller = DateController(pm, tm)
+    log_controller = LogController(fm, tm)
+    undo_controller = UndoController(fm, tm)
+    reset_controller = ResetController(fm, tm)
+    check_controller = CheckController(fm, tm)
+    date_controller = DateController(fm, tm)
 
-    version_controller = VersionController(pm, tm)
+    version_controller = VersionController(fm, tm)
 
-    help_controller = HelpController(pm, tm)
+    help_controller = HelpController(fm, tm)
 
     controllers = [
         project_controller,
@@ -74,7 +59,7 @@ def main(options: List[str], configuration: Configuration):
         help_controller
     ]
 
-    root_controller = CompositeController(pm, tm, controllers)
+    root_controller = CompositeController(fm, tm, controllers)
 
     command = None
     

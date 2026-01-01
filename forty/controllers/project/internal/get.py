@@ -10,7 +10,7 @@ class ProjectGetController(AbstractController):
         return [ProjectOptions.GET]
 
     def handle(self, options):
-        model = ProjectModel(self.pm, self.tm)
+        model = ProjectModel(self.fm, self.tm)
         current_project = model.get()
         if current_project:
             return StrView(current_project)

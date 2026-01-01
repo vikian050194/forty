@@ -4,7 +4,7 @@ from forty.models import HistoryModel
 
 def check_before(func):
     def wrapper(self, *args, **kwargs):
-        model = HistoryModel(self.pm, self.tm)
+        model = HistoryModel(self.fm, self.tm)
         invalid_dates = model.check_all()
         today = self.tm.get_date()
         invalid_dates = list(filter(lambda x: x != today, invalid_dates))

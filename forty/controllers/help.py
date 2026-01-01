@@ -3,7 +3,7 @@ from typing import List
 from forty.actions import Commands
 from forty.controllers.abstract import AbstractController
 from forty.options import Options
-from forty.views.base import AbstractView, ListView, StrView
+from forty.views.base import AbstractView, ListView
 
 
 class HelpController(AbstractController):

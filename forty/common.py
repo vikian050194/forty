@@ -2,7 +2,7 @@ from datetime import date, datetime, time, timedelta
 
 
 def dt_to_iso(value: datetime):
-    return value.isoformat(sep='T', timespec='seconds')
+    return value.isoformat(sep="T", timespec="seconds")
 
 
 def iso_to_dt(value: str):
@@ -18,7 +18,7 @@ def date_to_yms(value: date):
 
 
 def iso_to_date(value: str):
-    return datetime.strptime(value, '%Y-%m-%d').date()
+    return datetime.strptime(value, "%Y-%m-%d").date()
 
 
 def reduce_actions(reducer, actions, initial_state = None):
@@ -85,7 +85,7 @@ def normalize(values):
 
 
 def hms_to_int(value: str):
-    [h, m, s] = normalize(value.split(':'))
+    [h, m, s] = normalize(value.split(":"))
     hours = int(h) * 3600
     minutes = int(m) * 60
     seconds = int(s)

@@ -1,5 +1,5 @@
 from datetime import time, date
-from forty.managers.project_manager import Config
+from forty.managers.file_manager import Config
 from forty.views import IntervalStatusView
 from forty.models import StatusModel
 from forty.tools import ActionsBuilder as A
@@ -21,8 +21,8 @@ class TestStatusModelIntervalMethod(ModelTestCase):
         self.assertEqual(view.from_time, None)
         self.assertEqual(view.to_time, None)
         
-        self.pm.load_project.assert_called_once()
-        self.pm.load_actions.assert_called_once()
+        self.fm.load_project.assert_called_once()
+        self.fm.load_actions.assert_called_once()
 
     def test_started(self):
         self.now_to_return(hour=13)

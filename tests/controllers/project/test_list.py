@@ -17,9 +17,9 @@ class TestProjectListController(ControllerTestCase):
 
         view: InfoView = self.handle([])
 
-        self.pm.load_project.assert_not_called()
-        self.pm.get_projects_list.assert_called_once()
-        self.pm.save_actions.assert_not_called()
+        self.fm.load_project.assert_not_called()
+        self.fm.get_projects_list.assert_called_once()
+        self.fm.save_actions.assert_not_called()
         self.assertEqual(view.value, "there are no projects")
 
     def test_list_few_projects(self):
@@ -27,7 +27,7 @@ class TestProjectListController(ControllerTestCase):
         
         view: ListView = self.handle([])
 
-        self.pm.load_project.assert_not_called()
-        self.pm.get_projects_list.assert_called_once()
-        self.pm.save_actions.assert_not_called()
+        self.fm.load_project.assert_not_called()
+        self.fm.get_projects_list.assert_called_once()
+        self.fm.save_actions.assert_not_called()
         self.assertListEqual(view.list, ["aaa", "bbb", "ccc"])

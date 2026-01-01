@@ -4,7 +4,7 @@ from datetime import date
 
 from forty.tools import ActionsBuilder as A
 from forty.common import value_decorator
-from forty.managers.project_manager import Config
+from forty.managers.file_manager import Config
 from forty.reducers import get_today_remained_time
 
 

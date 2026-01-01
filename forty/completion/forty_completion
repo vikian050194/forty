@@ -1,7 +1,6 @@
 #/usr/bin/env bash
 
 DEBUG=0
-FORTY_OUTPUT="plain"
 
 function _forty_completions()
 {
@@ -21,18 +20,7 @@ function _forty_completions()
   local completionOptions=($(forty complete ${argumentsToComplete[@]}))
   [ $DEBUG -eq 1 ] && echo "completionOptions:${completionOptions[@]}"
 
-  # python-base matching
   COMPREPLY=(${completionOptions[@]})
-
-  # bash-base matching
-  # local lastOne=${COMP_WORDS[$totalLen-1]}
-  # [ $DEBUG -eq 1 ] && echo "lastOne:$lastOne"
-
-  # local completionSuggestions=($(compgen -W "$completionOptions" -- $lastOne))
-  # local completionSuggestionsLen=${#completionSuggestions[@]}
-  # [ $DEBUG -eq 1 ] && echo "completionSuggestions:${completionSuggestions[@]}"
-
-  # COMPREPLY=(${completionSuggestions[@]})
 
   return 0;
 }

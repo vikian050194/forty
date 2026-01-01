@@ -49,6 +49,10 @@ Rigth now the best way to install **forty** is following one:
 
 ## Development
 
+For development in VS Code it's needed to use Python version `3.9.*`.
+There is unexpected problem with test discovery feature on Python `3.8.10`.
+I'm using `3.9.5`.
+
 ```
 virtualenv venv
 source venv/bin/activate
@@ -137,7 +141,7 @@ There are three ways and layers of configuration
 
 | Name | Description | Value |
 | --- | --- | --- |
-| `FORTY_HOME` | Home directory where `.forty` is stored | Any valid pathv|
+| `FORTY_HOME` | Home directory where `.forty` is stored | Any valid path |
 | `FORTY_OUTPUT` | Output format | `human`, `plain` or `json` |
 | `FORTY_STATUS` | Status type | See valid values above |
 
@@ -175,6 +179,11 @@ or
 ```
 
 ### Coverage
+
+Install requrements
+```
+pip install -r requirements.txt
+```
 
 Generate coverage results
 ```

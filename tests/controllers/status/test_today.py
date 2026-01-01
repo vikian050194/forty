@@ -5,7 +5,7 @@ from datetime import date, timedelta
 from forty.views.status import TodayStatusView
 from forty.tools import ActionsBuilder as A
 from forty.controllers.status.internal import StatusTodayController
-from forty.managers.project_manager import Config
+from forty.managers.file_manager import Config
 
 from ..controller_test_case import ControllerTestCase
 

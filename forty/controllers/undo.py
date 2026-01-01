@@ -14,7 +14,7 @@ class UndoController(AbstractController):
         return [HistoryOptions.UNDO]
 
     def handle(self, options: Options) -> AbstractView:
-        model = HistoryModel(self.pm, self.tm)
+        model = HistoryModel(self.fm, self.tm)
         expected_count = 1
         if options.values:
             expected_count = int(options.values[0])

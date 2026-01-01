@@ -14,7 +14,7 @@ class StatusTodayController(AbstractController):
 
     @check_before
     def handle(self, options: Options) -> AbstractView:
-        model = StatusModel(self.pm, self.tm)
+        model = StatusModel(self.fm, self.tm)
         return model.today()
 
 

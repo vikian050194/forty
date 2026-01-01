@@ -6,8 +6,8 @@ from forty.actions import Action, WorkOptions
 
 class WorkModel(AbstractModel):
     def start(self, new_date: date = None, new_time: time = None):
-        project = self.pm.load_project()
-        actions = self.pm.load_actions()
+        project = self.fm.load_project()
+        actions = self.fm.load_actions()
 
         if actions and actions[-1].type == WorkOptions.START:
             return None
@@ -23,12 +23,12 @@ class WorkModel(AbstractModel):
 
         new_action = Action(type=WorkOptions.START, timestamp=timestamp)
         actions.append(new_action)
-        self.pm.save_actions(actions)
+        self.fm.save_actions(actions)
         return new_action
 
     def finish(self, new_date: date = None, new_time: time = None):
-        project = self.pm.load_project()
-        actions = self.pm.load_actions()
+        project = self.fm.load_project()
+        actions = self.fm.load_actions()
 
         if not actions or (actions and actions[-1].type == WorkOptions.FINISH):
             return None
@@ -44,7 +44,7 @@ class WorkModel(AbstractModel):
 
         new_action = Action(type=WorkOptions.FINISH, timestamp=timestamp)
         actions.append(new_action)
-        self.pm.save_actions(actions)
+        self.fm.save_actions(actions)
         return new_action
 
 

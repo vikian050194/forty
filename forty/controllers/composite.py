@@ -2,7 +2,7 @@ from typing import List
 
 from forty.controllers.abstract import AbstractController
 from forty.controllers.base import BaseController
-from forty.managers.project_manager import ProjectManager
+from forty.managers.file_manager import FileManager
 from forty.managers.time_manager import TimeManager
 from forty.options import Options
 from forty.views.base import AbstractView, ListView
@@ -10,8 +10,8 @@ from forty.views.message import ErrorView
 
 
 class CompositeController(BaseController):
-    def __init__(self, pm: ProjectManager, tm: TimeManager, cs: List[AbstractController]):
-        super().__init__(pm, tm, cs)
+    def __init__(self, fm: FileManager, tm: TimeManager, cs: List[AbstractController]):
+        super().__init__(fm, tm, cs)
         self.handlers = {}
         for c in cs:
             for key in c.keys():

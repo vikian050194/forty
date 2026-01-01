@@ -16,7 +16,7 @@ class FinishController(AbstractController):
 
     @check_after
     def handle(self, options: Options) -> AbstractView:
-        model = WorkModel(self.pm, self.tm)
+        model = WorkModel(self.fm, self.tm)
         new_time = None
         new_date = None
         if len(options.values) == 1:

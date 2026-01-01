@@ -1,6 +1,6 @@
 from datetime import timedelta
 from forty.common import State
-from forty.managers.project_manager import Config
+from forty.managers.file_manager import Config
 
 from forty.reducers import get_total_passed_time
 

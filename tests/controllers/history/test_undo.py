@@ -18,9 +18,9 @@ class TestUndoController(ControllerTestCase):
         view: InfoView = self.handle([])
 
         self.assertIsInstance(view, InfoView)
-        self.pm.load_project.assert_called_once()
-        self.pm.load_actions.assert_called_once()
-        self.pm.save_actions.assert_called_once_with(["one", "two"])
+        self.fm.load_project.assert_called_once()
+        self.fm.load_actions.assert_called_once()
+        self.fm.save_actions.assert_called_once_with(["one", "two"])
         self.assertEqual(view.value, "last 1 action is deleted")
 
     def test_two_actions(self):
@@ -29,9 +29,9 @@ class TestUndoController(ControllerTestCase):
         view: InfoView = self.handle(["2"])
 
         self.assertIsInstance(view, InfoView)
-        self.pm.load_project.assert_called_once()
-        self.pm.load_actions.assert_called_once()
-        self.pm.save_actions.assert_called_once_with(["one"])
+        self.fm.load_project.assert_called_once()
+        self.fm.load_actions.assert_called_once()
+        self.fm.save_actions.assert_called_once_with(["one"])
         self.assertEqual(view.value, "last 2 actions are deleted")
 
     def test_try_two(self):
@@ -40,9 +40,9 @@ class TestUndoController(ControllerTestCase):
         view: WarningView = self.handle(["2"])
 
         self.assertIsInstance(view, WarningView)
-        self.pm.load_project.assert_called_once()
-        self.pm.load_actions.assert_called_once()
-        self.pm.save_actions.assert_called_once_with([])
+        self.fm.load_project.assert_called_once()
+        self.fm.load_actions.assert_called_once()
+        self.fm.save_actions.assert_called_once_with([])
         self.assertEqual(view.value, "last 1 action is deleted")
 
     def test_no_actions(self):
@@ -51,7 +51,7 @@ class TestUndoController(ControllerTestCase):
         view: WarningView = self.handle(["2"])
 
         self.assertIsInstance(view, WarningView)
-        self.pm.load_project.assert_called_once()
-        self.pm.load_actions.assert_called_once()
-        self.pm.save_actions.assert_not_called()
+        self.fm.load_project.assert_called_once()
+        self.fm.load_actions.assert_called_once()
+        self.fm.save_actions.assert_not_called()
         self.assertEqual(view.value, "no actions are deleted")

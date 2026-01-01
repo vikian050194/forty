@@ -13,7 +13,7 @@ class LogController(AbstractController):
         return [HistoryOptions.LOG]
 
     def handle(self, options: Options) -> AbstractView:
-        model = HistoryModel(self.pm, self.tm)
+        model = HistoryModel(self.fm, self.tm)
         actions = model.log()
         actions = list(map(lambda a: ActionLogView(a.type, a.value, a.timestamp), actions))
         return LogView(actions)

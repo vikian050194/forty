@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from forty.tools import ActionsBuilder as A
 from forty.common import value_decorator
-from forty.managers.project_manager import Config
+from forty.managers.file_manager import Config
 from forty.reducers import get_total_remained_time
 
 

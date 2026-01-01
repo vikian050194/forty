@@ -8,9 +8,9 @@ from forty.common import int_to_timedelta
 
 class StatusModel(AbstractModel):
     def _magic(self, is_status=False, is_today=False, is_total=False, is_passed=False, is_remained=False, is_interval=False):
-        project = self.pm.load_project()
-        config = self.pm.load_config()
-        actions = self.pm.load_actions()
+        project = self.fm.load_project()
+        config = self.fm.load_config()
+        actions = self.fm.load_actions()
 
         status = get_current_status(actions)
         status_value: WorkOptions = None

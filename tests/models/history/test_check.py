@@ -20,8 +20,8 @@ class TestHistoryModelCheckMethod(ModelTestCase):
         result: bool = self.model.check(date(year=2021, month=1, day=1))
 
         self.assertTrue(result)
-        self.pm.load_project.assert_called_once()
-        self.pm.load_actions.assert_called_once()
+        self.fm.load_project.assert_called_once()
+        self.fm.load_actions.assert_called_once()
 
     def test_one_day_not_finished(self):
         actions = A().start().at(day=1).done()
@@ -30,8 +30,8 @@ class TestHistoryModelCheckMethod(ModelTestCase):
         result: bool = self.model.check(date(year=2021, month=1, day=1))
 
         self.assertFalse(result)
-        self.pm.load_project.assert_called_once()
-        self.pm.load_actions.assert_called_once()
+        self.fm.load_project.assert_called_once()
+        self.fm.load_actions.assert_called_once()
 
     def test_one_day_finished(self):
         actions = A().start().at(day=1).finish().at(day=1).done()
@@ -40,8 +40,8 @@ class TestHistoryModelCheckMethod(ModelTestCase):
         result: bool = self.model.check(date(year=2021, month=1, day=1))
 
         self.assertTrue(result)
-        self.pm.load_project.assert_called_once()
-        self.pm.load_actions.assert_called_once()
+        self.fm.load_project.assert_called_once()
+        self.fm.load_actions.assert_called_once()
 
     def test_one_day_two_finish(self):
         actions = (A()
@@ -55,8 +55,8 @@ class TestHistoryModelCheckMethod(ModelTestCase):
         result: bool = self.model.check(date(year=2021, month=1, day=1))
 
         self.assertTrue(result)
-        self.pm.load_project.assert_called_once()
-        self.pm.load_actions.assert_called_once()
+        self.fm.load_project.assert_called_once()
+        self.fm.load_actions.assert_called_once()
 
     def test_one_day_out_of_two_days(self):
         actions = (A()
@@ -70,5 +70,5 @@ class TestHistoryModelCheckMethod(ModelTestCase):
         result: bool = self.model.check(date(year=2021, month=1, day=2))
 
         self.assertTrue(result)
-        self.pm.load_project.assert_called_once()
-        self.pm.load_actions.assert_called_once()
+        self.fm.load_project.assert_called_once()
+        self.fm.load_actions.assert_called_once()

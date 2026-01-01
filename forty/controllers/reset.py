@@ -13,7 +13,7 @@ class ResetController(AbstractController):
         return [HistoryOptions.RESET]
 
     def handle(self, options: Options) -> AbstractView:
-        model = HistoryModel(self.pm, self.tm)
+        model = HistoryModel(self.fm, self.tm)
         model.reset()
         return InfoView("all actions are deleted")
 

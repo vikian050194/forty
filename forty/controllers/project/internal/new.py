@@ -9,7 +9,7 @@ class ProjectNewController(AbstractController):
         return [ProjectOptions.NEW]
 
     def handle(self, options):
-        model = ProjectModel(self.pm, self.tm)
+        model = ProjectModel(self.fm, self.tm)
         if not options.values:
             return ErrorView("new project name is not specified")
         [name] = options.values

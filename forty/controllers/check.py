@@ -14,7 +14,7 @@ class CheckController(AbstractController):
         return [HistoryOptions.CHECK]
 
     def handle(self, options: Options) -> AbstractView:
-        model = HistoryModel(self.pm, self.tm)
+        model = HistoryModel(self.fm, self.tm)
         if options.values:
             day = iso_to_date(options.values[0])
             is_ok = model.check(day)

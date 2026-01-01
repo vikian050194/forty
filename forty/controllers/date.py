@@ -13,7 +13,7 @@ class DateController(AbstractController):
         return [HistoryOptions.DATE]
 
     def handle(self, options: Options) -> AbstractView:
-        model = HistoryModel(self.pm, self.tm)
+        model = HistoryModel(self.fm, self.tm)
         dates = model.date()
         if dates:
             return ListView(dates)

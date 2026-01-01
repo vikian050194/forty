@@ -47,6 +47,7 @@ class TestMain(TestCase):
         mock_print.assert_called_with('ERROR: command "not_a_valid_option" is not found, please try "help"')
         mock_print.reset_mock()
 
+    # TODO move to unit tests
     def test_complete_all(self, mock_print):
         complete = ["complete"]
 
@@ -57,7 +58,7 @@ class TestMain(TestCase):
         mock_print.assert_called_with("help")
         mock_print.reset_mock()
 
-# TODO move to unit tests
+    # TODO move to unit tests
     def test_complete_project(self, mock_print):
         complete = ["complete", "pr"]
 
@@ -412,7 +413,7 @@ class TestMain(TestCase):
         mock_print.reset_mock()
 
         self.call(["status", "full"])
-        # TODO: it is not working by some reason
+        # TODO it is not working by some reason
         # self.assertEqual(mock_print.call_args_list[0], call("status: finish"))
         self.assertEqual(mock_print.call_args_list[1], call("today_passed_time:   00:25:04"))
         self.assertEqual(mock_print.call_args_list[2], call("today_remained_time: None"))

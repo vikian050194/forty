@@ -13,7 +13,7 @@ class ProjectSetController(AbstractController):
     def _complete(self, value: str) -> AbstractView:
         suggestions = []
 
-        model = ProjectModel(self.pm, self.tm)
+        model = ProjectModel(self.fm, self.tm)
         possible_values = model.list()
 
         if value:
@@ -29,7 +29,7 @@ class ProjectSetController(AbstractController):
         return ListView(suggestions)
 
     def _handle(self, value: str) -> AbstractView:
-        model = ProjectModel(self.pm, self.tm)
+        model = ProjectModel(self.fm, self.tm)
         if not value:
             return ErrorView("project name is not specified")
         set_project_name = model.set(value)

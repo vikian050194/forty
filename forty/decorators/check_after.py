@@ -4,10 +4,8 @@ from forty.models import HistoryModel
 
 def check_after(func):
     def wrapper(self, *args, **kwargs):
-        model = HistoryModel(self.pm, self.tm)
-
+        model = HistoryModel(self.fm, self.tm)
         result = func(self, *args, **kwargs)
-
         invalid_dates = model.check_all()
         if invalid_dates:
             model.undo(1)

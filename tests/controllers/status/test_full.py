@@ -4,7 +4,7 @@ from forty.views.status import FullStatusView
 from forty.actions import WorkOptions
 from forty.tools import ActionsBuilder as A
 from forty.controllers.status.internal import StatusFullController
-from forty.managers.project_manager import Config
+from forty.managers.file_manager import Config
 
 from ..controller_test_case import ControllerTestCase
 

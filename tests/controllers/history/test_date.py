@@ -18,9 +18,9 @@ class TestDateController(ControllerTestCase):
     def test_no_actions(self):
         view: InfoView = self.handle([])
 
-        self.pm.load_project.assert_called_once()
-        self.pm.load_actions.assert_called_once()
-        self.pm.save_actions.assert_not_called()
+        self.fm.load_project.assert_called_once()
+        self.fm.load_actions.assert_called_once()
+        self.fm.save_actions.assert_not_called()
         self.assertEqual(view.value, "there are no dates")
 
     def test_one_day(self):

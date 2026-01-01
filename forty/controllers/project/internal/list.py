@@ -10,7 +10,7 @@ class ProjectListController(AbstractController):
         return [ProjectOptions.LIST]
     
     def handle(self, options):
-        model = ProjectModel(self.pm, self.tm)
+        model = ProjectModel(self.fm, self.tm)
         projects_list = model.list()
         if projects_list:
             return ListView(projects_list)

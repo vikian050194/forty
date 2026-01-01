@@ -18,9 +18,9 @@ class TestResetController(ControllerTestCase):
         view: InfoView = self.handle([])
 
         self.assertIsInstance(view, InfoView)
-        self.pm.load_project.assert_called_once()
-        self.pm.load_actions.assert_not_called()
-        self.pm.save_actions.assert_called_once_with([])
+        self.fm.load_project.assert_called_once()
+        self.fm.load_actions.assert_not_called()
+        self.fm.save_actions.assert_called_once_with([])
         self.assertEqual(view.value, "all actions are deleted")
 
     def test_no_actions(self):
@@ -29,7 +29,7 @@ class TestResetController(ControllerTestCase):
         view: InfoView = self.handle([])
 
         self.assertIsInstance(view, InfoView)
-        self.pm.load_project.assert_called_once()
-        self.pm.load_actions.assert_not_called()
-        self.pm.save_actions.assert_called_once_with([])
+        self.fm.load_project.assert_called_once()
+        self.fm.load_actions.assert_not_called()
+        self.fm.save_actions.assert_called_once_with([])
         self.assertEqual(view.value, "all actions are deleted")

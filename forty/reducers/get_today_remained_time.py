@@ -4,7 +4,7 @@ from datetime import timedelta
 
 from forty.common import State
 from forty.actions import Action
-from forty.managers.project_manager import Config
+from forty.managers.file_manager import Config
 from forty.reducers import get_today_passed_time
 
 

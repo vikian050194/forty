@@ -3,14 +3,14 @@ import enum
 
 class Flag():
     def __init__(self, short_name: str, full_name: str, values: enum.Enum):
-        self.__values__ = values
-        self.__short_name__ = short_name
-        self.__full_name__ = full_name
+        self._values = values
+        self._short_name = short_name
+        self._full_name = full_name
 
     @property
     def short_name(self):
-        return self.__short_name__
+        return self._short_name
 
     @property
     def full_name(self):
-        return self.__full_name__
+        return self._full_name

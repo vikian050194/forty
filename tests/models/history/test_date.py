@@ -22,8 +22,8 @@ class TestHistoryModelDateMethod(ModelTestCase):
         result: List[date] = self.model.date()
 
         self.assertEqual(result, [])
-        self.pm.load_project.assert_called_once()
-        self.pm.load_actions.assert_called_once()
+        self.fm.load_project.assert_called_once()
+        self.fm.load_actions.assert_called_once()
 
     def test_one_day(self):
         actions = A().start().at(day=1).finish().at(day=1).done()
@@ -32,8 +32,8 @@ class TestHistoryModelDateMethod(ModelTestCase):
         result: List[date] = self.model.date()
 
         self.assertEqual(result, [date(year=2021, month=1, day=1)])
-        self.pm.load_project.assert_called_once()
-        self.pm.load_actions.assert_called_once()
+        self.fm.load_project.assert_called_once()
+        self.fm.load_actions.assert_called_once()
 
     def test_two_days(self):
         actions = (A()
@@ -49,5 +49,5 @@ class TestHistoryModelDateMethod(ModelTestCase):
         self.assertEqual(result, [
             date(year=2021, month=1, day=1),
             date(year=2021, month=1, day=2)])
-        self.pm.load_project.assert_called_once()
-        self.pm.load_actions.assert_called_once()
+        self.fm.load_project.assert_called_once()
+        self.fm.load_actions.assert_called_once()

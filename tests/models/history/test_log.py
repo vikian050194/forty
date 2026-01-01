@@ -17,8 +17,8 @@ class TestHistoryModelLogMethod(ModelTestCase):
         view: str = self.model.log()
 
         self.assertEqual(view, [])
-        self.pm.load_project.assert_called_once()
-        self.pm.load_actions.assert_called_once()
+        self.fm.load_project.assert_called_once()
+        self.fm.load_actions.assert_called_once()
 
     def test_few_actions(self):
         self.actions_to_return(["a", "b", "c"])
@@ -26,5 +26,5 @@ class TestHistoryModelLogMethod(ModelTestCase):
         view: str = self.model.log()
 
         self.assertEqual(view, ["a", "b", "c"])
-        self.pm.load_project.assert_called_once()
-        self.pm.load_actions.assert_called_once()
+        self.fm.load_project.assert_called_once()
+        self.fm.load_actions.assert_called_once()

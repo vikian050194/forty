@@ -17,8 +17,8 @@ class TestHistoryModelUndoMethod(ModelTestCase):
         view: int = self.model.undo()
 
         self.assertEqual(view, 0)
-        self.pm.load_project.assert_called_once()
-        self.pm.save_actions.assert_not_called()
+        self.fm.load_project.assert_called_once()
+        self.fm.save_actions.assert_not_called()
 
     def test_default_count(self):
         self.actions_to_return(["a", "b", "c"])
@@ -26,8 +26,8 @@ class TestHistoryModelUndoMethod(ModelTestCase):
         view: int = self.model.undo()
 
         self.assertEqual(view, 1)
-        self.pm.load_project.assert_called_once()
-        self.pm.save_actions.assert_called_with(["a", "b"])
+        self.fm.load_project.assert_called_once()
+        self.fm.save_actions.assert_called_with(["a", "b"])
 
     def test_undo_two(self):
         self.actions_to_return(["a", "b", "c"])
@@ -35,8 +35,8 @@ class TestHistoryModelUndoMethod(ModelTestCase):
         view: int = self.model.undo(2)
 
         self.assertEqual(view, 2)
-        self.pm.load_project.assert_called_once()
-        self.pm.save_actions.assert_called_with(["a"])
+        self.fm.load_project.assert_called_once()
+        self.fm.save_actions.assert_called_with(["a"])
 
     def test_undo_four(self):
         self.actions_to_return(["a", "b", "c"])
@@ -44,5 +44,5 @@ class TestHistoryModelUndoMethod(ModelTestCase):
         view: int = self.model.undo(4)
 
         self.assertEqual(view, 3)
-        self.pm.load_project.assert_called_once()
-        self.pm.save_actions.assert_called_with([])
+        self.fm.load_project.assert_called_once()
+        self.fm.save_actions.assert_called_with([])

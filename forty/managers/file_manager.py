@@ -28,7 +28,7 @@ class Config():
         )
 
 
-class AbstractProjectManager(abc.ABC):
+class AbstractFileManager(abc.ABC):
     @abc.abstractmethod
     def get_projects_list(self) -> List[str]:
         raise NotImplementedError()
@@ -70,7 +70,7 @@ class AbstractProjectManager(abc.ABC):
         raise NotImplementedError()
 
 
-class ProjectManager(AbstractProjectManager):
+class FileManager(AbstractFileManager):
     def __init__(self, tm: AbstractTimeManager, configuration: Configuration):
         self.tm = tm
         self.home = configuration.home
@@ -84,14 +84,14 @@ class ProjectManager(AbstractProjectManager):
         if not os.path.exists(self.file_project):
             self.save_project()
 
-    def __get_project_dir(self):
+    def _get_project_dir(self):
         return f"{self.dir}/{self.project}"
 
-    def __get_config_file(self):
-        return f"{self.__get_project_dir()}/config.json"
+    def _get_config_file(self):
+        return f"{self._get_project_dir()}/config.json"
 
-    def __get_actions_file(self):
-        return f"{self.__get_project_dir()}/actions.json"
+    def _get_actions_file(self):
+        return f"{self._get_project_dir()}/actions.json"
 
     def get_projects_list(self) -> List[str]:
         return [f for f in os.listdir(self.dir) if os.path.isdir(os.path.join(self.dir, f))]
@@ -117,7 +117,7 @@ class ProjectManager(AbstractProjectManager):
         if not self.is_project_selected():
             raise Exception()
 
-        with open(self.__get_config_file(), "r") as fr:
+        with open(self._get_config_file(), "r") as fr:
             values = json.load(fr)
             config = Config(values["day_limit"], values["total_limit"])
             config.today = self.tm.get_date()
@@ -127,14 +127,14 @@ class ProjectManager(AbstractProjectManager):
         if not self.is_project_selected():
             raise Exception()
         
-        with open(self.__get_config_file(), "w") as fw:
+        with open(self._get_config_file(), "w") as fw:
             json.dump(obj=config.to_dict(), fp=fw, sort_keys=True, indent=4)
 
     def load_actions(self):
         if not self.is_project_selected():
             raise Exception()
 
-        with open(self.__get_actions_file(), "r") as fr:
+        with open(self._get_actions_file(), "r") as fr:
             return list(map(to_action, json.load(fr)))
 
     def save_actions(self, actions):
@@ -142,13 +142,13 @@ class ProjectManager(AbstractProjectManager):
             raise Exception()
 
         data = list(map(lambda item: item.to_dict(), actions))
-        with open(self.__get_actions_file(), "w") as fw:
+        with open(self._get_actions_file(), "w") as fw:
             json.dump(obj=data, fp=fw, sort_keys=True, indent=4)
 
     def initialize_new_project(self, project_name: str):
         self.select_project(project_name)
 
-        project_dir = self.__get_project_dir()
+        project_dir = self._get_project_dir()
         if not os.path.exists(project_dir):
             os.makedirs(project_dir)
 
@@ -161,4 +161,4 @@ class ProjectManager(AbstractProjectManager):
         self.save_config(default_config)
 
 
-__all__ = ["ProjectManager"]
+__all__ = ["FileManager"]

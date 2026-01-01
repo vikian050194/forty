@@ -22,9 +22,9 @@ class TestWorkModelFinishMethod(ModelTestCase):
 
         self.assertEqual(view, None)
         
-        self.pm.load_project.assert_called_once()
-        self.pm.load_actions.assert_called_once()
-        self.pm.save_actions.assert_not_called()
+        self.fm.load_project.assert_called_once()
+        self.fm.load_actions.assert_called_once()
+        self.fm.save_actions.assert_not_called()
 
     # TODO refactoring
     def test_current_date_and_time(self):
@@ -39,10 +39,10 @@ class TestWorkModelFinishMethod(ModelTestCase):
         self.assertEqual(view.type, WorkOptions.FINISH)
         self.assertEqual(view.timestamp, datetime(2021, 1, 1, 8, 12, 34))
         
-        self.pm.load_project.assert_called_once()
-        self.pm.load_actions.assert_called_once()
-        self.pm.save_actions.assert_called_once()
-        args, _ = self.pm.save_actions.call_args_list[0]
+        self.fm.load_project.assert_called_once()
+        self.fm.load_actions.assert_called_once()
+        self.fm.save_actions.assert_called_once()
+        args, _ = self.fm.save_actions.call_args_list[0]
         (updated_actions,) = args
         self.assertEqual(len(updated_actions), 2)
         self.assertEqual(updated_actions[0], actions[0])
@@ -62,10 +62,10 @@ class TestWorkModelFinishMethod(ModelTestCase):
         self.assertEqual(view.type, WorkOptions.FINISH)
         self.assertEqual(view.timestamp, datetime(2021, 1, 1, 12, 23, 34))
         
-        self.pm.load_project.assert_called_once()
-        self.pm.load_actions.assert_called_once()
-        self.pm.save_actions.assert_called_once()
-        args, _ = self.pm.save_actions.call_args_list[0]
+        self.fm.load_project.assert_called_once()
+        self.fm.load_actions.assert_called_once()
+        self.fm.save_actions.assert_called_once()
+        args, _ = self.fm.save_actions.call_args_list[0]
         (updated_actions,) = args
         self.assertEqual(len(updated_actions), 2)
         self.assertEqual(updated_actions[0], actions[0])
@@ -85,10 +85,10 @@ class TestWorkModelFinishMethod(ModelTestCase):
         self.assertEqual(view.type, WorkOptions.FINISH)
         self.assertEqual(view.timestamp, datetime(2021, 2, 2, 0, 0, 0))
         
-        self.pm.load_project.assert_called_once()
-        self.pm.load_actions.assert_called_once()
-        self.pm.save_actions.assert_called_once()
-        args, _ = self.pm.save_actions.call_args_list[0]
+        self.fm.load_project.assert_called_once()
+        self.fm.load_actions.assert_called_once()
+        self.fm.save_actions.assert_called_once()
+        args, _ = self.fm.save_actions.call_args_list[0]
         (updated_actions,) = args
         self.assertEqual(len(updated_actions), 2)
         self.assertEqual(updated_actions[0], actions[0])
@@ -109,10 +109,10 @@ class TestWorkModelFinishMethod(ModelTestCase):
         self.assertEqual(view.type, WorkOptions.FINISH)
         self.assertEqual(view.timestamp, datetime(2021, 2, 2, 12, 23, 34))
         
-        self.pm.load_project.assert_called_once()
-        self.pm.load_actions.assert_called_once()
-        self.pm.save_actions.assert_called_once()
-        args, _ = self.pm.save_actions.call_args_list[0]
+        self.fm.load_project.assert_called_once()
+        self.fm.load_actions.assert_called_once()
+        self.fm.save_actions.assert_called_once()
+        args, _ = self.fm.save_actions.call_args_list[0]
         (updated_actions,) = args
         self.assertEqual(len(updated_actions), 2)
         self.assertEqual(updated_actions[0], actions[0])
@@ -126,6 +126,6 @@ class TestWorkModelFinishMethod(ModelTestCase):
 
         self.assertEqual(view, None)
         
-        self.pm.load_project.assert_called_once()
-        self.pm.load_actions.assert_called_once()
-        self.pm.save_actions.assert_not_called()
+        self.fm.load_project.assert_called_once()
+        self.fm.load_actions.assert_called_once()
+        self.fm.save_actions.assert_not_called()

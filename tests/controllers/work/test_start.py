@@ -20,10 +20,10 @@ class TestStartController(ControllerTestCase):
 
         view: ActionView = self.handle([])
 
-        self.assertEqual(self.pm.load_project.call_count, 2)
-        self.assertEqual(self.pm.load_actions.call_count, 2)
+        self.assertEqual(self.fm.load_project.call_count, 2)
+        self.assertEqual(self.fm.load_actions.call_count, 2)
 
-        self.pm.save_actions.assert_called_once_with([Action(type=WorkOptions.START, timestamp=timestamp)])
+        self.fm.save_actions.assert_called_once_with([Action(type=WorkOptions.START, timestamp=timestamp)])
         self.assertEqual(view.type, WorkOptions.START)
         self.assertEqual(view.timestamp, timestamp)
 
@@ -33,10 +33,10 @@ class TestStartController(ControllerTestCase):
         
         view: ActionView = self.handle(["12:34:56"])
 
-        self.assertEqual(self.pm.load_project.call_count, 2)
-        self.assertEqual(self.pm.load_actions.call_count, 2)
+        self.assertEqual(self.fm.load_project.call_count, 2)
+        self.assertEqual(self.fm.load_actions.call_count, 2)
 
-        self.pm.save_actions.assert_called_once_with([expected])
+        self.fm.save_actions.assert_called_once_with([expected])
         self.assertEqual(view.type, WorkOptions.START)
         self.assertEqual(view.timestamp, datetime(2021, 1, 1, 12, 34, 56))
 
@@ -45,10 +45,10 @@ class TestStartController(ControllerTestCase):
         
         view: ActionView = self.handle(["2022-06-02", "12:34:56"])
 
-        self.assertEqual(self.pm.load_project.call_count, 2)
-        self.assertEqual(self.pm.load_actions.call_count, 2)
+        self.assertEqual(self.fm.load_project.call_count, 2)
+        self.assertEqual(self.fm.load_actions.call_count, 2)
 
-        self.pm.save_actions.assert_called_once_with([expected])
+        self.fm.save_actions.assert_called_once_with([expected])
         self.assertEqual(view.type, WorkOptions.START)
         self.assertEqual(view.timestamp, datetime(2022, 6, 2, 12, 34, 56))
 
@@ -58,7 +58,7 @@ class TestStartController(ControllerTestCase):
 
         view: InfoView = self.handle([])
 
-        self.assertEqual(self.pm.load_project.call_count, 3)
-        self.assertEqual(self.pm.load_actions.call_count, 3)
-        self.pm.save_actions.assert_not_called()
+        self.assertEqual(self.fm.load_project.call_count, 3)
+        self.assertEqual(self.fm.load_actions.call_count, 3)
+        self.fm.save_actions.assert_not_called()
         self.assertEqual(view.value, "already started")

@@ -17,8 +17,8 @@ class TestCheckController(ControllerTestCase):
         view: StrView = self.handle(["2021-01-01"])
 
         self.assertIsInstance(view, StrView)
-        self.pm.load_project.assert_called_once()
-        self.pm.load_actions.assert_called_once()
+        self.fm.load_project.assert_called_once()
+        self.fm.load_actions.assert_called_once()
         self.assertEqual(view.value, "2021-01-01 is OK")
 
     def test_one_day_not_finished(self):
@@ -43,8 +43,8 @@ class TestCheckController(ControllerTestCase):
         view: InfoView = self.handle([])
 
         self.assertIsInstance(view, InfoView)
-        self.pm.load_project.assert_called_once()
-        self.pm.load_actions.assert_called_once()
+        self.fm.load_project.assert_called_once()
+        self.fm.load_actions.assert_called_once()
         self.assertEqual(view.value, "there is nothing to check")
 
     def test_all_days_not_finished(self):
