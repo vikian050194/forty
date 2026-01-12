@@ -110,7 +110,7 @@ Format: `forty [COMMAND]`
 | `help` | Help information |
 | `version` | Installed version |
 
-**Status**
+### Status
 
 Format: `forty status [VALUE]`
 
@@ -124,7 +124,7 @@ Format: `forty status [VALUE]`
 | `remained` | Remained time |
 | `interval` | Today you are working `from` and `to` |
 
-**History**
+### History
 
 Format: `forty [COMMAND] [OPTION]`
 

@@ -8,16 +8,16 @@ from forty.managers.time_manager import AbstractTimeManager, TimeManager
 from forty.models.base import AbstractModel
 
 
-def get_project_manager_spec():
+def get_file_manager_spec():
     fm: AbstractFileManager = create_autospec(spec=FileManager, spec_set=True, instance=True)
     return fm
 
 
 class ModelTestCase(TestCase):
     def __init__(self, *args, **kwargs):
-        TestCase.__init__(self, *args, **kwargs)
+        super().__init__(*args, **kwargs)
 
-        self.fm: AbstractFileManager = get_project_manager_spec()
+        self.fm: AbstractFileManager = get_file_manager_spec()
         self.tm: AbstractTimeManager = TimeManager()
 
         self.model = self.model_class(fm=self.fm, tm=self.tm)

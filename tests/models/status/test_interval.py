@@ -9,7 +9,7 @@ from ..model_test_case import ModelTestCase
 
 class TestStatusModelIntervalMethod(ModelTestCase):
     def __init__(self, *args, **kwargs):
-        ModelTestCase.__init__(self, *args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     @property
     def model_class(self):
