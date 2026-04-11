@@ -8,8 +8,6 @@
 
 **forty** is a tool that can help you track (working) time, take a break and many more
 
-By the way, there is [todo list](./TODO.md).
-
 ## Motivation
 
 There are a lot of flexible and powerful time and work trackers but as for me all of them are too complex and I don't need a biggest part of provided features
@@ -27,18 +25,11 @@ Rigth now the best way to install **forty** is following one:
     ```
     git clone https://github.com/vikian050194/forty.git
     ```
-2. Make directory for custom bash completion scripts and grant full access for everyone (TODO: fix this dirty manual hack)
-    ```
-    mkdir "$HOME/.bash_completion.d"
-    chmod 777 "$HOME/.bash_completion.d"
-    ```
-3. Install the package globally
-
-   Privileged user is required because bash completion file will be copied to `etc` directory
+2. Install the package globally
     ```
     pip3 install .
     ```
-4. Call installed package via a generated standalone "shim" script
+3. Call installed package via a generated standalone "shim" script
     ```
     forty
     ```

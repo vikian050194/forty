@@ -23,53 +23,53 @@ class OutputManager(AbstractOutputManager):
         if configuration.output == OutputFlagValues.JSON:
             self.printer = JsonPrinter()
 
-    def __print_str__(self, message):
+    def _print_str(self, message):
         self.printer.print_str(message)
 
-    def __print_message__(self, message: MessageView):
+    def _print_message(self, message: MessageView):
         self.printer.print_message(message)
 
-    def __print_list__(self, list):
+    def _print_list(self, list):
         self.printer.print_list(list)
 
-    def __print_object__(self, object):
+    def _print_object(self, object):
         self.printer.print_object(object)
 
-    def __print_log__(self, log):
+    def _print_log(self, log):
         self.printer.print_log(log)
 
 
     def emmit(self,  view: AbstractView):
         if type(view) is StrView:
-            self.__print_str__(view)
+            self._print_str(view)
         elif type(view) is InfoView:
-            self.__print_message__(view)
+            self._print_message(view)
         elif type(view) is WarningView:
-            self.__print_message__(view)
+            self._print_message(view)
         elif type(view) is ErrorView:
-            self.__print_message__(view)
+            self._print_message(view)
         elif type(view) is ListView:
-            self.__print_list__(view.list)
+            self._print_list(view.list)
         elif type(view) is ActionView:
-            self.__print_object__(view)
+            self._print_object(view)
         elif type(view) is LogView:
-            self.__print_log__(view.list)
+            self._print_log(view.list)
         elif type(view) is FullStatusView:
-            self.__print_object__(view)
+            self._print_object(view)
         elif type(view) is TodayStatusView:
-            self.__print_object__(view)
+            self._print_object(view)
         elif type(view) is TotalStatusView:
-            self.__print_object__(view)
+            self._print_object(view)
         elif type(view) is PassedStatusView:
-            self.__print_object__(view)
+            self._print_object(view)
         elif type(view) is RemainedStatusView:
-            self.__print_object__(view)
+            self._print_object(view)
         elif type(view) is IntervalStatusView:
-            self.__print_object__(view)
+            self._print_object(view)
         elif type(view) is OnlyStatusView:
-            self.__print_object__(view)
+            self._print_object(view)
         else:
-            self.__print_str__("unknown view")
+            self._print_str("unknown view")
 
 
 __all__ = ["OutputManager"]

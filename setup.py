@@ -73,8 +73,6 @@ attrs = dict(
     license="MIT",
     packages=find_packages(where=".", exclude=["tests*"], include="*"),
     install_requires=[],
-    test_suite="nose.collector",
-    tests_require=["nose"],
     cmdclass={
         "develop": PostDevelopCommand,
         "install": PostInstallCommand,
@@ -83,7 +81,7 @@ attrs = dict(
         "console_scripts": ["forty=forty.app:run"],
     },
     include_package_data=True,
-    zip_safe=False
+    zip_safe=True
 )
 
 setup(**attrs)
