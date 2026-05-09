@@ -61,7 +61,7 @@ In general invocation has following format `forty [COMMAND] [OPTIONS]`
 Use service to get advantage of auto-start and auto-finish
 
 ```
-bash automation/setup.sh
+bash automation/install.sh
 ```
 
 To remove service
